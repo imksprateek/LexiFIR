@@ -14,45 +14,42 @@ class TranscriptionPage extends StatefulWidget {
 
 class _TranscriptionPageState extends State<TranscriptionPage> {
   List<String> msg_recv = [];
-  late WebSocketChannel _channel;
+  WebSocketChannel? _channel;
   bool _isRecording = false;
   final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
-  final StreamController<Uint8List> _audioStreamController =
-      StreamController<Uint8List>();
+  StreamController<Uint8List>? _audioStreamController;
 
   @override
   void initState() {
     super.initState();
-    _initializeWebSocket();
     _initializeRecorder();
   }
 
   Future<void> _initializeWebSocket() async {
+    // Close any previous WebSocket connection
+    _channel?.sink.close();
+
     try {
       _channel = WebSocketChannel.connect(
         Uri.parse("ws://eng.ksprateek.studio/TranscribeStreaming"),
       );
-      _channel.stream.listen(
-        (message) {
-          print("Message from server: $message");
 
+      _channel!.stream.listen(
+            (message) {
+          print("Message from server: $message");
           setState(() {
             msg_recv.add(message);
           });
         },
         onError: (error) {
-          print("WebSocket Error: ${error.toString()}");
+          print("WebSocket Error: $error");
+        },
+        onDone: () {
+          print("WebSocket connection closed.");
         },
       );
-
-      // Send audio chunks to WebSocket when available
-      _audioStreamController.stream.listen((audioChunk) {
-        if (_channel.closeCode == null) {
-          _channel.sink.add(audioChunk); // Send audio data to the server
-        }
-      });
     } catch (e) {
-      print("Error connecting to WebSocket: $e");
+      print("Error initializing WebSocket: $e");
     }
   }
 
@@ -68,17 +65,33 @@ class _TranscriptionPageState extends State<TranscriptionPage> {
   }
 
   Future<void> _startRecording() async {
+    if (_isRecording) return;
+
+    // Reinitialize WebSocket and StreamController
+    await _initializeWebSocket();
+
+    _audioStreamController?.close();
+    _audioStreamController = StreamController<Uint8List>();
+
     setState(() {
       _isRecording = true;
     });
 
     try {
       await _recorder.startRecorder(
-          toStream: _audioStreamController.sink,
-          codec: Codec.pcm16,
-          sampleRate: 16000,
-          numChannels: 1,
-          bufferSize: 1024);
+        toStream: _audioStreamController!.sink,
+        codec: Codec.pcm16,
+        sampleRate: 16000,
+        numChannels: 1,
+        bufferSize: 1024,
+      );
+
+      // Send audio chunks to WebSocket
+      _audioStreamController!.stream.listen((audioChunk) {
+        if (_channel != null && _channel!.closeCode == null) {
+          _channel!.sink.add(audioChunk);
+        }
+      });
     } catch (e) {
       print("Error starting recorder: $e");
       setState(() {
@@ -88,14 +101,15 @@ class _TranscriptionPageState extends State<TranscriptionPage> {
   }
 
   Future<void> _stopRecording() async {
+    if (!_isRecording) return;
+
     setState(() {
       _isRecording = false;
     });
 
     try {
       await _recorder.stopRecorder();
-      _channel.sink
-          .add("submit_response"); // Notify server that recording is complete
+      _channel?.sink.add("submit_response"); // Notify server that recording is complete
     } catch (e) {
       print("Error stopping recorder: $e");
     }
@@ -119,10 +133,12 @@ class _TranscriptionPageState extends State<TranscriptionPage> {
 
   @override
   void dispose() {
-    _audioStreamController.close();
-
+    _audioStreamController?.close();
+    if (_recorder.isRecording) {
+      _recorder.stopRecorder();
+    }
     _recorder.closeRecorder();
-    _channel.sink.close();
+    _channel?.sink.close();
     msg_recv.clear();
     super.dispose();
   }
@@ -136,24 +152,29 @@ class _TranscriptionPageState extends State<TranscriptionPage> {
         child: Column(
           children: [
             ElevatedButton(
-              onPressed: _isRecording ? _stopRecording : _startRecording,
+              onPressed: () async {
+                if (_isRecording) {
+                  await _stopRecording();
+                } else {
+                  await _startRecording();
+                }
+              },
               child: Text(_isRecording ? "Stop Recording" : "Start Recording"),
             ),
             const SizedBox(height: 16),
             const Text("Transcriptions will appear here."),
-            // Text(msg_recv.toString())
             Expanded(
               child: msg_recv.isEmpty
                   ? const Center(child: Text("No messages received yet."))
                   : ListView.builder(
-                      itemCount: msg_recv.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(msg_recv[index]),
-                        );
-                      },
-                    ),
-            )
+                itemCount: msg_recv.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(msg_recv[index]),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
