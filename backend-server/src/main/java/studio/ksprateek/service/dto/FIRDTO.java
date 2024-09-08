@@ -19,6 +19,7 @@ public class FIRDTO {
     private List<RelatedSectionDTO> relatedSections = new ArrayList<>();  // Initialize as empty list
     private List<LandmarkJudgmentDTO> landmarkJudgments = new ArrayList<>(); // Initialize as empty list
     private String status;
+    private String typeOfCase;
     @Schema(hidden = true)
     private UserDTO officer; // Reference to the officer
 

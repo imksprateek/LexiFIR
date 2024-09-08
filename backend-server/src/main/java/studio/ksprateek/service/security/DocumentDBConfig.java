@@ -89,11 +89,14 @@ public class DocumentDBConfig extends AbstractMongoClientConfiguration {
 
     private String getConnectionString() {
         log.info("Generating connection string...");
-        return String.format(this.connectionStringTemplate,
+        String sanitizedConnectionString = String.format(this.connectionStringTemplate,
                 this.user,
                 this.password,
                 this.host,
                 this.port,
                 this.getDatabaseName());
+
+        log.info("Generated connection string: {}", sanitizedConnectionString);
+        return sanitizedConnectionString;
     }
 }
