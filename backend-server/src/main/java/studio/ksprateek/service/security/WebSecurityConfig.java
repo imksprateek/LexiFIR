@@ -64,12 +64,12 @@ public class WebSecurityConfig {
                         addList("Bearer Authentication"))
                 .components(new Components().addSecuritySchemes
                         ("Bearer Authentication", createAPIKeyScheme()))
-                .info(new Info().title("My REST API")
-                        .description("Some custom description of API.")
-                        .version("1.0").contact(new Contact().name("Sallo Szrajbman")
-                                .email( "www.baeldung.com").url("salloszraj@gmail.com"))
-                        .license(new License().name("License of API")
-                                .url("API license URL")));
+                .info(new Info().title("LexiFIR - Ensuring Legal Accuracy in Every Complaint")
+                        .description("LexiFIR is an AI-driven mobile and web application developed to assist police officers in drafting accurate First Information Reports (FIRs) by providing legal recommendations in real time. It addresses the lack of immediate legal expertise in police stations by offering legally compliant, context-based guidance on relevant case laws, legal sections, and landmark judgments.")
+                        .version("3.0").contact(new Contact().name("K S Prateek")
+                                .email( "ksprateek2004@gmail.com").url("https://ksprateek.studio"))
+                        .license(new License().name("MIT License")
+                                .url("LICENSE.md")));
     }
 
     private SecurityScheme createAPIKeyScheme() {
