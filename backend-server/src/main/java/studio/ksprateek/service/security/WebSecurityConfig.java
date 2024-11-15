@@ -1,4 +1,4 @@
-package studio.ksprateek.service.config;
+package studio.ksprateek.service.security;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
