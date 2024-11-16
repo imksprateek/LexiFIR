@@ -32,3 +32,8 @@
 
 # Android Profiling
 /app-client/*.hprof
+
+
+######################## Backend Server ############################
+/backend-server/src/main/resources/.env
+/backend-server/target/classes/*
