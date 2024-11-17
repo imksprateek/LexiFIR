@@ -1,5 +1,12 @@
 package studio.ksprateek.service.security;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -62,7 +69,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**").permitAll().requestMatchers("/api/test/**", "/swagger-ui/**","/swagger-resources/*",
-                                "/v3/api-docs/**", "/login")
+                                "/v3/api-docs/**", "/api/health/")
                         .permitAll().anyRequest().authenticated());
 
         http.authenticationProvider(authenticationProvider());
@@ -70,5 +77,25 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
+    }
+
+    @Bean
+    public OpenAPI openAPI() {
+        return new OpenAPI().addSecurityItem(new SecurityRequirement().
+                        addList("Bearer Authentication"))
+                .components(new Components().addSecuritySchemes
+                        ("Bearer Authentication", createAPIKeyScheme()))
+                .info(new Info().title("LexiFIR - Ensuring Legal Accuracy in Every Complaint")
+                        .description("LexiFIR is an AI-driven mobile and web application developed to assist police officers in drafting accurate First Information Reports (FIRs) by providing legal recommendations in real time. It addresses the lack of immediate legal expertise in police stations by offering legally compliant, context-based guidance on relevant case laws, legal sections, and landmark judgments.")
+                        .version("3.0").contact(new Contact().name("K S Prateek")
+                                .email( "ksprateek2004@gmail.com").url("https://ksprateek.studio"))
+                        .license(new License().name("MIT License")
+                                .url("LICENSE.md")));
+    }
+
+    private SecurityScheme createAPIKeyScheme() {
+        return new SecurityScheme().type(SecurityScheme.Type.HTTP)
+                .bearerFormat("JWT")
+                .scheme("bearer");
     }
 }
