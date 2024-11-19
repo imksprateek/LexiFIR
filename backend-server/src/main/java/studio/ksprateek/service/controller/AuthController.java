@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,13 +23,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import studio.ksprateek.service.payload.requests.LoginRequest;
+import studio.ksprateek.service.payload.requests.OtpRequest;
+import studio.ksprateek.service.payload.requests.OtpValidation;
 import studio.ksprateek.service.payload.requests.SignUpRequest;
+import studio.ksprateek.service.payload.responses.AuthResponse;
 import studio.ksprateek.service.payload.responses.JwtResponse;
 import studio.ksprateek.service.payload.responses.MessageResponse;
 import studio.ksprateek.service.entity.User;
 import studio.ksprateek.service.repository.RoleRepository;
 import studio.ksprateek.service.repository.UserRepository;
 import studio.ksprateek.service.security.jwt.JwtUtils;
+import studio.ksprateek.service.service.OtpService;
 import studio.ksprateek.service.service.UserDetailsImpl;
 import studio.ksprateek.service.models.ERole;
 import studio.ksprateek.service.models.Role;
@@ -50,7 +57,10 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/signin")
+    @Autowired
+    OtpService otpService;
+
+    @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -125,4 +135,26 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+    @PostMapping("sendotp")
+    public ResponseEntity<AuthResponse> sendOtp(@RequestBody OtpRequest otpRequest) throws MessagingException {
+        Logger logger = LoggerFactory.getLogger(AuthController.class);
+        logger.info("Received OTP request for email: {}", otpRequest.getEmail());
+
+
+        AuthResponse response = otpService.sendOtp(otpRequest);
+        if (response.getStatusCode() == 200) {
+            logger.info("OTP sent successfully to email: {}", otpRequest.getEmail());
+            return ResponseEntity.ok(response);
+        } else {
+            logger.error("Failed to send OTP to email: {}", otpRequest.getEmail());
+            return ResponseEntity.unprocessableEntity().body(response);
+        }
+    }
+
+    @PostMapping("validateotp")
+    public AuthResponse validateOtp(@RequestBody OtpValidation otpValidationRequest){
+        return otpService.validateOtp(otpValidationRequest);
+    }
+
 }
