@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 
@@ -61,6 +62,7 @@ public class AuthController {
     OtpService otpService;
 
     @PostMapping("/login")
+    @Operation(summary = "To log the user in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -82,6 +84,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
+    @Operation(summary = "To register user in the database")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
@@ -137,6 +140,7 @@ public class AuthController {
     }
 
     @PostMapping("sendotp")
+    @Operation(summary = "To send otp to user's email")
     public ResponseEntity<AuthResponse> sendOtp(@RequestBody OtpRequest otpRequest) throws MessagingException {
         Logger logger = LoggerFactory.getLogger(AuthController.class);
         logger.info("Received OTP request for email: {}", otpRequest.getEmail());
@@ -153,6 +157,7 @@ public class AuthController {
     }
 
     @PostMapping("validateotp")
+    @Operation(summary = "To verify if the OTP entered is valid")
     public AuthResponse validateOtp(@RequestBody OtpValidation otpValidationRequest){
         return otpService.validateOtp(otpValidationRequest);
     }
