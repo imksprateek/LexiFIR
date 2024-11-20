@@ -1,12 +1,14 @@
 # Backend Server Docs
 
-## Test the API endpoints here: <a href="http://localhost:8080/swagger-ui/index.html#">Test</a>
+## Test the API endpoints here: <a href="http://server.ksprateek.studio/swagger-ui/index.html#/">Test</a>
 
 ### **Frontend-Backend API Request Sequence for Authentication**
 
 This document outlines the sequence of API requests for the authentication flow. The details about the request structure, payloads, and responses can be referred to in the SwaggerUI API documentation.
 
 ---
+
+**BASE URL:** `http://server.ksprateek.studio/`
 
 ## **Sequence of API Requests**
 
