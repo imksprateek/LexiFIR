@@ -24,4 +24,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return UserDetailsImpl.build(user);
     }
 
+    public boolean emailExists(String email){
+        return userRepository.existsByEmail(email);
+    }
+
+    public boolean userExists(String username){
+        return userRepository.existsByUsername(username);
+    }
+
 }

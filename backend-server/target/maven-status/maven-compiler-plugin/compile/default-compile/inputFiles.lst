@@ -12,6 +12,7 @@
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/requests/OtpRequest.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/requests/OtpValidation.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/requests/SignUpRequest.java
+/home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/requests/UserCheck.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/responses/AuthResponse.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/responses/JwtResponse.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/responses/MessageResponse.java

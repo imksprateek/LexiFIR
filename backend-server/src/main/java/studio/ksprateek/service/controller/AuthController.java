@@ -23,10 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import studio.ksprateek.service.payload.requests.LoginRequest;
-import studio.ksprateek.service.payload.requests.OtpRequest;
-import studio.ksprateek.service.payload.requests.OtpValidation;
-import studio.ksprateek.service.payload.requests.SignUpRequest;
+import studio.ksprateek.service.payload.requests.*;
 import studio.ksprateek.service.payload.responses.AuthResponse;
 import studio.ksprateek.service.payload.responses.JwtResponse;
 import studio.ksprateek.service.payload.responses.MessageResponse;
@@ -38,6 +35,7 @@ import studio.ksprateek.service.service.OtpService;
 import studio.ksprateek.service.service.UserDetailsImpl;
 import studio.ksprateek.service.models.ERole;
 import studio.ksprateek.service.models.Role;
+import studio.ksprateek.service.service.UserDetailsServiceImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -60,6 +58,8 @@ public class AuthController {
 
     @Autowired
     OtpService otpService;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @PostMapping("/login")
     @Operation(summary = "To log the user in")
@@ -160,6 +160,17 @@ public class AuthController {
     @Operation(summary = "To verify if the OTP entered is valid")
     public AuthResponse validateOtp(@RequestBody OtpValidation otpValidationRequest){
         return otpService.validateOtp(otpValidationRequest);
+    }
+
+    @PostMapping("checkuser")
+    @Operation(summary = "Checks if the user's email is already registered in the DB")
+    public ResponseEntity<?> checkUser(@RequestBody UserCheck userCheck){
+        if(userDetailsServiceImpl.userExists(userCheck.getUsername())){
+            return ResponseEntity.badRequest().body("User already exists. Login instead");
+        }else if(userDetailsServiceImpl.emailExists(userCheck.getEmail())){
+            return ResponseEntity.badRequest().body("Email already exists. Login instead");
+        }
+        return ResponseEntity.ok().body("You can proceed to sign up");
     }
 
 }
