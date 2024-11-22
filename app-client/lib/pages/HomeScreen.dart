@@ -1,7 +1,16 @@
+import 'package:app_client/utils/carasouel.dart';
 import 'package:app_client/utils/circle_container.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 String username = "Venkat";
+
+List<Color> colours = [
+  const Color.fromARGB(255, 255, 228, 190),
+  Color.fromARGB(255, 250, 219, 193),
+  const Color.fromARGB(255, 255, 206, 175)
+];
+List<String> titles = ["", "", ""];
 
 class Homescreen extends StatelessWidget {
   const Homescreen({super.key});
@@ -38,6 +47,17 @@ class Homescreen extends StatelessWidget {
               textAlign: TextAlign.left,
             ),
             SizedBox(height: 16),
+            Container(
+              height: 150,
+              width: 400,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: const Color.fromARGB(255, 255, 240, 195),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -68,6 +88,10 @@ class Homescreen extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 30,
+            ),
+            CustomCarousel(containerColors: colours, titles: titles)
           ],
         ),
       ),

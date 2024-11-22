@@ -19,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _checkToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs =await SharedPreferences.getInstance();
     String? token = prefs.getString('jwt_token'); // Retrieve the token
 
     // Simulate a delay for the splash screen (optional)
