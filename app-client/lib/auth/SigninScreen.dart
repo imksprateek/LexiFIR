@@ -15,7 +15,7 @@ class SigninScreen extends StatelessWidget {
     TextEditingController name = TextEditingController();
     TextEditingController role = TextEditingController(); // Role input
 
-    var result_From_SendOTP;
+    bool resultFromSendotp;
 
     return Scaffold(
       body: Center(
@@ -24,37 +24,37 @@ class SigninScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Signin Screen'),
+              const Text('Signin Screen'),
               // Name input field
               LoginPage_Textfield(
                 controller: name,
                 HintText: 'Enter your Name',
                 LabelText: 'Name',
-                Iconer: Icon(Icons.account_circle, color: Colors.blue),
+                Iconer: const Icon(Icons.account_circle, color: Colors.blue),
               ),
               // Role input field
               LoginPage_Textfield(
                 controller: role,
                 HintText: 'Enter your role',
                 LabelText: 'Role',
-                Iconer: Icon(Icons.account_circle, color: Colors.blue),
+                Iconer: const Icon(Icons.account_circle, color: Colors.blue),
               ),
               // Email input field
               LoginPage_Textfield(
                 controller: email,
                 HintText: 'Enter your email',
                 LabelText: 'Email',
-                Iconer: Icon(Icons.email, color: Colors.blue),
+                Iconer: const Icon(Icons.email, color: Colors.blue),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               // Password input field
               LoginPage_Textfield(
                 controller: password,
                 HintText: 'Enter password',
                 LabelText: 'Password',
-                Iconer: Icon(Icons.lock, color: Colors.blue),
+                Iconer: const Icon(Icons.lock, color: Colors.blue),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               // Sign up button
               ElevatedButton(
                 onPressed: () async {
@@ -67,8 +67,8 @@ class SigninScreen extends StatelessWidget {
                   List<String> roleList = roleText.split(',').map((e) => e.trim()).toList();
 
                   // Send OTP to the email
-                  result_From_SendOTP = await sendOTP(emailText);
-                  if (result_From_SendOTP) {
+                  resultFromSendotp = await sendOTP(emailText);
+                  if (resultFromSendotp) {
                     // Navigate to OTP screen with email, password, name, and roles
                     Navigator.push(
                       context,
@@ -83,7 +83,7 @@ class SigninScreen extends StatelessWidget {
                     );
                     if(SigninSuccessfull)
                       {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Loginscreen())) ;
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const Loginscreen())) ;
                       }
 
                   } else {
@@ -92,12 +92,12 @@ class SigninScreen extends StatelessWidget {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Login',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
@@ -106,10 +106,10 @@ class SigninScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Loginscreen()),
+                    MaterialPageRoute(builder: (context) => const Loginscreen()),
                   );
                 },
-                child: Text('Already a member? Login'),
+                child: const Text('Already a member? Login'),
               ),
             ],
           ),
@@ -150,11 +150,11 @@ class LoginPage_Textfield extends StatelessWidget {
         prefixIcon: Iconer,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: Colors.blue, width: 2),
+          borderSide: const BorderSide(color: Colors.blue, width: 2),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
-          borderSide: BorderSide(color: Colors.green, width: 2),
+          borderSide: const BorderSide(color: Colors.green, width: 2),
         ),
       ),
     );

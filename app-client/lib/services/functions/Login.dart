@@ -3,12 +3,13 @@ import 'package:app_client/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Map<String, dynamic>> login(String username, String password) async {
+Future<Map<String, dynamic>> login(String _username, String password) async {
   print('Login function called');
-  print('Username: $username');
+  print('Username: $_username');
   print('Password: $password');
 
-  String baseUrl = "http://server.ksprateek.studio"; // Replace with your base URL
+  String baseUrl =
+      "http://server.ksprateek.studio"; // Replace with your base URL
   String endpoint = "/api/auth/login"; // API endpoint for login
 
   // Set the headers and the request body
@@ -17,7 +18,7 @@ Future<Map<String, dynamic>> login(String username, String password) async {
   };
 
   Map<String, dynamic> body = {
-    'username': username,
+    'username': _username,
     'password': password,
   };
 
@@ -33,7 +34,9 @@ Future<Map<String, dynamic>> login(String username, String password) async {
     if (response.statusCode == 200) {
       print('Login successful. Parsing response body...');
 
-      LoginSuccessfull =true ;
+      LoginSuccessfull = true;
+
+      username = _username;
       // Successfully logged in, parse the response body
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       print('Response body: $responseBody');
@@ -41,7 +44,8 @@ Future<Map<String, dynamic>> login(String username, String password) async {
       String token = responseBody['token']; // Extract the token
       String id = responseBody['id']; // Extract user id
       String email = responseBody['email']; // Extract email
-      List<String> roles = List<String>.from(responseBody['roles']); // Extract roles
+      List<String> roles =
+          List<String>.from(responseBody['roles']); // Extract roles
 
       // Save the token in SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();

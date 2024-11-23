@@ -17,9 +17,9 @@ class CircleContainer extends StatelessWidget {
           child: Container(
             width: 80, // Specify the width
             height: 80, // Specify the height
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color.fromARGB(255, 255, 228, 194),
+              color: Color.fromARGB(255, 255, 228, 194),
 
               // Optional: Add a color to visualize the circle
             ),

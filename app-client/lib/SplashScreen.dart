@@ -23,20 +23,20 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = prefs.getString('jwt_token'); // Retrieve the token
 
     // Simulate a delay for the splash screen (optional)
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
 
     // Navigate based on token availability
     if (token != null && token.isNotEmpty) {
       // Token exists, navigate to home screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Homescreen()),
+        MaterialPageRoute(builder: (context) => const Homescreen()),
       );
     } else {
       // Token doesn't exist, navigate to login screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Loginscreen()),
+        MaterialPageRoute(builder: (context) => const Loginscreen()),
       );
     }
   }

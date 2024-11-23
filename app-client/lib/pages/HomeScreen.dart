@@ -1,18 +1,18 @@
 import 'package:app_client/services/functions/Logout.dart';
 import 'package:app_client/pages/fir_screen.dart';
+import 'package:app_client/services/functions/NewsApi.dart';
 import 'package:app_client/utils/carasouel.dart';
 import 'package:app_client/utils/circle_container.dart';
+import 'package:app_client/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-String username = "Venkat";
-
 List<Color> colours = [
   const Color.fromARGB(255, 255, 228, 190),
-  Color.fromARGB(255, 250, 219, 193),
+  const Color.fromARGB(255, 250, 219, 193),
   const Color.fromARGB(255, 255, 206, 175)
 ];
-List<String> titles = ["", "", ""];
+//List<String> titles = ["", "", ""];
 
 class Homescreen extends StatelessWidget {
   const Homescreen({super.key});
@@ -23,19 +23,19 @@ class Homescreen extends StatelessWidget {
       print("FIR TAPPED!");
 
       Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => FirAiScreen(),
+        builder: (context) => const FirAiScreen(),
       ));
     }
 
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.translate)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.translate)),
           IconButton(
             onPressed: () {
-              logout(context) ;
+              logout(context);
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.person_outlined,
               size: 35,
             ),
@@ -49,19 +49,19 @@ class Homescreen extends StatelessWidget {
           children: [
             Text(
               "Hello $username,",
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 24,
                   color: Colors.orange,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 8),
-            Text(
+            const SizedBox(height: 8),
+            const Text(
               "What do you want to do today?",
               style: TextStyle(fontSize: 18),
               textAlign: TextAlign.left,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Container(
               height: 150,
               width: 400,
@@ -82,17 +82,17 @@ class Homescreen extends StatelessWidget {
                     icon: (Icons.file_copy),
                     ontap: ontap_fir,
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   CircleContainer(
                     feature_name: "Legal Assistance",
                     icon: Icons.handshake,
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   CircleContainer(
                     feature_name: "Learn",
                     icon: Icons.book,
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   CircleContainer(
                     feature_name: "Saved Documents",
                     icon: Icons.save,
@@ -107,7 +107,11 @@ class Homescreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            CustomCarousel(containerColors: colours, titles: titles)
+            GestureDetector(
+                onTap: () {
+                  GetArticle();
+                },
+                child: CustomCarousel(imageUrls: imageUrls, ))
           ],
         ),
       ),

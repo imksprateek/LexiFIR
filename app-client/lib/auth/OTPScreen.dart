@@ -31,31 +31,31 @@ class _OTPScreenState extends State<OTPScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Enter OTP')),
+      appBar: AppBar(title: const Text('Enter OTP')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0), // Add padding to the screen
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center, // Center the widgets
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Enter the 6-digit OTP sent to your email',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center, // Center the OTP fields
               children: [
                 _buildOTPTextField(_otpController1, _focusNode2),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 _buildOTPTextField(_otpController2, _focusNode3),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 _buildOTPTextField(_otpController3, _focusNode4),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 _buildOTPTextField(_otpController4, FocusNode()), // No focus on the last field
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
                 // Combine OTP from each controller
@@ -72,23 +72,23 @@ class _OTPScreenState extends State<OTPScreen> {
 
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Loginscreen()), // Replace HomeScreen with your next screen
+                    MaterialPageRoute(builder: (context) => const Loginscreen()), // Replace HomeScreen with your next screen
                   );
                 } else {
                   // OTP is invalid, show error message
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Invalid OTP')),
+                    const SnackBar(content: Text('Invalid OTP')),
                   );
                 }
               },
-              child: Text('Verify OTP'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue, // Button color
-                padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15), // Padding for the button
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15), // Padding for the button
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30), // Circular button
                 ),
               ),
+              child: Text('Verify OTP'),
             ),
           ],
         ),
@@ -110,11 +110,11 @@ class _OTPScreenState extends State<OTPScreen> {
           counterText: "", // Hide counter
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10), // Rounded border
-            borderSide: BorderSide(color: Colors.blue, width: 2),
+            borderSide: const BorderSide(color: Colors.blue, width: 2),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: Colors.green, width: 2),
+            borderSide: const BorderSide(color: Colors.green, width: 2),
           ),
         ),
         onChanged: (value) {

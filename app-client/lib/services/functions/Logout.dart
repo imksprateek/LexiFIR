@@ -18,7 +18,7 @@ Future<void> logout(BuildContext context) async {
       // Navigate to the LoginScreen
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => Loginscreen()),
+        MaterialPageRoute(builder: (context) => const Loginscreen()),
             (Route<dynamic> route) => false, // Remove all previous routes
       );
     } else {
