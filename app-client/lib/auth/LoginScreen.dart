@@ -20,6 +20,7 @@ class Loginscreen extends StatelessWidget {
             // Wrap the text fields in a Column
             mainAxisSize: MainAxisSize.min,
             children: [
+              Image.asset("lib/images/Ellipse1.png"),
               const Text('Login Screen'),
               LoginPage_Textfield(
                 controller: email,

@@ -1,8 +1,9 @@
-import 'package:app_client/auth/LoginScreen.dart';
+//import 'package:app_client/auth/LoginScreen.dart';
 import 'package:app_client/auth/OTPScreen.dart';
 import 'package:app_client/services/functions/sendOTP.dart';
 import 'package:app_client/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:app_client/auth/Loginui.dart';
 
 class SigninScreen extends StatelessWidget {
   const SigninScreen({super.key});
@@ -64,7 +65,8 @@ class SigninScreen extends StatelessWidget {
                   String roleText = role.text;
 
                   // Convert role string into a list
-                  List<String> roleList = roleText.split(',').map((e) => e.trim()).toList();
+                  List<String> roleList =
+                      roleText.split(',').map((e) => e.trim()).toList();
 
                   // Send OTP to the email
                   resultFromSendotp = await sendOTP(emailText);
@@ -81,18 +83,20 @@ class SigninScreen extends StatelessWidget {
                         ),
                       ),
                     );
-                    if(SigninSuccessfull)
-                      {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>const Loginscreen())) ;
-                      }
-
+                    if (SigninSuccessfull) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const Loginscreen()));
+                    }
                   } else {
                     print('Error sending OTP');
                   }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
-                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -106,7 +110,8 @@ class SigninScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const Loginscreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const Loginscreen()),
                   );
                 },
                 child: const Text('Already a member? Login'),
@@ -139,14 +144,17 @@ class LoginPage_Textfield extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: LabelText == 'Password',
-      keyboardType: LabelText == 'Email' ? TextInputType.emailAddress : TextInputType.text,
+      keyboardType: LabelText == 'Email'
+          ? TextInputType.emailAddress
+          : TextInputType.text,
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         hintText: HintText,
         labelText: LabelText,
         filled: true,
         fillColor: Colors.white,
-        contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         prefixIcon: Iconer,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
