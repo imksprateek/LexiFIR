@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import studio.ksprateek.service.entity.FIR;
-import studio.ksprateek.service.entity.User;
 import studio.ksprateek.service.repository.FIRRepository;
-import studio.ksprateek.service.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,28 +14,49 @@ public class FIRService {
 
     @Autowired
     private FIRRepository firRepository;
-    @Autowired
-    private UserRepository userRepository;
 
-    // Create a new FIR
+    // Create a new FIR (POST request)
     @Transactional
     public FIR createFIR(FIR fir) {
-        FIR savedFIR = firRepository.save(fir);
-
-        // Add FIR ID to the user's firIds list
-        User user = userRepository.findById(fir.getOfficerId().getId())
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        List<String> firIds = user.getFirIds();
-        if (firIds == null) {
-            firIds = new ArrayList<>();
-        }
-        firIds.add(savedFIR.getId());
-        user.setFirIds(firIds);
-        userRepository.save(user);
-
-        return savedFIR;
+        // Ensure empty fields are set as empty if not provided
+        if (fir.getCaseTitle() == null) fir.setCaseTitle("");
+        if (fir.getIncidentDescription() == null) fir.setIncidentDescription("");
+        if (fir.getStatus() == null) fir.setStatus("");
+        fir.setId(null);  // Ensure ID is not passed (generated automatically)
+        return firRepository.save(fir);
     }
 
+    // Update an existing FIR (PUT request)
+    @Transactional
+    public FIR updateFIR(String id, FIR firToUpdate) {
+        FIR existingFIR = firRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("FIR not found"));
+
+        // Update only non-empty fields from the request
+        if (firToUpdate.getCaseTitle() != null && !firToUpdate.getCaseTitle().isEmpty()) {
+            existingFIR.setCaseTitle(firToUpdate.getCaseTitle());
+        }
+        if (firToUpdate.getIncidentDescription() != null && !firToUpdate.getIncidentDescription().isEmpty()) {
+            existingFIR.setIncidentDescription(firToUpdate.getIncidentDescription());
+        }
+        if (firToUpdate.getIncidentDate() != null) {
+            existingFIR.setIncidentDate(firToUpdate.getIncidentDate());
+        }
+        if (firToUpdate.getLocation() != null) {
+            existingFIR.setLocation(firToUpdate.getLocation());
+        }
+        if (firToUpdate.getRelatedSections() != null) {
+            existingFIR.setRelatedSections(firToUpdate.getRelatedSections());
+        }
+        if (firToUpdate.getLandmarkJudgments() != null) {
+            existingFIR.setLandmarkJudgments(firToUpdate.getLandmarkJudgments());
+        }
+        if (firToUpdate.getStatus() != null && !firToUpdate.getStatus().isEmpty()) {
+            existingFIR.setStatus(firToUpdate.getStatus());
+        }
+
+        return firRepository.save(existingFIR);
+    }
 
     // Get all FIRs
     public List<FIR> getAllFIRs() {
@@ -48,30 +66,5 @@ public class FIRService {
     // Get FIR by ID
     public Optional<FIR> getFIRById(String id) {
         return firRepository.findById(id);
-    }
-
-    // Get FIRs by officer ID
-    public List<FIR> getFIRsByOfficer(String officerId) {
-        return firRepository.findByOfficerId(officerId);
-    }
-
-    // Update an FIR
-    @Transactional
-    public FIR updateFIR(String id, FIR updatedFIR) {
-        if (firRepository.existsById(id)) {
-            updatedFIR.setId(id);
-            return firRepository.save(updatedFIR);
-        }
-        throw new RuntimeException("FIR not found");
-    }
-
-    // Delete an FIR
-    @Transactional
-    public void deleteFIR(String id) {
-        firRepository.deleteById(id);
-    }
-
-    public List<FIR> getFIRsByUserId(String userId) {
-        return firRepository.findByOfficerId(userId);
     }
 }

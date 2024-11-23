@@ -1,19 +1,21 @@
 package studio.ksprateek.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class FIRDTO {
     private String id;
     private String caseTitle;
     private String incidentDescription;
     private LocalDateTime incidentDate;
     private LocationDTO location;
-    private List<RelatedSectionDTO> relatedSections;
-    private List<LandmarkJudgmentDTO> landmarkJudgments;
-    private List<ReviewHistoryDTO> reviewHistory;
+    private List<RelatedSectionDTO> relatedSections = new ArrayList<>();  // Initialize as empty list
+    private List<LandmarkJudgmentDTO> landmarkJudgments = new ArrayList<>(); // Initialize as empty list
     private String status;
     private UserDTO officer; // Reference to the officer
 
@@ -37,13 +39,5 @@ public class FIRDTO {
         private String title;
         private String summary;
         private String url;
-    }
-
-    @Data
-    public static class ReviewHistoryDTO {
-        private String moderatorId;
-        private LocalDateTime reviewDate;
-        private String comments;
-        private String status;
     }
 }

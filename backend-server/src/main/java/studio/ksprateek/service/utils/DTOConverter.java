@@ -8,10 +8,7 @@ import studio.ksprateek.service.models.ERole;
 import studio.ksprateek.service.models.Role;
 import studio.ksprateek.service.repository.RoleRepository;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -36,6 +33,10 @@ public class DTOConverter {
     }
 
     public User toUserEntity(UserDTO dto) {
+        if (dto == null) {
+            throw new IllegalArgumentException("UserDTO cannot be null");
+        }
+
         User user = User.builder()
                 .id(dto.getId())
                 .name(dto.getName())
@@ -44,21 +45,18 @@ public class DTOConverter {
                 .languagePreference(dto.getLanguagePreference())
                 .build();
 
-        // Convert roleNames (List<String>) to Role references (Role entities)
+        // If roleNames are present in the DTO, set roles accordingly
         if (dto.getRoleNames() != null && !dto.getRoleNames().isEmpty()) {
             Set<Role> roles = dto.getRoleNames().stream()
-                    .map(roleName -> {
-                        // Convert role name (String) to ERole enum
-                        ERole roleEnum = ERole.valueOf(roleName);  // Convert to ERole enum
-                        return roleRepository.findByName(roleEnum) // Fetch Role by ERole enum
-                                .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
-                    })
+                    .map(roleName -> roleRepository.findByName(ERole.valueOf(roleName))  // Convert to ERole enum
+                            .orElseThrow(() -> new RuntimeException("Role not found: " + roleName)))
                     .collect(Collectors.toSet());
             user.setRoles(roles);
         }
 
         return user;
     }
+
 
 
 
@@ -72,7 +70,6 @@ public class DTOConverter {
         dto.setLocation(toLocationDTO(fir.getLocation()));
         dto.setRelatedSections(fir.getRelatedSections().stream().map(this::toRelatedSectionDTO).collect(Collectors.toList()));
         dto.setLandmarkJudgments(fir.getLandmarkJudgments().stream().map(this::toLandmarkJudgmentDTO).collect(Collectors.toList()));
-        dto.setReviewHistory(fir.getReviewHistory().stream().map(this::toReviewHistoryDTO).collect(Collectors.toList()));
         dto.setStatus(fir.getStatus());
         dto.setOfficer(toUserDTO(fir.getOfficerId())); // Map referenced User
         return dto;
@@ -80,19 +77,35 @@ public class DTOConverter {
 
     // Convert FIR DTO to Entity
     public FIR toFIREntity(FIRDTO dto) {
-        return FIR.builder()
+        if (dto == null) {
+            throw new IllegalArgumentException("FIRDTO cannot be null");
+        }
+
+        // Build the FIR entity using the provided DTO
+        FIR fir = FIR.builder()
                 .id(dto.getId())
                 .caseTitle(dto.getCaseTitle())
                 .incidentDescription(dto.getIncidentDescription())
                 .incidentDate(dto.getIncidentDate())
                 .location(toLocationEntity(dto.getLocation()))
-                .relatedSections(dto.getRelatedSections().stream().map(this::toRelatedSectionEntity).collect(Collectors.toList()))
-                .landmarkJudgments(dto.getLandmarkJudgments().stream().map(this::toLandmarkJudgmentEntity).collect(Collectors.toList()))
-                .reviewHistory(dto.getReviewHistory().stream().map(this::toReviewHistoryEntity).collect(Collectors.toList()))
+                .relatedSections(dto.getRelatedSections() != null ? dto.getRelatedSections().stream()
+                        .map(this::toRelatedSectionEntity)
+                        .collect(Collectors.toList()) : new ArrayList<>())
+                .landmarkJudgments(dto.getLandmarkJudgments() != null ? dto.getLandmarkJudgments().stream()
+                        .map(this::toLandmarkJudgmentEntity)
+                        .collect(Collectors.toList()) : new ArrayList<>())
                 .status(dto.getStatus())
-                .officerId(toUserEntity(dto.getOfficer())) // Map referenced User
                 .build();
+
+        // Set officerId only if it's present
+        if (dto.getOfficer() != null) {
+            fir.setOfficerId(toUserEntity(dto.getOfficer()));  // Convert UserDTO to User entity
+        }
+
+        return fir;
     }
+
+
 
     // Location Conversion
     private FIRDTO.LocationDTO toLocationDTO(FIR.Location location) {
@@ -149,24 +162,6 @@ public class DTOConverter {
         return judgment;
     }
 
-    // ReviewHistory Conversion
-    private FIRDTO.ReviewHistoryDTO toReviewHistoryDTO(FIR.ReviewHistory reviewHistory) {
-        FIRDTO.ReviewHistoryDTO dto = new FIRDTO.ReviewHistoryDTO();
-        dto.setModeratorId(reviewHistory.getModeratorId().getId()); // Map referenced User ID
-        dto.setReviewDate(reviewHistory.getReviewDate());
-        dto.setComments(reviewHistory.getComments());
-        dto.setStatus(reviewHistory.getStatus());
-        return dto;
-    }
-
-    private FIR.ReviewHistory toReviewHistoryEntity(FIRDTO.ReviewHistoryDTO dto) {
-        FIR.ReviewHistory reviewHistory = new FIR.ReviewHistory();
-        reviewHistory.setModeratorId(User.builder().id(dto.getModeratorId()).build()); // Map referenced User
-        reviewHistory.setReviewDate(dto.getReviewDate());
-        reviewHistory.setComments(dto.getComments());
-        reviewHistory.setStatus(dto.getStatus());
-        return reviewHistory;
-    }
 
     // Convert LegalReference Entity to DTO
     public LegalReferenceDTO toLegalReferenceDTO(LegalReference legalReference) {

@@ -1,5 +1,6 @@
 package studio.ksprateek.service.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,11 +24,11 @@ public class FIR {
 
     private String caseTitle;
     private String incidentDescription;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime incidentDate;
     private Location location;
     private List<RelatedSection> relatedSections;
     private List<LandmarkJudgment> landmarkJudgments;
-    private List<ReviewHistory> reviewHistory;
     private String status;
 
     @CreatedDate
@@ -56,14 +57,5 @@ public class FIR {
         private String title;
         private String summary;
         private String url;
-    }
-
-    @Data
-    public static class ReviewHistory {
-        @DBRef
-        private User moderatorId;
-        private LocalDateTime reviewDate;
-        private String comments;
-        private String status;
     }
 }
