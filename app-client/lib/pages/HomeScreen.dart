@@ -1,3 +1,4 @@
+import 'package:app_client/pages/fir_screen.dart';
 import 'package:app_client/utils/carasouel.dart';
 import 'package:app_client/utils/circle_container.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,14 @@ class Homescreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void ontap_fir() {
+      print("FIR TAPPED!");
+
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => FirAiScreen(),
+      ));
+    }
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -37,7 +46,10 @@ class Homescreen extends StatelessWidget {
           children: [
             Text(
               "Hello $username,",
-              style: TextStyle(fontSize: 24),
+              style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.orange,
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
             SizedBox(height: 8),
@@ -65,6 +77,7 @@ class Homescreen extends StatelessWidget {
                   CircleContainer(
                     feature_name: "File FIR",
                     icon: (Icons.file_copy),
+                    ontap: ontap_fir,
                   ),
                   SizedBox(width: 16),
                   CircleContainer(
