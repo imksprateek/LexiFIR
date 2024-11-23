@@ -23,15 +23,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import studio.ksprateek.service.security.jwt.AuthEntryPointJwt;
 import studio.ksprateek.service.security.jwt.AuthTokenFilter;
-import studio.ksprateek.service.service.UserDetailsServiceImpl;
+import studio.ksprateek.service.service.user.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-        // securedEnabled = true,
-        // jsr250Enabled = true,
         prePostEnabled = true)
-public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -68,7 +66,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**","/api/auth/checkuser", "/api/health").permitAll().requestMatchers("/api/test/**", "/swagger-ui/**","/swagger-resources/*",
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/auth/**","/api/auth/checkuser", "/api/health", "/api/**").permitAll().requestMatchers("/api/test/**", "/swagger-ui/**","/swagger-resources/*",
                                 "/v3/api-docs/**")
                         .permitAll().anyRequest().authenticated());
 

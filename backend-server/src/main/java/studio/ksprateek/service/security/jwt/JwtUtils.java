@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import studio.ksprateek.service.service.UserDetailsImpl;
+import studio.ksprateek.service.service.user.UserDetailsImpl;
 
 @Component
 public class JwtUtils {

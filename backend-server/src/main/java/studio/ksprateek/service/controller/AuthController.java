@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 
@@ -31,15 +32,16 @@ import studio.ksprateek.service.entity.User;
 import studio.ksprateek.service.repository.RoleRepository;
 import studio.ksprateek.service.repository.UserRepository;
 import studio.ksprateek.service.security.jwt.JwtUtils;
-import studio.ksprateek.service.service.OtpService;
-import studio.ksprateek.service.service.UserDetailsImpl;
+import studio.ksprateek.service.service.auth.OtpService;
+import studio.ksprateek.service.service.user.UserDetailsImpl;
 import studio.ksprateek.service.models.ERole;
 import studio.ksprateek.service.models.Role;
-import studio.ksprateek.service.service.UserDetailsServiceImpl;
+import studio.ksprateek.service.service.user.UserDetailsServiceImpl;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Authentication")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -62,7 +64,7 @@ public class AuthController {
     private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @PostMapping("/login")
-    @Operation(summary = "To log the user in")
+    @Operation(summary = "Log the user in")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -84,7 +86,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    @Operation(summary = "To register user in the database")
+    @Operation(summary = "Register user in the database")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
@@ -140,7 +142,7 @@ public class AuthController {
     }
 
     @PostMapping("sendotp")
-    @Operation(summary = "To send otp to user's email")
+    @Operation(summary = "Send otp to user's email")
     public ResponseEntity<AuthResponse> sendOtp(@RequestBody OtpRequest otpRequest) throws MessagingException {
         Logger logger = LoggerFactory.getLogger(AuthController.class);
         logger.info("Received OTP request for email: {}", otpRequest.getEmail());
@@ -157,7 +159,7 @@ public class AuthController {
     }
 
     @PostMapping("validateotp")
-    @Operation(summary = "To verify if the OTP entered is valid")
+    @Operation(summary = "Verify if the OTP entered is valid")
     public AuthResponse validateOtp(@RequestBody OtpValidation otpValidationRequest){
         return otpService.validateOtp(otpValidationRequest);
     }
