@@ -57,13 +57,35 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Transactional
-    public User updateUser(String id, User user) {
-        if (userRepository.existsById(id)) {
-            user.setId(id);
-            return userRepository.save(user);
+    public User updateUser(String id, User updatedUser) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Update only non-empty fields
+        if (updatedUser.getName() != null && !updatedUser.getName().isEmpty()) {
+            existingUser.setName(updatedUser.getName());
         }
-        throw new RuntimeException("User not found");
+
+        if (updatedUser.getEmail() != null && !updatedUser.getEmail().isEmpty()) {
+            existingUser.setEmail(updatedUser.getEmail());
+        }
+
+        if (updatedUser.getUsername() != null && !updatedUser.getUsername().isEmpty()) {
+            existingUser.setUsername(updatedUser.getUsername());
+        }
+
+        if (updatedUser.getLanguagePreference() != null && !updatedUser.getLanguagePreference().isEmpty()) {
+            existingUser.setLanguagePreference(updatedUser.getLanguagePreference());
+        }
+
+        if (updatedUser.getRoles() != null && !updatedUser.getRoles().isEmpty()) {
+            existingUser.setRoles(updatedUser.getRoles());
+        }
+
+        return userRepository.save(existingUser);
     }
+
+
 
     @Transactional
     public void deleteUser(String id) {

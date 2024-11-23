@@ -16,33 +16,44 @@ public class DTOConverter {
     @Autowired
     private RoleRepository roleRepository;
 
-    // Convert User Entity to DTO
     public UserDTO toUserDTO(User user) {
         UserDTO dto = new UserDTO();
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
+        dto.setUsername(user.getUsername()); // Correctly map the username field
         dto.setLanguagePreference(user.getLanguagePreference());
-        dto.setRoleId(String.join(",", user.getRoles().stream()
+
+        // Map roles to roleIds as a list of strings
+        dto.setRoleIds(user.getRoles().stream()
                 .map(Role::getId)
-                .collect(Collectors.toSet())));
+                .collect(Collectors.toList()));
+
         return dto;
     }
 
-    // Convert User DTO to Entity
+
+
     public User toUserEntity(UserDTO dto) {
         User user = User.builder()
                 .id(dto.getId())
-                .name(dto.getName())
+                .name(dto.getName()) // These fields might be null for partial updates
                 .email(dto.getEmail())
+                .username(dto.getUsername())
                 .languagePreference(dto.getLanguagePreference())
                 .build();
-        user.setRoles(dto.getRoleId().isEmpty() ? Collections.emptySet() :
-                Arrays.stream(dto.getRoleId().split(","))
-                        .map(roleId -> roleRepository.findById(roleId).orElseThrow(() -> new RuntimeException("Role not found")))
-                        .collect(Collectors.toSet()));
+
+        // Convert roleIds to roles if provided
+        if (dto.getRoleIds() != null && !dto.getRoleIds().isEmpty()) {
+            user.setRoles(dto.getRoleIds().stream()
+                    .map(roleId -> roleRepository.findById(roleId)
+                            .orElseThrow(() -> new RuntimeException("Role not found: " + roleId)))
+                    .collect(Collectors.toSet()));
+        }
         return user;
     }
+
+
 
     // Convert FIR Entity to DTO
     public FIRDTO toFIRDTO(FIR fir) {

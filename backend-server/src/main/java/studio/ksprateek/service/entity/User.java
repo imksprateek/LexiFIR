@@ -3,6 +3,7 @@ package studio.ksprateek.service.entity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
@@ -19,6 +20,7 @@ import java.util.Set;
 @Document(collection = "users")
 @Data
 @Builder
+@AllArgsConstructor
 public class User {
     @Id
     private String id;
@@ -49,8 +51,6 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     private List<String> firIds;
-
-
 
 
 
