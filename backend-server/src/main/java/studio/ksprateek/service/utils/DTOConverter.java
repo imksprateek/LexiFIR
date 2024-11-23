@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import studio.ksprateek.service.dto.*;
 import studio.ksprateek.service.entity.*;
+import studio.ksprateek.service.models.ERole;
 import studio.ksprateek.service.models.Role;
 import studio.ksprateek.service.repository.RoleRepository;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -21,35 +24,39 @@ public class DTOConverter {
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
-        dto.setUsername(user.getUsername()); // Correctly map the username field
+        dto.setUsername(user.getUsername());
         dto.setLanguagePreference(user.getLanguagePreference());
 
-        // Map roles to roleIds as a list of strings
-        dto.setRoleIds(user.getRoles().stream()
-                .map(Role::getId)
+        // Map roles to roleNames (Convert ERole to String using name())
+        dto.setRoleNames(user.getRoles().stream()
+                .map(role -> role.getName().name())  // Correctly convert ERole to String
                 .collect(Collectors.toList()));
 
         return dto;
     }
 
-
-
     public User toUserEntity(UserDTO dto) {
         User user = User.builder()
                 .id(dto.getId())
-                .name(dto.getName()) // These fields might be null for partial updates
+                .name(dto.getName())
                 .email(dto.getEmail())
-                .username(dto.getUsername())
+                .username(dto.getUsername())  // Set username if provided
                 .languagePreference(dto.getLanguagePreference())
                 .build();
 
-        // Convert roleIds to roles if provided
-        if (dto.getRoleIds() != null && !dto.getRoleIds().isEmpty()) {
-            user.setRoles(dto.getRoleIds().stream()
-                    .map(roleId -> roleRepository.findById(roleId)
-                            .orElseThrow(() -> new RuntimeException("Role not found: " + roleId)))
-                    .collect(Collectors.toSet()));
+        // Convert roleNames (List<String>) to Role references (Role entities)
+        if (dto.getRoleNames() != null && !dto.getRoleNames().isEmpty()) {
+            Set<Role> roles = dto.getRoleNames().stream()
+                    .map(roleName -> {
+                        // Convert role name (String) to ERole enum
+                        ERole roleEnum = ERole.valueOf(roleName);  // Convert to ERole enum
+                        return roleRepository.findByName(roleEnum) // Fetch Role by ERole enum
+                                .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
+                    })
+                    .collect(Collectors.toSet());
+            user.setRoles(roles);
         }
+
         return user;
     }
 

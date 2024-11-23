@@ -8,9 +8,9 @@ import java.util.List;
 @Data
 public class UserDTO {
     private String id;
-    private String username;
-    private String email;
     private String name;
+    private String email;
+    private String username;
     private String languagePreference;
-    private List<String> roleIds;  // Role reference
+    private List<String> roleNames; // Store role names instead of IDs
 }
