@@ -63,10 +63,14 @@ public class FIRController {
         FIR fir = dtoConverter.toFIREntity(firDTO);
         fir.setOfficerId(officer);  // Set officerId to the User entity
 
+        // Call the service to create the FIR and append the FIR ID to the officer's firIds
         FIR createdFIR = firService.createFIR(fir);
+
+        // Convert the created FIR entity to DTO and return the response
         FIRDTO responseDTO = dtoConverter.toFIRDTO(createdFIR);
         return ResponseEntity.ok(responseDTO);
     }
+
 
 
 

@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import studio.ksprateek.service.entity.FIR;
+import studio.ksprateek.service.entity.User;
 import studio.ksprateek.service.repository.FIRRepository;
+import studio.ksprateek.service.repository.UserRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,16 +17,28 @@ public class FIRService {
 
     @Autowired
     private FIRRepository firRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     // Create a new FIR (POST request)
     @Transactional
     public FIR createFIR(FIR fir) {
-        // Ensure empty fields are set as empty if not provided
-        if (fir.getCaseTitle() == null) fir.setCaseTitle("");
-        if (fir.getIncidentDescription() == null) fir.setIncidentDescription("");
-        if (fir.getStatus() == null) fir.setStatus("");
-        fir.setId(null);  // Ensure ID is not passed (generated automatically)
-        return firRepository.save(fir);
+        // Save the FIR entity first
+        FIR savedFIR = firRepository.save(fir);
+
+        // Fetch the user (officer) associated with the FIR
+        User officer = fir.getOfficerId();  // Assuming the officer is already set in the FIR object
+
+        // Add the new FIR's ID to the user's firIds list
+        if (officer.getFirIds() == null) {
+            officer.setFirIds(new ArrayList<>());  // Initialize firIds list if it's null
+        }
+        officer.getFirIds().add(savedFIR.getId());  // Append the new FIR ID
+
+        // Save the updated user
+        userRepository.save(officer);
+
+        return savedFIR;  // Return the saved FIR entity
     }
 
     // Update an existing FIR (PUT request)

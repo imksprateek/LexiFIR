@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import studio.ksprateek.service.models.Role;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,7 +51,7 @@ public class User {
     @DBRef
     private Set<Role> roles = new HashSet<>();
 
-    private List<String> firIds;
+    private List<String> firIds = new ArrayList<>();  // Initialize the list
 
 
 
