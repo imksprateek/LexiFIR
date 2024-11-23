@@ -1,3 +1,4 @@
+import 'package:app_client/services/functions/Logout.dart';
 import 'package:app_client/pages/fir_screen.dart';
 import 'package:app_client/utils/carasouel.dart';
 import 'package:app_client/utils/circle_container.dart';
@@ -31,7 +32,9 @@ class Homescreen extends StatelessWidget {
         actions: [
           IconButton(onPressed: () {}, icon: Icon(Icons.translate)),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              logout(context) ;
+            },
             icon: Icon(
               Icons.person_outlined,
               size: 35,

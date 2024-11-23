@@ -1,3 +1,7 @@
+import 'package:app_client/auth/SigninScreen.dart';
+import 'package:app_client/pages/HomeScreen.dart';
+import 'package:app_client/services/functions/Login.dart';
+import 'package:app_client/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class Loginscreen extends StatelessWidget {
@@ -5,8 +9,9 @@ class Loginscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController email = TextEditingController() ;
-    TextEditingController password = TextEditingController() ;
+    TextEditingController email = TextEditingController();
+    TextEditingController password = TextEditingController();
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -14,17 +19,53 @@ class Loginscreen extends StatelessWidget {
           child: Column(  // Wrap the text fields in a Column
             mainAxisSize: MainAxisSize.min,
             children: [
+              Text('Login Screen') ,
               LoginPage_Textfield(
-                HintText: 'Enter your email', // Example hint text
+                controller: email,
+                HintText: 'Enter your Username', // Example hint text
                 LabelText: 'Email', // Example label text
-                Iconer: Icon(Icons.email, color: Colors.blue), // Example icon
+                Iconer: Icon(Icons.contacts_rounded, color: Colors.blue), // Example icon
               ),
               SizedBox(height: 20),  // Add space between the fields
               LoginPage_Textfield(
+                controller: password,
                 HintText: 'Enter password', // Password hint text
                 LabelText: 'Password', // Password label
                 Iconer: Icon(Icons.lock, color: Colors.blue), // Lock icon
               ),
+              SizedBox(height: 20),  // Add space between the fields and the button
+              ElevatedButton(
+                onPressed: () async{
+                  // Handle login button press
+                  String emailText = email.text;
+                  String passwordText = password.text;
+                  // Perform login with email and password
+                 await login(emailText, passwordText) ;
+                  print('Email: $emailText, Password: $passwordText');
+                  // Add your authentication logic here
+                  if(LoginSuccessfull)
+                    {
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>Homescreen())) ;
+                    }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue, // Button color
+                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15), // Padding for the button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30), // Circular button
+                  ),
+                ),
+                child: Text(
+                  'Login',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+              ),
+              
+              GestureDetector(
+                onTap: (){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> SigninScreen())) ;
+                },
+                  child: Text('Not a member ? Signin'))
             ],
           ),
         ),
@@ -37,17 +78,20 @@ class LoginPage_Textfield extends StatelessWidget {
   final String HintText;
   final String LabelText;
   final Icon Iconer;
+  final TextEditingController controller; // Controller for text field input
 
   const LoginPage_Textfield({
     super.key,
     required this.HintText,
     required this.LabelText,
     required this.Iconer,
+    required this.controller, // Pass controller to text field
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller, // Set controller for the text field
       obscureText: LabelText == 'Password', // Hide text for password field
       keyboardType: LabelText == 'Email'
           ? TextInputType.emailAddress
