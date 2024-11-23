@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/health")
-@Tag(name = "Health Check")
+@Tag(name = "6. Health Check", description = "Know about server status")
 public class Health {
 
     @Operation(summary = "To check server health")

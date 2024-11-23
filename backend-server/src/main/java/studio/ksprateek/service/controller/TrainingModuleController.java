@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/training-modules")
-@Tag(name = "Training modules")
+@Tag(name = "5. Training modules", description = "Operations related to Training Modules, Letcures and resources")
 public class TrainingModuleController {
 
     @Autowired

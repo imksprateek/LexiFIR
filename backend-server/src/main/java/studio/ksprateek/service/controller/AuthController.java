@@ -41,7 +41,7 @@ import studio.ksprateek.service.service.user.UserDetailsServiceImpl;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-@Tag(name = "Authentication")
+@Tag(name = "1. Authentication", description = "Operations related to user Authentication")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;

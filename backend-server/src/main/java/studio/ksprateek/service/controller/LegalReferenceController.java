@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/legal-references")
-@Tag(name = "Legal references")
+@Tag(name = "Legal references", description = "THIS WILL NOT BE WORKED ON")
 public class LegalReferenceController {
 
     @Autowired

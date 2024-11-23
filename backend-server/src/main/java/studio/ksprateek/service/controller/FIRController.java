@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/firs")
-@Tag(name = "FIRs")
+@Tag(name = "3. FIRs", description = "Operations related to managing FIRs")
 public class FIRController {
 
     @Autowired

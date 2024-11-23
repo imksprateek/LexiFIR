@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/firs/{firId}/documents")
-@Tag(name = "Document files")
+@Tag(name = "4. Document files", description = "Operations for managing user uploaded documents")
 public class DocumentController {
 
     @Autowired

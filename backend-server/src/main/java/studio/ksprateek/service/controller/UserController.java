@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/users")
-@Tag(name = "Users")
+@Tag(name = "2. Users", description = "Operations related to Users")
 public class UserController {
 
     @Autowired
