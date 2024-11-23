@@ -112,6 +112,23 @@ public class FIRController {
         return "Error occurred while authorizing user";
     }
 
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete an existing FIR")
+    public ResponseEntity<String> deleteFIR(@PathVariable String id) {
+        // Get the userId from SecurityContextHolder
+        String userId = getCurrentUserId();
+
+        // Fetch the User entity by the userId
+        User officer = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Call the service to delete the FIR
+        firService.deleteFIR(id);
+
+        // Return a success message after deletion
+        return ResponseEntity.ok("FIR with ID " + id + " deleted successfully.");
+    }
+
 
     // GET request for getting all FIRs
     @GetMapping

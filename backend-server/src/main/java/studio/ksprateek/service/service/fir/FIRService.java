@@ -67,4 +67,14 @@ public class FIRService {
     public Optional<FIR> getFIRById(String id) {
         return firRepository.findById(id);
     }
+    @Transactional
+    public void deleteFIR(String id) {
+        // Fetch the FIR by ID
+        FIR existingFIR = firRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("FIR with ID " + id + " not found"));
+
+        // Perform the deletion
+        firRepository.delete(existingFIR);
+    }
+
 }
