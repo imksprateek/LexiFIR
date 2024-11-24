@@ -1,4 +1,4 @@
-package studio.ksprateek.service.service;
+package studio.ksprateek.service.service.auth;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +7,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-import studio.ksprateek.service.payload.EmailDetails;
+import studio.ksprateek.service.dto.EmailDetails;
 
 @Service
 @Slf4j

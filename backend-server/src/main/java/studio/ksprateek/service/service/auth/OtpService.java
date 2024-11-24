@@ -1,4 +1,4 @@
-package studio.ksprateek.service.service;
+package studio.ksprateek.service.service.auth;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

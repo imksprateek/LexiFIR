@@ -1,4 +1,4 @@
-package studio.ksprateek.service.payload;
+package studio.ksprateek.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

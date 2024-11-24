@@ -1,4 +1,4 @@
-package studio.ksprateek.service.service;
+package studio.ksprateek.service.service.user;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

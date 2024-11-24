@@ -1,4 +1,4 @@
-package studio.ksprateek.service.service;
+package studio.ksprateek.service.service.user;
 
 import java.util.Collection;
 import java.util.List;

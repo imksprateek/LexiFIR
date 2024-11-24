@@ -3,17 +3,25 @@ package studio.ksprateek.service.entity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import studio.ksprateek.service.models.Role;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Document(collection = "users")
 @Data
+@Builder
+@AllArgsConstructor
 public class User {
     @Id
     private String id;
@@ -31,8 +39,21 @@ public class User {
     @Size(max = 120)
     private String password;
 
+    @NotBlank
+    private String name;
+
+    @NotBlank
+    private String languagePreference;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
     @DBRef
     private Set<Role> roles = new HashSet<>();
+
+    private List<String> firIds = new ArrayList<>();  // Initialize the list
+
+
 
     public User() {
     }

@@ -16,7 +16,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import studio.ksprateek.service.service.UserDetailsServiceImpl;
+import studio.ksprateek.service.service.user.UserDetailsServiceImpl;
 
 
 public class AuthTokenFilter extends OncePerRequestFilter {
