@@ -22,8 +22,9 @@ class _CustomCarouselState extends State<CustomCarousel> {
   int _currentIndex = 0;
 
   Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
+    final Uri _url = Uri.parse(url); // Convert the string URL to a Uri object
+    if (await canLaunchUrl(_url)) {
+      await launchUrl(_url); // Use launchUrl with Uri
     } else {
       throw 'Could not launch $url';
     }
@@ -36,6 +37,7 @@ class _CustomCarouselState extends State<CustomCarousel> {
         GestureDetector(
           onTap: () {
             // Handle tap event here, for example navigate to the link
+            print("Launching URL: ${widget.linkUrls[_currentIndex]}");
 
             _launchURL(widget.linkUrls[_currentIndex]);
 
