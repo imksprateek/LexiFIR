@@ -1,11 +1,14 @@
 package studio.ksprateek.service.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.*;
 import studio.ksprateek.service.dto.FIRDTO;
 import studio.ksprateek.service.dto.UserDTO;
@@ -14,6 +17,7 @@ import studio.ksprateek.service.entity.User;
 import studio.ksprateek.service.service.fir.FIRService;
 import studio.ksprateek.service.utils.DTOConverter;
 import studio.ksprateek.service.repository.UserRepository;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +40,26 @@ public class FIRController {
 
     // POST request for creating a new FIR (ID will be generated automatically)
     @PostMapping("/generate")
-    @Operation(summary = "Create a new FIR")
+    @Operation(
+            summary = "Create a new FIR",
+            description = "Creates a new FIR and associates it with the officer. Returns the created FIR details."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "FIR created successfully",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = FIRDTO.class)
+            )
+    )
+    @ApiResponse(
+            responseCode = "400",
+            description = "Invalid input data",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)
+            )
+    )
     public ResponseEntity<FIRDTO> createFIR(@RequestBody FIRDTO firDTO) {
         if (firDTO == null) {
             return ResponseEntity.badRequest().body(null);  // Handle the null case
@@ -76,7 +99,34 @@ public class FIRController {
 
     // PUT request for updating an existing FIR (ID should not be provided or updated)
     @PutMapping("/{id}")
-    @Operation(summary = "Update an existing FIR")
+    @Operation(
+            summary = "Update an existing FIR",
+            description = "Updates an existing FIR with the provided data. The FIR ID should not be modified."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "FIR updated successfully",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = FIRDTO.class)
+            )
+    )
+    @ApiResponse(
+            responseCode = "400",
+            description = "Invalid input data",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)
+            )
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "FIR not found",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)
+            )
+    )
     public ResponseEntity<FIRDTO> updateFIR(@PathVariable String id, @RequestBody FIRDTO firDTO) {
         // Get the userId from SecurityContextHolder
         String userId = getCurrentUserId();
@@ -117,7 +167,26 @@ public class FIRController {
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete an existing FIR")
+    @Operation(
+            summary = "Delete an existing FIR",
+            description = "Deletes an FIR by its ID. Returns a success message after deletion."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "FIR deleted successfully",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = String.class)
+            )
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "FIR not found",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)
+            )
+    )
     public ResponseEntity<String> deleteFIR(@PathVariable String id) {
         // Get the userId from SecurityContextHolder
         String userId = getCurrentUserId();
@@ -136,7 +205,21 @@ public class FIRController {
 
     // GET request for getting all FIRs
     @GetMapping
-    @Operation(summary = "Get all FIRs in Database")
+    @Operation(
+            summary = "Get all FIRs in Database",
+            description = "Retrieves a list of all FIRs from the database."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "List of FIRs",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(
+                            type = "array",
+                            implementation = FIRDTO.class
+                    )
+            )
+    )
     public List<FIRDTO> getAllFIRs() {
         List<FIR> firs = firService.getAllFIRs();
         return firs.stream()
@@ -146,7 +229,26 @@ public class FIRController {
 
     // GET request for a specific FIR by ID
     @GetMapping("/{id}")
-    @Operation(summary = "Get a specific FIR by ID")
+    @Operation(
+            summary = "Get a specific FIR by ID",
+            description = "Retrieves an FIR by its ID."
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "FIR found",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = FIRDTO.class)
+            )
+    )
+    @ApiResponse(
+            responseCode = "404",
+            description = "FIR not found",
+            content = @Content(
+                    mediaType = "application/json",
+                    schema = @Schema(implementation = ErrorResponse.class)
+            )
+    )
     public ResponseEntity<FIRDTO> getFIRById(@PathVariable String id) {
         FIR fir = firService.getFIRById(id)
                 .orElseThrow(() -> new RuntimeException("FIR not found"));

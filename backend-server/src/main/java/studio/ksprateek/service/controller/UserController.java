@@ -1,6 +1,9 @@
 package studio.ksprateek.service.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +39,24 @@ public class UserController {
     private DTOConverter dtoConverter;
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get user details by user ID")
+    @Operation(
+            summary = "Get user details by user ID",
+            description = "Fetches the details of a user by their unique user ID. Returns the user details in a DTO format.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully retrieved user details.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = UserDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "User with the specified ID not found."
+                    )
+            }
+    )
     public ResponseEntity<UserDTO> getUserById(@PathVariable String id) {
         Optional<User> user = userService.getUserById(id);
 
@@ -49,7 +69,28 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update user details (partial updates supported)")
+    @Operation(
+            summary = "Update user details (partial updates supported)",
+            description = "Updates user details, allowing partial updates. Fields not provided in the request will retain their existing values.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "User details updated successfully.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = UserDTO.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "User with the specified ID not found."
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "An error occurred while updating the user."
+                    )
+            }
+    )
     public ResponseEntity<UserDTO> updateUser(@PathVariable String id, @RequestBody UserDTO userDTO) {
         // Fetch existing user to preserve fields not provided in the request
         User existingUser = userService.getUserById(id)
@@ -68,14 +109,44 @@ public class UserController {
 
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a user")
+    @Operation(
+            summary = "Delete a user",
+            description = "Deletes the user identified by the specified user ID.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "204",
+                            description = "User deleted successfully. No content returned."
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "User with the specified ID not found."
+                    )
+            }
+    )
     public ResponseEntity<Void> deleteUser(@PathVariable String id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}/firs")
-    @Operation(summary = "Get all FIRs created by a user")
+    @Operation(
+            summary = "Get all FIRs created by a user",
+            description = "Fetches all FIRs created by the user identified by their ID. Returns a list of FIR DTOs.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully retrieved list of FIRs created by the user.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = List.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "User with the specified ID not found."
+                    )
+            }
+    )
     public ResponseEntity<List<?>> getFIRsByUserId(@PathVariable String id) {
         List<FIR> firs = userService.getFIRsByUserId(id);
         List<?> firDTOs = firs.stream()
@@ -85,7 +156,24 @@ public class UserController {
     }
 
     @GetMapping("Documents/all")
-    @Operation(summary = "Get a list of all files uploaded by the user")
+    @Operation(
+            summary = "Get a list of all files uploaded by the user",
+            description = "Fetches a list of all files uploaded by the user to an S3 bucket, returning only the file names.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully retrieved list of uploaded files.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = List.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "An error occurred while retrieving the files."
+                    )
+            }
+    )
     public ResponseEntity<List<String>> getAllS3ObjectsOfSpecificUser() {
         String userPrefix = "Documents/" + getCurrentUserId(); // Construct the prefix for the user's folder
         List<String> objectKeys = fileService.listObjects(userPrefix);
