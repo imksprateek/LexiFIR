@@ -17,6 +17,7 @@ import studio.ksprateek.service.service.document.AccessType;
 import studio.ksprateek.service.service.document.DocumentService;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -94,5 +95,10 @@ public class DocumentController {
             return user.get().getId();
         }
         return "Error occurred while authorizing user";
+    }
+
+    @GetMapping("{userID}/all")
+    public ResponseEntity<List<String>> getAllS3ObjectsOfSpecificUser(@PathVariable String userID){
+        return ResponseEntity.ok(fileService.listObjects("Documents/" + userID));
     }
 }
