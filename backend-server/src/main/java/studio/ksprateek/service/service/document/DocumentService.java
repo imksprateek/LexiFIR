@@ -115,8 +115,7 @@ public class DocumentService {
     /**
      * Uploads a MultipartFile to S3 with specified access type.
      */
-    public String uploadMultipartFile(MultipartFile file, AccessType accessType, String userId) throws IOException {
-        String fileName = userId + "_" + file.getOriginalFilename();
+    public String uploadMultipartFile(MultipartFile file, AccessType accessType, String userId, String fileName) throws IOException {
         try (InputStream inputStream = file.getInputStream()) {
             PutObjectRequest.Builder putObjectRequestBuilder = PutObjectRequest.builder()
                     .bucket(bucketName)

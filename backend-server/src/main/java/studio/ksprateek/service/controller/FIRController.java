@@ -136,7 +136,7 @@ public class FIRController {
 
     // GET request for getting all FIRs
     @GetMapping
-    @Operation(summary = "Get all FIRs")
+    @Operation(summary = "Get all FIRs in Database")
     public List<FIRDTO> getAllFIRs() {
         List<FIR> firs = firService.getAllFIRs();
         return firs.stream()

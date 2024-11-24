@@ -65,8 +65,9 @@ public class DocumentController {
             @RequestParam("file") MultipartFile file,
             @RequestParam(name = "accessType", required = false, defaultValue = "PRIVATE") AccessType accessType) throws IOException {
         String userId = getCurrentUserId();
-        String fileName = fileService.uploadMultipartFile(file, accessType ,userId);
-        return ResponseEntity.ok("File name: " + fileName);
+        String fileName = "Documents/" + userId + "/" + file.getOriginalFilename();
+        String NewFilePath = fileService.uploadMultipartFile(file, accessType ,userId, fileName);
+        return ResponseEntity.ok("File name: " + NewFilePath);
     }
 
     /**
@@ -75,9 +76,10 @@ public class DocumentController {
     @GetMapping("/download/{fileName}")
     @Operation(summary = "Download a pre-uploaded public document using filename")
     public ResponseEntity<StreamingResponseBody> downloadFile(@PathVariable("fileName") String fileName) throws Exception {
-        return fileService.downloadFileResponse(fileName);
+        String userId = getCurrentUserId(); // Get the current user's ID
+        String fileKey = "Documents/" + userId + "/" + fileName;
+        return fileService.downloadFileResponse(fileKey);
     }
-
 
     private String getCurrentUserId() {
         // Get the Authentication object from SecurityContextHolder
@@ -95,10 +97,5 @@ public class DocumentController {
             return user.get().getId();
         }
         return "Error occurred while authorizing user";
-    }
-
-    @GetMapping("{userID}/all")
-    public ResponseEntity<List<String>> getAllS3ObjectsOfSpecificUser(@PathVariable String userID){
-        return ResponseEntity.ok(fileService.listObjects("Documents/" + userID));
     }
 }
