@@ -64,7 +64,7 @@ class _HomescreenState extends State<Homescreen> {
               "Hello $username,",
               style: const TextStyle(
                   fontSize: 24,
-                  color: Colors.orange,
+                  color: Color.fromRGBO(98, 48, 2, 1),
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
