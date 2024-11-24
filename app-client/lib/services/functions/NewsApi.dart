@@ -8,6 +8,8 @@ String API_CALL =
 // List to store image URLs
 List<String> imageUrls = [];
 
+List<String> linkURLS = [];
+
 Future<bool> GetArticle() async {
   Map<String, String> headers = {
     'Content-Type': 'application/json',
@@ -34,8 +36,14 @@ Future<bool> GetArticle() async {
         // Iterate through articles and extract image URLs
         for (var article in articles) {
           String? imageUrl = article['image_url'] as String?;
+
+          String? linkUrl = article['link'] as String?;
           if (imageUrl != null && imageUrl.isNotEmpty) {
             imageUrls.add(imageUrl); // Add valid image URLs to the list
+          }
+
+          if (linkUrl != null && linkUrl.isNotEmpty) {
+            linkURLS.add(linkUrl); // Add valid image URLs to the list
           }
         }
 

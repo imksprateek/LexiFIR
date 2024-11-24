@@ -1,12 +1,17 @@
+import 'package:app_client/services/functions/NewsApi.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:hyperlink/hyperlink.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomCarousel extends StatefulWidget {
   final List<String> imageUrls;
+  final List<String> linkUrls;
 
   const CustomCarousel({
     super.key,
     required this.imageUrls,
+    required this.linkUrls,
   });
 
   @override
@@ -16,78 +21,95 @@ class CustomCarousel extends StatefulWidget {
 class _CustomCarouselState extends State<CustomCarousel> {
   int _currentIndex = 0;
 
+  Future<void> _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CarouselSlider(
-          options: CarouselOptions(
-            autoPlay: true,
-            enlargeCenterPage: true,
-            onPageChanged: (index, reason) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-          ),
-          items: widget.imageUrls
-              .map(
-                (imageUrl) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    margin: const EdgeInsets.symmetric(vertical: 10.0),
-                    elevation: 6.0,
-                    shadowColor: Colors.black45,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(30.0),
-                      child: Stack(
-                        children: <Widget>[
-                          // Network image
-                          Image.network(
-                            imageUrl,
-                            width: double.infinity,
-                            height: 200, // Adjust height as needed
-                            fit: BoxFit.cover,
-                            errorBuilder: (context, error, stackTrace) {
-                              return Container(
-                                color: Colors.grey.shade200,
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.image_not_supported,
-                                    size: 50,
-                                    color: Colors.grey,
+        GestureDetector(
+          onTap: () {
+            // Handle tap event here, for example navigate to the link
+
+            _launchURL(widget.linkUrls[_currentIndex]);
+
+            // You can use Navigator.push or any other logic to handle the tap event
+          },
+          child: CarouselSlider(
+            options: CarouselOptions(
+              autoPlay: true,
+              enlargeCenterPage: true,
+              onPageChanged: (index, reason) {
+                setState(() {
+                  _currentIndex = index;
+                });
+              },
+            ),
+            items: widget.imageUrls
+                .map(
+                  (imageUrl) => Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
+                      elevation: 6.0,
+                      shadowColor: Colors.black45,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30.0),
+                        child: Stack(
+                          children: <Widget>[
+                            // Network image
+                            Image.network(
+                              imageUrl,
+                              width: double.infinity,
+                              height: 200, // Adjust height as needed
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: Colors.grey.shade200,
+                                  child: const Center(
+                                    child: Icon(
+                                      Icons.image_not_supported,
+                                      size: 50,
+                                      color: Colors.grey,
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                          // Title overlay
-                          Positioned(
-                            bottom: 20,
-                            left: 0,
-                            right: 0,
-                            child: Center(
-                              child: Text(
-                                "",
-                                style: const TextStyle(
-                                  fontSize: 24.0,
-                                  fontWeight: FontWeight.bold,
-                                  backgroundColor: Colors.black45,
-                                  color: Colors.white,
+                                );
+                              },
+                            ),
+                            // Title overlay
+                            Positioned(
+                              bottom: 20,
+                              left: 0,
+                              right: 0,
+                              child: Center(
+                                child: Text(
+                                  "",
+                                  style: const TextStyle(
+                                    fontSize: 24.0,
+                                    fontWeight: FontWeight.bold,
+                                    backgroundColor: Colors.black45,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              )
-              .toList(),
+                )
+                .toList(),
+          ),
         ),
         // Dots indicator
         Row(

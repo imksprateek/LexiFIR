@@ -14,8 +14,21 @@ List<Color> colours = [
 ];
 //List<String> titles = ["", "", ""];
 
-class Homescreen extends StatelessWidget {
+class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
+
+  @override
+  State<Homescreen> createState() => _HomescreenState();
+}
+
+class _HomescreenState extends State<Homescreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    GetArticle();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,11 +120,10 @@ class Homescreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            GestureDetector(
-                onTap: () {
-                  GetArticle();
-                },
-                child: CustomCarousel(imageUrls: imageUrls, ))
+            CustomCarousel(
+              imageUrls: imageUrls,
+              linkUrls: linkURLS,
+            )
           ],
         ),
       ),
