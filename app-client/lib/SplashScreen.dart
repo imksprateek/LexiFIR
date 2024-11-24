@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'package:app_client/auth/LoginScreen.dart';
 
+import 'auth/Loginui.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 

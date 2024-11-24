@@ -20,10 +20,13 @@ class Loginscreen extends StatelessWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.asset(
-              "lib/images/Ellipse1.png",
-              fit: BoxFit.cover, // Makes the image fill the width of the screen
-              height: 200, // Adjust the height of the circle
+            child: Container(
+              child: Image.asset(
+                "lib/images/Ellipse1.png",
+                fit: BoxFit.cover, // Makes the image fill the width of the screen
+                height: 200,
+                // Adjust the height of the circle
+              ),
             ),
           ),
           Center(
@@ -35,6 +38,9 @@ class Loginscreen extends StatelessWidget {
                 children: [
                   Column(
                     children: [
+                      SizedBox(
+                        height: 100,
+                      ) ,
                       Text(
                         "LexAI",
                         style: TextStyle(

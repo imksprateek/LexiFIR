@@ -15,8 +15,8 @@ class CircleContainer extends StatelessWidget {
         GestureDetector(
           onTap: ontap,
           child: Container(
-            width: 80, // Specify the width
-            height: 80, // Specify the height
+            width: 60, // Specify the width
+            height: 60, // Specify the height
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: Color.fromARGB(255, 255, 228, 194),

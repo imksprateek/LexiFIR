@@ -3,8 +3,11 @@ import 'package:app_client/pages/fir_screen.dart';
 import 'package:app_client/services/functions/NewsApi.dart';
 import 'package:app_client/utils/carasouel.dart';
 import 'package:app_client/utils/circle_container.dart';
+import 'package:app_client/utils/colors.dart';
 import 'package:app_client/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:app_client/auth/Loginui.dart';
+import 'package:app_client/auth/LoginScreen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 List<Color> colours = [
@@ -80,7 +83,7 @@ class _HomescreenState extends State<Homescreen> {
               width: 400,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
-                color: const Color.fromARGB(255, 255, 240, 195),
+                color: LightBrown,
               ),
             ),
             const SizedBox(

@@ -56,16 +56,16 @@ class _CustomCarouselState extends State<CustomCarousel> {
             items: widget.imageUrls
                 .map(
                   (imageUrl) => Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(0),
                     child: Card(
                       margin: const EdgeInsets.symmetric(vertical: 10.0),
                       elevation: 6.0,
                       shadowColor: Colors.black45,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.circular(10.0),
                         child: Stack(
                           children: <Widget>[
                             // Network image
