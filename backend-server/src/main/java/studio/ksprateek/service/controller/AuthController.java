@@ -6,6 +6,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
@@ -64,7 +67,25 @@ public class AuthController {
     private UserDetailsServiceImpl userDetailsServiceImpl;
 
     @PostMapping("/login")
-    @Operation(summary = "Log the user in")
+    @Operation(
+            summary = "Log the user in",
+            description = "Authenticates a user by verifying their username and password. Returns a JWT token if authentication is successful.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successfully logged in. Returns a JWT token.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = JwtResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid credentials provided. Login failed."
+                    )
+            }
+    )
+
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
@@ -86,7 +107,24 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    @Operation(summary = "Register user in the database")
+    @Operation(
+            summary = "Register user in the database",
+            description = "Registers a new user by saving their username, email, and encrypted password to the database. Also assigns roles (if any).",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "User registered successfully."
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Username or Email already exists.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = MessageResponse.class)
+                            )
+                    )
+            }
+    )
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
@@ -142,7 +180,28 @@ public class AuthController {
     }
 
     @PostMapping("sendotp")
-    @Operation(summary = "Send otp to user's email")
+    @Operation(
+            summary = "Send otp to user's email",
+            description = "Sends a one-time password (OTP) to the user's email for verification. The OTP will be used to validate the user's identity.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "OTP sent successfully to the email.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = AuthResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "422",
+                            description = "Failed to send OTP.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = AuthResponse.class)
+                            )
+                    )
+            }
+    )
     public ResponseEntity<AuthResponse> sendOtp(@RequestBody OtpRequest otpRequest) throws MessagingException {
         Logger logger = LoggerFactory.getLogger(AuthController.class);
         logger.info("Received OTP request for email: {}", otpRequest.getEmail());
@@ -159,13 +218,47 @@ public class AuthController {
     }
 
     @PostMapping("validateotp")
-    @Operation(summary = "Verify if the OTP entered is valid")
+    @Operation(
+            summary = "Verify if the OTP entered is valid",
+            description = "Validates the OTP entered by the user to verify their identity.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "OTP is valid. Returns a response with the status of the verification.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = AuthResponse.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "OTP is invalid or expired.",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = AuthResponse.class)
+                            )
+                    )
+            }
+    )
     public AuthResponse validateOtp(@RequestBody OtpValidation otpValidationRequest){
         return otpService.validateOtp(otpValidationRequest);
     }
 
     @PostMapping("checkuser")
-    @Operation(summary = "Checks if the user's email is already registered in the DB")
+    @Operation(
+            summary = "Checks if the user's email is already registered in the DB",
+            description = "Checks whether the provided username or email already exists in the database. Returns an appropriate message for login or signup.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "User can proceed to sign up."
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "User already exists or email already exists. Suggests login instead."
+                    )
+            }
+    )
     public ResponseEntity<?> checkUser(@RequestBody UserCheck userCheck){
         if(userDetailsServiceImpl.userExists(userCheck.getUsername())){
             return ResponseEntity.badRequest().body("User already exists. Login instead");

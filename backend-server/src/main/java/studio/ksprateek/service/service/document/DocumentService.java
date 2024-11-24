@@ -1,5 +1,6 @@
 package studio.ksprateek.service.service.document;
 
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Request;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -11,11 +12,10 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.http.SdkHttpMethod;
+import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectResponse;
-import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.model.*;
+import software.amazon.awssdk.services.s3.paginators.ListObjectsV2Iterable;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
@@ -32,6 +32,7 @@ import java.text.Normalizer;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -114,8 +115,7 @@ public class DocumentService {
     /**
      * Uploads a MultipartFile to S3 with specified access type.
      */
-    public String uploadMultipartFile(MultipartFile file, AccessType accessType, String userId) throws IOException {
-        String fileName = userId + "_" + file.getOriginalFilename();
+    public String uploadMultipartFile(MultipartFile file, AccessType accessType, String userId, String fileName) throws IOException {
         try (InputStream inputStream = file.getInputStream()) {
             PutObjectRequest.Builder putObjectRequestBuilder = PutObjectRequest.builder()
                     .bucket(bucketName)
@@ -192,6 +192,34 @@ public class DocumentService {
     private static String sanitizeFileName(String fileName) {
         String normalizedFileName = Normalizer.normalize(fileName, Normalizer.Form.NFKD);
         return normalizedFileName.replaceAll("\\s+", "_").replaceAll("[^a-zA-Z0-9.\\-_]", "");
+    }
+
+
+    public List<String> listObjects(String filePrefix) {
+        List<String> objectKeys = new ArrayList<>();
+
+        ListObjectsV2Request request = ListObjectsV2Request.builder()
+                .bucket(bucketName)
+                .prefix(filePrefix)
+                .build();
+
+        ListObjectsV2Response response;
+        do {
+            response = s3Client.listObjectsV2(request);
+
+            // Add object keys to the list
+            for (S3Object s3Object : response.contents()) {
+                objectKeys.add(s3Object.key());
+                System.out.println("Object Key: " + s3Object.key());
+            }
+
+            // Update the request to handle pagination
+            request = request.toBuilder()
+                    .continuationToken(response.nextContinuationToken())
+                    .build();
+        } while (response.isTruncated());
+
+        return objectKeys;
     }
 
 
