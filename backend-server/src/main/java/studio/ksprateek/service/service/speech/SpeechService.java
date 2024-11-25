@@ -41,7 +41,8 @@ public class SpeechService {
     public byte[] textToSpeech(String text) {
         SynthesizeSpeechRequest request = SynthesizeSpeechRequest.builder()
                 .text(text)
-                .voiceId("Kajal") // Replace with the desired voice
+                .languageCode(software.amazon.awssdk.services.polly.model.LanguageCode.EN_GB)
+                .voiceId("Raveena") // Replace with the desired voice
                 .outputFormat(OutputFormat.MP3)
                 .build();
 

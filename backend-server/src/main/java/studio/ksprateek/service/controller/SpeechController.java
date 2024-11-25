@@ -3,8 +3,8 @@ package studio.ksprateek.service.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,25 +26,20 @@ public class SpeechController {
         this.speechService = speechService;
     }
 
-    @PostMapping("/text-to-speech")
-//    @Operation(
-//            summary = "Convert text to speech",
-//            description = "Converts a given text string into an MP3 audio file using AWS Polly.",
-//            requestBody = @RequestBody(
-//                    description = "The text to convert to speech",
-//                    required = true,
-//                    content = @Content(schema = @Schema(implementation = TextToSpeechRequest.class))
-//            ),
-//            responses = {
-//                    @ApiResponse(responseCode = "200", description = "Audio file generated successfully",
-//                            content = @Content(schema = @Schema(type = "string", format = "binary"))),
-//                    @ApiResponse(responseCode = "400", description = "Bad Request"),
-//                    @ApiResponse(responseCode = "500", description = "Internal Server Error")
-//            }
-//    )
-    public ResponseEntity<?> textToSpeech(@RequestBody TextToSpeechRequest request) {
+    @PostMapping("/text-to-speech/{textData}")
+    @Operation(
+            summary = "Convert text to speech",
+            description = "Converts a given text string into an MP3 audio file using AWS Polly.",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Audio file generated successfully",
+                            content = @Content(schema = @Schema(type = "string", format = "binary"))),
+                    @ApiResponse(responseCode = "400", description = "Bad Request"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error")
+            }
+    )
+    public ResponseEntity<?> textToSpeech(@PathVariable String textData) {
         try {
-            byte[] audioBytes = speechService.textToSpeech(request.getText());
+            byte[] audioBytes = speechService.textToSpeech(textData);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=output.mp3")
                     .body(audioBytes);
