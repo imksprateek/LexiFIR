@@ -6,8 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.polly.PollyClient;
+import software.amazon.awssdk.services.polly.model.Engine;
 import software.amazon.awssdk.services.polly.model.OutputFormat;
 import software.amazon.awssdk.services.polly.model.SynthesizeSpeechRequest;
+import software.amazon.awssdk.services.polly.model.VoiceId;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.transcribe.TranscribeClient;
@@ -41,8 +43,9 @@ public class SpeechService {
     public byte[] textToSpeech(String text) {
         SynthesizeSpeechRequest request = SynthesizeSpeechRequest.builder()
                 .text(text)
-                .languageCode(software.amazon.awssdk.services.polly.model.LanguageCode.EN_GB)
-                .voiceId("Raveena") // Replace with the desired voice
+                .languageCode(software.amazon.awssdk.services.polly.model.LanguageCode.EN_IN)
+                .voiceId(VoiceId.KAJAL) // Replace with the desired voice
+                .engine(Engine.GENERATIVE)
                 .outputFormat(OutputFormat.MP3)
                 .build();
 

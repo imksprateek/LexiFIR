@@ -3,7 +3,6 @@ package studio.ksprateek.service.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,7 +25,7 @@ public class SpeechController {
         this.speechService = speechService;
     }
 
-    @PostMapping("/text-to-speech/{textData}")
+    @PostMapping("/text-to-speech/")
     @Operation(
             summary = "Convert text to speech",
             description = "Converts a given text string into an MP3 audio file using AWS Polly.",
@@ -37,9 +36,10 @@ public class SpeechController {
                     @ApiResponse(responseCode = "500", description = "Internal Server Error")
             }
     )
-    public ResponseEntity<?> textToSpeech(@PathVariable String textData) {
+    public ResponseEntity<?> textToSpeech(@RequestBody TextToSpeechRequest textData) {
         try {
-            byte[] audioBytes = speechService.textToSpeech(textData);
+            String text = textData.getText();
+            byte[] audioBytes = speechService.textToSpeech(text);
             return ResponseEntity.ok()
                     .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=output.mp3")
                     .body(audioBytes);
