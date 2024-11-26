@@ -1,6 +1,7 @@
 import 'package:app_client/services/functions/Logout.dart';
 import 'package:app_client/pages/fir_screen.dart';
 import 'package:app_client/services/functions/NewsApi.dart';
+import 'package:app_client/services/functions/TexttoSpeech.dart';
 import 'package:app_client/utils/carasouel.dart';
 import 'package:app_client/utils/circle_container.dart';
 import 'package:app_client/utils/colors.dart';
@@ -49,7 +50,8 @@ class _HomescreenState extends State<Homescreen> {
           IconButton(onPressed: () {}, icon: const Icon(Icons.translate)),
           IconButton(
             onPressed: () {
-              logout(context);
+              // logout(context);
+              textToSpeech("This is for efficient FIR filing , thank you" ) ;
             },
             icon: const Icon(
               Icons.person_outlined,
@@ -58,12 +60,13 @@ class _HomescreenState extends State<Homescreen> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(height: 20,) ,
+          Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: Text(
               "Hello $username,",
               style: const TextStyle(
                   fontSize: 24,
@@ -71,14 +74,20 @@ class _HomescreenState extends State<Homescreen> {
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
-            const SizedBox(height: 8),
-            const Text(
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: EdgeInsets.only(left: 20),
+            child: const Text(
               "What do you want to do today?",
               style: TextStyle(fontSize: 18),
               textAlign: TextAlign.left,
             ),
-            const SizedBox(height: 16),
-            Container(
+          ),
+          const SizedBox(height: 16),
+          Padding(
+            padding: EdgeInsets.all(14),
+            child: Container(
               height: 150,
               width: 400,
               decoration: BoxDecoration(
@@ -86,12 +95,16 @@ class _HomescreenState extends State<Homescreen> {
                 color: LightBrown,
               ),
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: EdgeInsets.only(left: 20),
               child: Row(
+
                 children: [
                   CircleContainer(
                     feature_name: "File FIR",
@@ -120,15 +133,15 @@ class _HomescreenState extends State<Homescreen> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 30,
-            ),
-            CustomCarousel(
-              imageUrls: imageUrls,
-              linkUrls: linkURLS,
-            )
-          ],
-        ),
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+          CustomCarousel(
+            imageUrls: imageUrls,
+            linkUrls: linkURLS,
+          )
+        ],
       ),
     );
   }
