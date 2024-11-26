@@ -8,7 +8,7 @@ This document outlines the sequence of API requests for the authentication flow.
 
 ---
 
-**BASE URL:** `http://server.ksprateek.studio/`
+**BASE URL:** `http://server.ksprateek.studio`
 
 ## **Sequence of API Requests**
 
