@@ -5,7 +5,7 @@
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/controller/Health.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/controller/LegalReferenceController.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/controller/QuestionnaireController.java
-/home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/controller/SpeechToTextController.java
+/home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/controller/SpeechController.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/controller/TestController.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/controller/TrainingModuleController.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/controller/UserController.java
@@ -37,6 +37,7 @@
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/requests/OtpRequest.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/requests/OtpValidation.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/requests/SignUpRequest.java
+/home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/requests/TextToSpeechRequest.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/requests/UserCheck.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/responses/AuthResponse.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/payload/responses/FileUploadResponse.java
@@ -55,13 +56,12 @@
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/repository/RoleRepository.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/repository/TrainingModuleRepository.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/repository/UserRepository.java
+/home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/security/AWSConfig.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/security/CorsConfiguration.java
-/home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/security/S3Config.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/security/WebSecurityConfig.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/security/jwt/AuthEntryPointJwt.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/security/jwt/AuthTokenFilter.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/security/jwt/JwtUtils.java
-/home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/TranscribeService.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/auth/EmailService.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/auth/OtpService.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/document/AccessType.java
@@ -71,6 +71,7 @@
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/legalref/LegalReferenceService.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/notification/NotificationService.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/questionnaire/QuestionnaireService.java
+/home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/speech/SpeechService.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/training/TrainingModuleService.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/user/UserDetailsImpl.java
 /home/ksprateek/Documents/SpringBootProject/spring-boot-external-projects/SIH-Finale-Dev/backend-server/src/main/java/studio/ksprateek/service/service/user/UserDetailsService.java

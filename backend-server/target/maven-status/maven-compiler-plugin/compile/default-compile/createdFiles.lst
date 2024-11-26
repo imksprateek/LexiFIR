@@ -19,6 +19,7 @@ studio/ksprateek/service/security/WebSecurityConfig.class
 studio/ksprateek/service/entity/FIR$Location.class
 studio/ksprateek/service/controller/Health.class
 studio/ksprateek/service/utils/AppUtils.class
+studio/ksprateek/service/payload/requests/TextToSpeechRequest.class
 studio/ksprateek/service/service/auth/EmailService.class
 studio/ksprateek/service/entity/RelatedJudgement.class
 studio/ksprateek/service/payload/responses/AuthResponse$AuthResponseBuilder.class
@@ -30,10 +31,12 @@ studio/ksprateek/service/repository/ChatLogRepository.class
 studio/ksprateek/service/payload/requests/SignUpRequest.class
 studio/ksprateek/service/controller/DocumentController.class
 studio/ksprateek/service/payload/requests/EmailDetails.class
+studio/ksprateek/service/controller/SpeechController.class
 studio/ksprateek/service/controller/AuthController.class
 studio/ksprateek/service/payload/responses/FileUploadResponse.class
 studio/ksprateek/service/service/user/UserDetailsService.class
 studio/ksprateek/service/service/document/AccessType.class
+studio/ksprateek/service/service/speech/SpeechService.class
 studio/ksprateek/service/repository/LegalReferenceRepository.class
 studio/ksprateek/service/repository/QuestionnaireRepository.class
 studio/ksprateek/service/entity/UploadedDocument.class
@@ -41,7 +44,6 @@ studio/ksprateek/service/entity/CrimeRecord$CrimeRecordBuilder.class
 studio/ksprateek/service/entity/Otp$OtpBuilder.class
 studio/ksprateek/service/payload/responses/AuthResponse.class
 studio/ksprateek/service/repository/NotificationRepository.class
-studio/ksprateek/service/service/TranscribeService.class
 studio/ksprateek/service/models/ERole.class
 studio/ksprateek/service/service/document/DocumentService.class
 studio/ksprateek/service/repository/FIRRepository.class
@@ -56,11 +58,9 @@ studio/ksprateek/service/entity/Questionnaire.class
 studio/ksprateek/service/dto/NotificationDTO.class
 studio/ksprateek/service/security/CorsConfiguration$1.class
 studio/ksprateek/service/entity/TrainingModule.class
-studio/ksprateek/service/controller/SpeechToTextController.class
 studio/ksprateek/service/payload/requests/EmailDetails$EmailDetailsBuilder.class
 studio/ksprateek/service/entity/Notification.class
 studio/ksprateek/service/entity/UploadedDocument$UploadedDocumentBuilder.class
-studio/ksprateek/service/security/S3Config.class
 studio/ksprateek/service/payload/responses/MultiplePreSignedUrlResponse.class
 studio/ksprateek/service/entity/ChatLog.class
 studio/ksprateek/service/entity/User$UserBuilder.class
@@ -107,3 +107,4 @@ studio/ksprateek/service/controller/UserController.class
 studio/ksprateek/service/repository/DocumentRepository.class
 studio/ksprateek/service/dto/QuestionnaireDTO.class
 studio/ksprateek/service/dto/FIRDTO$LandmarkJudgmentDTO.class
+studio/ksprateek/service/security/AWSConfig.class
