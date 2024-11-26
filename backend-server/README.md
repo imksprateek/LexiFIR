@@ -46,7 +46,7 @@ This document outlines the sequence of API requests for the authentication flow.
 ### **5. Check Username Availability**
 
 - **Endpoint:** `/auth/checkuser`
-- **Action:** Checks if the entered username is unique. Proceed if the username is available.
+- **Action:** Checks if the entered username and email are both unique. Proceed if the username is available.
 
 ---
 
