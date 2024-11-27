@@ -3,6 +3,7 @@ import 'package:app_client/pages/HomeScreen.dart';
 import 'package:app_client/services/functions/Login.dart';
 import 'package:app_client/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Loginscreen extends StatelessWidget {
   const Loginscreen({super.key});
@@ -84,6 +85,8 @@ class Loginscreen extends StatelessWidget {
                       print('Email: $username_text, Password: $passwordText');
                       // Add your authentication logic here
                       if (LoginSuccessfull) {
+                        SharedPreferences prefs = await SharedPreferences.getInstance();
+                        await prefs.setString('username', username_text);
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
