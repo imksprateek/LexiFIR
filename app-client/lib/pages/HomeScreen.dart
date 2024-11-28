@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter/material.dart';
 import 'package:app_client/services/functions/Logout.dart';
 import 'package:app_client/pages/fir_screen.dart';
 import 'package:app_client/services/functions/NewsApi.dart';
@@ -5,18 +7,6 @@ import 'package:app_client/services/functions/TexttoSpeech.dart';
 import 'package:app_client/utils/carasouel.dart';
 import 'package:app_client/utils/circle_container.dart';
 import 'package:app_client/utils/colors.dart';
-import 'package:app_client/utils/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:app_client/auth/Loginui.dart';
-import 'package:app_client/auth/LoginScreen.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-
-List<Color> colours = [
-  const Color.fromARGB(255, 255, 228, 190),
-  const Color.fromARGB(255, 250, 219, 193),
-  const Color.fromARGB(255, 255, 206, 175)
-];
-//List<String> titles = ["", "", ""];
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -26,32 +16,42 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  String? username; // Variable to store the retrieved username
+
   @override
   void initState() {
-    // TODO: implement initState
-
-    GetArticle();
     super.initState();
+    _loadUsername(); // Fetch the username
+    GetArticle();
+  }
+
+  Future<void> _loadUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      username = prefs.getString('username') ?? 'User'; // Default to 'User' if no username is found
+    });
+  }
+
+  void ontap_fir() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => const FirAiScreen(),
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    void ontap_fir() {
-      print("FIR TAPPED!");
-
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const FirAiScreen(),
-      ));
-    }
-
     return Scaffold(
       appBar: AppBar(
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.translate)),
           IconButton(
             onPressed: () {
-              // logout(context);
-              textToSpeech("This is for efficient FIR filing , thank you" ) ;
+              logout(context);
+            },
+            icon: const Icon(Icons.translate),
+          ),
+          IconButton(
+            onPressed: () {
+              textToSpeech("Venkat pp small  lmao , hahahahahaha");
             },
             icon: const Icon(
               Icons.person_outlined,
@@ -63,22 +63,23 @@ class _HomescreenState extends State<Homescreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 20,) ,
+          const SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.only(left: 20),
+            padding: const EdgeInsets.only(left: 20),
             child: Text(
               "Hello $username,",
               style: const TextStyle(
-                  fontSize: 24,
-                  color: Color.fromRGBO(98, 48, 2, 1),
-                  fontWeight: FontWeight.bold),
+                fontSize: 24,
+                color: Color.fromRGBO(98, 48, 2, 1),
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.left,
             ),
           ),
           const SizedBox(height: 8),
-          Padding(
+          const Padding(
             padding: EdgeInsets.only(left: 20),
-            child: const Text(
+            child: Text(
               "What do you want to do today?",
               style: TextStyle(fontSize: 18),
               textAlign: TextAlign.left,
@@ -86,7 +87,7 @@ class _HomescreenState extends State<Homescreen> {
           ),
           const SizedBox(height: 16),
           Padding(
-            padding: EdgeInsets.all(14),
+            padding: const EdgeInsets.all(14),
             child: Container(
               height: 150,
               width: 400,
@@ -102,9 +103,8 @@ class _HomescreenState extends State<Homescreen> {
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: EdgeInsets.only(left: 20),
+              padding: const EdgeInsets.only(left: 20),
               child: Row(
-
                 children: [
                   CircleContainer(
                     feature_name: "File FIR",
@@ -124,10 +124,6 @@ class _HomescreenState extends State<Homescreen> {
                   const SizedBox(width: 16),
                   CircleContainer(
                     feature_name: "Saved Documents",
-                    icon: Icons.save,
-                  ),
-                  CircleContainer(
-                    feature_name: "        Kedar seeing Icon now",
                     icon: Icons.save,
                   ),
                 ],

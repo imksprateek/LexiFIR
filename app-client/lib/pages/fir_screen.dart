@@ -1,3 +1,4 @@
+import 'package:app_client/services/functions/SpeechToText.dart';
 import 'package:app_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -46,9 +47,16 @@ class _FirAiScreenState extends State<FirAiScreen> {
                         borderRadius: BorderRadius.circular(15),
                       ),
                       suffixIcon: IconButton(
-                        onPressed: () {
+                        onPressed: () async {
                           // Add functionality for the speaker icon here
                           print("Speaker icon tapped!");
+
+                          print("speech to text calling..,");
+
+                          String file_path =
+                              'assets/recordings/Voiceover_Proxy.mp3';
+
+                          await SpeechToText(file_path);
                         },
                         icon: Icon(Icons.mic, color: Colors.blue),
                       ),
@@ -81,16 +89,15 @@ class _FirAiScreenState extends State<FirAiScreen> {
                   ],
                 ), // You can replace this with any color
                 child: Center(
-                    child: Column(
-                        children: [
+                    child: Column(children: [
                   IconButton(
                       onPressed: () {},
                       icon: Icon(
                         Icons.attach_file,
                         size: 100,
                         color: Colors.brown,
-                      )) ,
-                          Text("Click here to")
+                      )),
+                  Text("Click here to")
                 ])),
               ),
             ),
