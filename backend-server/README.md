@@ -71,6 +71,12 @@ This document outlines the sequence of API requests for the authentication flow.
 
 1. **Send OTP** → 2. **Validate OTP** → 3. **Signup** → 4. **Onboarding** (Collect Name & Set Username) → 5. **Check Username** → 6. **Login** → 7. **Update User Details**
 
+### **Speech-to-Text Real-time Streaming**
+
+Speech to text real-time streaming is deployed and working as expected (English). Check the example client.py file in the repo and similarly establish a WebSocket connection with this endpoint:
+
+- **WebSocket Endpoint:** `ws://eng.ksprateek.studio/TranscribeStreaming`
+
 ### **Notes for Frontend Developers**
 - Ensure all requests are sequential and depend on the success of the previous step.
 - Handle errors at each step with appropriate user feedback (e.g., invalid OTP, username already taken).
@@ -78,3 +84,4 @@ This document outlines the sequence of API requests for the authentication flow.
 - Store the JWT token securely after login for authenticated requests. Add the token as a bearer token in the `Authorization` header for subsequent API calls.
 
 Refer to SwaggerUI for detailed request and response structures.
+
