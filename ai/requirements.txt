@@ -1,0 +1,7 @@
+crewai
+crewai[tools]
+langchain_core
+langchain_groq
+flask
+geocoder
+bson
