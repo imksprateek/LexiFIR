@@ -1,4 +1,5 @@
 //import 'package:app_client/auth/LoginScreen.dart';
+import 'package:app_client/auth/LoginUInew.dart';
 import 'package:app_client/auth/OTPScreen.dart';
 import 'package:app_client/services/functions/CheckUserExistence.dart';
 import 'package:app_client/services/functions/sendOTP.dart';
@@ -16,8 +17,6 @@ class SigninScreen extends StatelessWidget {
     TextEditingController password = TextEditingController();
     TextEditingController name = TextEditingController();
     TextEditingController role = TextEditingController(); // Role input
-
-
 
     return Scaffold(
       body: Center(
@@ -68,7 +67,8 @@ class SigninScreen extends StatelessWidget {
                   // Convert role string into a list
                   List<String> roleList =
                       roleText.split(',').map((e) => e.trim()).toList();
-                  await checkUserExists(nameText, emailText, passwordText, roleList) ;
+                  await checkUserExists(
+                      nameText, emailText, passwordText, roleList);
                   // Send OTP to the email
 
                   if (resultFromSendotp) {
@@ -111,8 +111,7 @@ class SigninScreen extends StatelessWidget {
                 onTap: () {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const Loginscreen()),
+                    MaterialPageRoute(builder: (context) => Login()),
                   );
                 },
                 child: const Text('Already a member? Login'),

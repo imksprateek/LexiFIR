@@ -68,6 +68,10 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/images/Ellipse1.png
+    - lib/images/bgimage.png
+    - lib/images/rectangelbg.png
+    - lib/images/google.png
+    - lib/images/apple.png
     - assets/recordings/Voiceover_Proxy.mp3
 
   # An image asset can refer to one or more resolution-specific "variants", see
