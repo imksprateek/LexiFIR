@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app_client/auth/SignInScreennew.dart';
 import 'package:app_client/auth/SigninScreen.dart';
 import 'package:app_client/pages/HomeScreen.dart';
 import 'package:app_client/services/functions/Login.dart';
@@ -147,7 +148,7 @@ class Login extends StatelessWidget {
                               }
                             },
                             child: Container(
-                              width: 230,
+                              width: 300,
                               height: 49.5,
                               decoration: BoxDecoration(
                                   color: const Color.fromARGB(255, 0, 21, 39),
@@ -207,7 +208,7 @@ class Login extends StatelessWidget {
                               Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => SigninScreen(),
+                                    builder: (context) => SignUpScreen(),
                                   ));
                             },
                             child: Text(
