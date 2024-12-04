@@ -56,7 +56,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
                           String file_path =
                               'assets/recordings/Voiceover_Proxy.mp3';
 
-                          await SpeechToText(file_path);
+                          // await SpeechToText(file_path);
                         },
                         icon: Icon(Icons.mic, color: Colors.blue),
                       ),

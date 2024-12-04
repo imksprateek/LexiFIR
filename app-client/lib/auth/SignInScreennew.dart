@@ -173,9 +173,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       iconEnabledColor:
                                           Colors.black, // Dropdown icon color
                                       items: <String>[
-                                        'User',
-                                        'Admin',
-                                        'Moderator',
+                                        'user',
+                                        'admin',
+                                        'moderator',
                                       ].map<DropdownMenuItem<String>>(
                                           (String value) {
                                         return DropdownMenuItem<String>(
@@ -273,9 +273,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             GestureDetector(
                               onTap: () async {
-                                String emailText = email.text;
-                                String passwordText = password.text;
-                                String nameText = username.text;
+                                String emailText = email.text.trim();
+                                String passwordText = password.text.trim();
+                                String nameText = username.text.trim();
                                 String roleText = role!;
 
                                 // Convert role string into a list

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:app_client/auth/Loginui.dart';
 
-import '../../auth/LoginScreen.dart';
+import '../../auth/LoginUInew.dart';
+
 
 Future<void> logout(BuildContext context) async {
   try {
@@ -19,7 +19,7 @@ Future<void> logout(BuildContext context) async {
       // Navigate to the LoginScreen
       Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const Loginscreen()),
+        MaterialPageRoute(builder: (context) => const Login()),
             (Route<dynamic> route) => false, // Remove all previous routes
       );
     } else {
