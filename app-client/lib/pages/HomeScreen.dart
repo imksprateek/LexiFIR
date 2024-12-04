@@ -82,7 +82,7 @@ class _HomescreenState extends State<Homescreen> {
                   right: 140,
                   child: Text(
                     '''Welcome Back 
-              $username,''',
+$username,''',
                     style: const TextStyle(
                       fontSize: 28,
                       color: Colors.white,
@@ -118,6 +118,10 @@ class _HomescreenState extends State<Homescreen> {
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10, right: 8),
                     child: Container(
+                      child:  Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Image.asset('lib/images/stats.png' ,fit: BoxFit.fitWidth,),
+                      ),
                       height: 120,
                       width: 400,
                       decoration: BoxDecoration(

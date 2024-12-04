@@ -68,6 +68,7 @@ class _FillFirState extends State<FillFir> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Padding(
           padding: EdgeInsets.all(15), // Applies uniform padding
           child: SingleChildScrollView(
