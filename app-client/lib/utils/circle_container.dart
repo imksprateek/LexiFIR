@@ -21,13 +21,13 @@ class CircleContainer extends StatelessWidget {
             height: 60, // Specify the height
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppBlue,
+              color: Color(0xFFcee8ff),
 
               // Optional: Add a color to visualize the circle
             ),
             child: Icon(
               icon,
-              color: Colors.white,
+              color: Colors.black,
             ),
           ),
         ),
