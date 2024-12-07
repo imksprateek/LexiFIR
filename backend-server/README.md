@@ -10,6 +10,8 @@ This document outlines the sequence of API requests for the authentication flow.
 
 **BASE URL:** `http://server.ksprateek.studio`
 
+---
+
 ## **Sequence of API Requests**
 
 ### **1. Send OTP**
@@ -71,17 +73,34 @@ This document outlines the sequence of API requests for the authentication flow.
 
 1. **Send OTP** → 2. **Validate OTP** → 3. **Signup** → 4. **Onboarding** (Collect Name & Set Username) → 5. **Check Username** → 6. **Login** → 7. **Update User Details**
 
-### **Speech-to-Text Real-time Streaming**
+---
 
-Speech to text real-time streaming is deployed and working as expected (English). Check the example client.py file in the repo and similarly establish a WebSocket connection with this endpoint:
+## **Speech-to-Text Real-time Streaming**
 
-- **WebSocket Endpoint:** `ws://eng.ksprateek.studio/TranscribeStreaming`
+### **English Speech-to-Text Service**
+- Speech-to-text real-time streaming is deployed and working as expected (English). Check the example `client.py` file in the repo and establish a WebSocket connection using the following endpoint:
+  - **WebSocket Endpoint:** `ws://eng.ksprateek.studio/TranscribeStreaming`
+
+---
+
+### **Hindi Speech-to-Text Service**
+- Hindi speech-to-text service has been deployed. You can access it via the WebSocket connection at:
+  - **WebSocket Endpoint:** `ws://hin.ksprateek.studio/TranscribeStreaming`
+
+---
+
+### **Flow of Speech-to-Text for Conversational AI in Hindi**
+1. Receive the **Hindi response** from the WebSocket server.
+2. Translate the Hindi text to **English** using the **Flutter Translate package**.
+3. Send the translated English text to the **AI service**.
+4. Retrieve the AI-generated response and proceed with further processing.
+
+---
 
 ### **Notes for Frontend Developers**
-- Ensure all requests are sequential and depend on the success of the previous step.
-- Handle errors at each step with appropriate user feedback (e.g., invalid OTP, username already taken).
-- After login, make a PUT request to `/api/users/{id}` to update the user’s full name and username (partial updates allowed).
-- Store the JWT token securely after login for authenticated requests. Add the token as a bearer token in the `Authorization` header for subsequent API calls.
+- Ensure all requests are sequential and depend on the success of the previous step in authentication flow.
+- Handle errors with appropriate user feedback (e.g., invalid OTP, username already taken).
+- Store the JWT token securely after login for authenticated requests and include it as a `Bearer` token in the `Authorization` header.
+- Integrate the STT WebSocket services for English and Hindi as per your application's requirements.
 
 Refer to SwaggerUI for detailed request and response structures.
-

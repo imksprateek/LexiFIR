@@ -2,9 +2,8 @@ import 'package:app_client/pages/HomeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
-import 'package:app_client/auth/LoginScreen.dart';
 
-import 'auth/Loginui.dart';
+import 'auth/LoginUInew.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -38,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Token doesn't exist, navigate to login screen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Loginscreen()),
+        MaterialPageRoute(builder: (context) => const Login()),
       );
     }
   }

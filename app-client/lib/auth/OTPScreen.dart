@@ -1,5 +1,5 @@
-import 'package:app_client/auth/Loginui.dart';
-import 'package:app_client/auth/SigninScreen.dart';
+import 'package:app_client/auth/LoginUInew.dart';
+
 import 'package:app_client/services/functions/ValidateOTP.dart'; // Your validate OTP function
 import 'package:flutter/material.dart';
 
@@ -7,11 +7,16 @@ import '../SplashScreen.dart';
 
 class OTPScreen extends StatefulWidget {
   final String email;
-  final String password ;
-  final List<String> role ;
-  final String name ;// Email passed to this screen
+  final String password;
+  final List<String> role;
+  final String name; // Email passed to this screen
 
-  const OTPScreen({super.key, required this.email ,required this.password ,required this.role , required this.name});
+  const OTPScreen(
+      {super.key,
+      required this.email,
+      required this.password,
+      required this.role,
+      required this.name});
 
   @override
   State<OTPScreen> createState() => _OTPScreenState();
@@ -33,7 +38,8 @@ class _OTPScreenState extends State<OTPScreen> {
     return Scaffold(
       appBar: AppBar(title: const Text('Enter OTP')),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0), // Add padding to the screen
+        padding: const EdgeInsets.symmetric(
+            horizontal: 30.0), // Add padding to the screen
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center, // Center the widgets
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,7 +50,8 @@ class _OTPScreenState extends State<OTPScreen> {
             ),
             const SizedBox(height: 20),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center, // Center the OTP fields
+              mainAxisAlignment:
+                  MainAxisAlignment.center, // Center the OTP fields
               children: [
                 _buildOTPTextField(_otpController1, _focusNode2),
                 const SizedBox(width: 10),
@@ -52,7 +59,8 @@ class _OTPScreenState extends State<OTPScreen> {
                 const SizedBox(width: 10),
                 _buildOTPTextField(_otpController3, _focusNode4),
                 const SizedBox(width: 10),
-                _buildOTPTextField(_otpController4, FocusNode()), // No focus on the last field
+                _buildOTPTextField(
+                    _otpController4, FocusNode()), // No focus on the last field
               ],
             ),
             const SizedBox(height: 20),
@@ -64,15 +72,15 @@ class _OTPScreenState extends State<OTPScreen> {
                     _otpController3.text +
                     _otpController4.text;
 
-                bool isValid = await validateOTP(widget.email, otp , widget.password ,widget.role ,widget.name);
+                bool isValid = await validateOTP(widget.email, otp,
+                    widget.password, widget.role, widget.name);
 
                 if (isValid) {
-
-                  await
-
-                  Navigator.pushReplacement(
+                  await Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const Loginscreen()), // Replace HomeScreen with your next screen
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            const Login()), // Replace HomeScreen with your next screen
                   );
                 } else {
                   // OTP is invalid, show error message
@@ -83,7 +91,8 @@ class _OTPScreenState extends State<OTPScreen> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue, // Button color
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15), // Padding for the button
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 50, vertical: 15), // Padding for the button
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30), // Circular button
                 ),
@@ -97,7 +106,8 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   // Helper method to build each OTP text field
-  Widget _buildOTPTextField(TextEditingController controller, FocusNode? focusNode) {
+  Widget _buildOTPTextField(
+      TextEditingController controller, FocusNode? focusNode) {
     return SizedBox(
       width: 50,
       child: TextField(

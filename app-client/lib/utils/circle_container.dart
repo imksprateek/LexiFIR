@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+
 class CircleContainer extends StatelessWidget {
   IconData icon;
   String feature_name;
@@ -17,15 +19,15 @@ class CircleContainer extends StatelessWidget {
           child: Container(
             width: 60, // Specify the width
             height: 60, // Specify the height
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Color.fromARGB(255, 255, 228, 194),
+              color: Color(0xFFcee8ff),
 
               // Optional: Add a color to visualize the circle
             ),
             child: Icon(
               icon,
-              color: const Color.fromARGB(255, 80, 27, 8),
+              color: Colors.black,
             ),
           ),
         ),

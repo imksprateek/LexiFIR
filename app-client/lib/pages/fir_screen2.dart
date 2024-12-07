@@ -15,7 +15,10 @@ class _FirAiScreenState extends State<FirAiScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+      ),
       drawer: const Drawer(
         child: Column(
           children: [Text("Chat History")],
@@ -35,7 +38,9 @@ class _FirAiScreenState extends State<FirAiScreen> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Container(
+
                   decoration: BoxDecoration(
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(color: Colors.black),
                   ),
@@ -56,7 +61,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
                           String file_path =
                               'assets/recordings/Voiceover_Proxy.mp3';
 
-                          await SpeechToText(file_path);
+                          // await SpeechToText(file_path);
                         },
                         icon: Icon(Icons.mic, color: Colors.blue),
                       ),
@@ -77,7 +82,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
                 width: 200,
 
                 decoration: BoxDecoration(
-                  color: LightBrown, // Replace with your desired color
+                  color: Appbluelight2, // Replace with your desired color
                   borderRadius: BorderRadius.circular(20), // Rounds the edges
                   boxShadow: [
                     BoxShadow(
@@ -89,15 +94,19 @@ class _FirAiScreenState extends State<FirAiScreen> {
                   ],
                 ), // You can replace this with any color
                 child: Center(
-                    child: Column(children: [
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
                   IconButton(
                       onPressed: () {},
                       icon: Icon(
                         Icons.attach_file,
                         size: 100,
-                        color: Colors.brown,
+                        color: Colors.white,
                       )),
-                  Text("Click here to")
+                  Center(child: Text('''      Click here to Attach      
+ Documents or Start Typing'''  ,style: TextStyle(color: Colors.white),))
                 ])),
               ),
             ),

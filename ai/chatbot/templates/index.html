@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Context-Aware Chatbot</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 600px; 
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        #chat-container {
+            border: 1px solid #ccc;
+            height: 400px;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+        #message-input {
+            width: 70%;
+            padding: 10px;
+        }
+        #send-btn {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="chat-container"></div>
+    <input type="text" id="message-input" placeholder="Type your message...">
+    <button id="send-btn">Send</button>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+
+        function addMessage(message, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `${sender}: ${message}`;
+            messageElement.style.marginBottom = '10px';
+            messageElement.style.color = sender === 'AI' ? 'blue' : 'black';
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        sendBtn.addEventListener('click', async () => {
+            const userMessage = messageInput.value.trim();
+            if (userMessage) {
+                addMessage(userMessage, 'User');
+                messageInput.value = '';
+
+                try {
+                    const response = await axios.post('/chat', { message: userMessage });
+                    addMessage(response.data.response, 'AI');
+                } catch (error) {
+                    console.error('Error:', error);
+                    addMessage('Sorry, something went wrong.', 'AI');
+                }
+            }
+        });
+
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>

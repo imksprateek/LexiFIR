@@ -1,4 +1,5 @@
 import 'package:app_client/services/functions/NewsApi.dart';
+import 'package:app_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:hyperlink/hyperlink.dart';
@@ -59,8 +60,8 @@ class _CustomCarouselState extends State<CustomCarousel> {
                     padding: const EdgeInsets.all(0),
                     child: Card(
                       margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      elevation: 6.0,
-                      shadowColor: Colors.black45,
+                      elevation: 10.0,
+                      shadowColor: AppBlue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20.0),
                       ),
@@ -95,10 +96,10 @@ class _CustomCarouselState extends State<CustomCarousel> {
                               child: Center(
                                 child: Text(
                                   "",
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 24.0,
                                     fontWeight: FontWeight.bold,
-                                    backgroundColor: Colors.black45,
+                                    backgroundColor: AppBlue,
                                     color: Colors.white,
                                   ),
                                 ),
