@@ -11,6 +11,8 @@ import 'package:app_client/utils/colors.dart';
 
 import 'dart:ui' as ui;
 
+import 'fir_screen1.dart';
+
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
 
@@ -19,7 +21,7 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
-  String? username; // Variable to store the retrieved username
+  String? username;
 
   @override
   void initState() {
@@ -31,8 +33,7 @@ class _HomescreenState extends State<Homescreen> {
   Future<void> _loadUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      username = prefs.getString('username') ??
-          'User'; // Default to 'User' if no username is found
+      username = prefs.getString('username') ?? 'User'; // Default to 'User' if no username is found
     });
   }
 
@@ -44,6 +45,10 @@ class _HomescreenState extends State<Homescreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen width and height dynamically
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFf4f9ff),
@@ -51,100 +56,97 @@ class _HomescreenState extends State<Homescreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 380,
-
-              child: Stack(children: [
-                Image.asset('lib/images/rect.png'),
-                Row(
-
-                  children:  [
-                    SizedBox(width: 10,),
-                    IconButton(
-                      onPressed: () {
-                        logout(context);
-                      },
-                      icon: const Icon(Icons.translate ,color: Colors.white,),
-                    ),
-                    SizedBox(width: 250,),
-                    IconButton(
-                      onPressed: () {
-                        textToSpeech("Venkat pp small  lmao , hahahahahaha");
-                      },
-                      icon: const Icon(
-                        Icons.person_outlined,
-                        color: Colors.white,
-                        size: 35,
+              height: screenHeight * 0.5, // Adjusting height relative to screen height
+              child: Stack(
+                children: [
+                  Image.asset('lib/images/rect.png'),
+                  Row(
+                    children: [
+                      SizedBox(width: screenWidth * 0.025), // Dynamic padding
+                      IconButton(
+                        onPressed: () {
+                          logout(context);
+                        },
+                        icon: const Icon(Icons.translate, color: Colors.white),
                       ),
-                    ),
-                  ],),
-                Positioned(
-                  top: 60,
-                  right: 140,
-                  child: Text(
-                    '''Welcome Back 
-$username,''',
-                    style: const TextStyle(
-                      fontSize: 28,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    textAlign: TextAlign.left,
+                      SizedBox(width: screenWidth * 0.55),
+                      IconButton(
+                        onPressed: () {
+                          textToSpeech("Venkat pp small lmao , hahahahahaha");
+                        },
+                        icon: const Icon(
+                          Icons.person_outlined,
+                          color: Colors.white,
+                          size: 35,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Positioned(
-                  left: 240,
-                  top: 60,
-                  child: Container(
-                    height: 110,
-                      child: Image.asset('lib/images/cartoon.png' ,scale: 0.5,)),
-                ) ,
-
-                Positioned(
-                  top: 150,
-                  left: 5,
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 20),
+                  Positioned(
+                    top: screenHeight * 0.08, // Adjusted for dynamic positioning
+                    right: screenWidth * 0.4,
                     child: Text(
-                      "What do you want to do today?",
-                      style: TextStyle(fontSize: 14 ,color: Colors.white),
+                      '''Welcome Back 
+$username,''',
+                      style: const TextStyle(
+                        fontSize: 28,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                       textAlign: TextAlign.left,
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 240,
-                  right: 2,
-                 left: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 8),
+                  Positioned(
+                    left: screenWidth * 0.6, // Adjusted for dynamic positioning
+                    top: screenHeight * 0.07,
                     child: Container(
-                      child:  Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Image.asset('lib/images/stats.png' ,fit: BoxFit.fitWidth,),
-                      ),
-                      height: 120,
-                      width: 400,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: AppBlue,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.4), // Shadow color
-                            spreadRadius: 3, // How much the shadow spreads
-                            blurRadius: 6, // How blurry the shadow is
-                            offset: Offset(0, 3), // Position of the shadow (horizontal, vertical)
-                          ),
-                        ],
+                      height: screenHeight * 0.2, // Adjust the height as needed
+                      child: Image.asset('lib/images/cartoon.png', scale: 0.5),
+                    ),
+                  ),
+                  Positioned(
+                    top: screenHeight * 0.2, // Adjusted for dynamic positioning
+                    left: screenWidth * 0.001,
+                    child: const Padding(
+                      padding: EdgeInsets.only(left: 20),
+                      child: Text(
+                        "What do you want to do today?",
+                        style: TextStyle(fontSize: 14, color: Colors.white),
+                        textAlign: TextAlign.left,
                       ),
                     ),
                   ),
-                ),
-
-              ]),
+                  Positioned(
+                    top: screenHeight * 0.3, // Adjusted for dynamic positioning
+                    right: 2,
+                    left: 1,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 8),
+                      child: Container(
+                        height: screenHeight * 0.15, // Adjust the height as needed
+                        width: screenWidth * 0.9, // Adjust the width as needed
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppBlue,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.4),
+                              spreadRadius: 3,
+                              blurRadius: 6,
+                              offset: Offset(0, 3),
+                            ),
+                          ],
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Image.asset('lib/images/stats.png', fit: BoxFit.fitWidth),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-
-
-
             const SizedBox(
               height: 20,
             ),
@@ -156,7 +158,7 @@ $username,''',
                   children: [
                     CircleContainer(
                       feature_name: "File FIR",
-                      icon: (Icons.file_copy),
+                      icon: Icons.file_copy,
                       ontap: ontap_fir,
                     ),
                     const SizedBox(width: 16),
@@ -184,12 +186,10 @@ $username,''',
             CustomCarousel(
               imageUrls: imageUrls,
               linkUrls: linkURLS,
-            )
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-//Add this CustomPaint widget to the Widget Tree
