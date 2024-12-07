@@ -1,4 +1,5 @@
 import 'package:app_client/pages/fir_screen2.dart';
+import 'package:app_client/services/functions/speech_to_text.dart';
 import 'package:app_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -54,16 +55,16 @@ class _FillFirState extends State<FillFir> {
     // Map weapons and crime categories to DropdownMenuItem
     final List<DropdownMenuItem<String>> weaponItems = weapons
         .map((weapon) => DropdownMenuItem(
-      value: weapon,
-      child: Text(weapon),
-    ))
+              value: weapon,
+              child: Text(weapon),
+            ))
         .toList();
 
     final List<DropdownMenuItem<String>> categoryItems = crimeCategories
         .map((category) => DropdownMenuItem(
-      value: category,
-      child: Text(category),
-    ))
+              value: category,
+              child: Text(category),
+            ))
         .toList();
 
     return SafeArea(
@@ -80,8 +81,8 @@ class _FillFirState extends State<FillFir> {
                     SizedBox(height: 100),
                     Text(
                       "LexiFir",
-                      style: TextStyle(
-                          fontSize: 40, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                     ),
                     Spacer(),
                     ElevatedButton(
@@ -91,7 +92,10 @@ class _FillFirState extends State<FillFir> {
                             borderRadius: BorderRadius.circular(12)),
                       ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>FirAiScreen())) ;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FirAiScreen()));
                       },
                       child: Text(
                         'Skip',
@@ -130,9 +134,21 @@ class _FillFirState extends State<FillFir> {
                       ),
                       hintText: '',
                       hintStyle: TextStyle(color: Colors.grey),
-                      suffixIcon: Padding(
-                        padding: EdgeInsets.only(top: 90),
-                        child: Icon(Icons.mic, color: Colors.black),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return SpeechToTextt();
+                              });
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 90),
+                          child: Icon(
+                            Icons.mic,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -207,7 +223,8 @@ class _FillFirState extends State<FillFir> {
                       controller: TextEditingController(
                         text: selectedDate == null
                             ? 'Select a date'
-                            : '${selectedDate!.toLocal()}'.split(' ')[0], // Format date
+                            : '${selectedDate!.toLocal()}'
+                                .split(' ')[0], // Format date
                       ),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -253,31 +270,36 @@ class _FillFirState extends State<FillFir> {
                       borderSide: BorderSide(color: Colors.black, width: 2),
                     ),
                     hintText: '',
-                    suffixIcon: Icon(Icons.pin_drop ),
+                    suffixIcon: Icon(Icons.pin_drop),
                     hintStyle: TextStyle(color: Colors.grey),
                   ),
                 ),
                 SizedBox(
                   height: 20,
                 ),
-                Center(child:   ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppBlue, // Assuming AppBlue is defined
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppBlue, // Assuming AppBlue is defined
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () {},
+                    child: Container(
+                      width: double
+                          .infinity, // This makes the button stretch across the screen
+                      padding: EdgeInsets.symmetric(
+                          vertical:
+                              15), // Adjust vertical padding to elongate vertically
+                      child: Text(
+                        'Proceed',
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                        textAlign:
+                            TextAlign.center, // Ensures the text is centered
+                      ),
                     ),
                   ),
-                  onPressed: () {},
-                  child: Container(
-                    width: double.infinity, // This makes the button stretch across the screen
-                    padding: EdgeInsets.symmetric(vertical: 15), // Adjust vertical padding to elongate vertically
-                    child: Text(
-                      'Proceed',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                      textAlign: TextAlign.center, // Ensures the text is centered
-                    ),
-                  ),
-                ),
                 )
               ],
             ),

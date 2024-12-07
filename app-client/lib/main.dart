@@ -1,4 +1,3 @@
-
 import 'package:app_client/pages/HomeScreen.dart';
 import 'package:app_client/services/functions/speech_to_text.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +13,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: SplashScreen());
+        debugShowCheckedModeBanner: false, home: Homescreen());
   }
 }
