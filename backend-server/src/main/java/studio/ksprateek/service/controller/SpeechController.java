@@ -16,7 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/speech")
-@Tag(name = "Speech Operations", description = "APIs for Text-to-Speech and Speech-to-Text using AWS Polly and Transcribe")
+@Tag(name = "6. Speech Operations", description = "APIs for Text-to-Speech and Speech-to-Text using AWS Polly and Transcribe")
 public class SpeechController {
 
     private final SpeechService speechService;
@@ -52,7 +52,7 @@ public class SpeechController {
     @PostMapping(path = "/speech-to-text",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(
-            summary = "Convert speech to text",
+            summary = "THERE'S A SEPARATE MICROSERVICE FOR STT. CHECK DOCS IN REPO",
             description = "Transcribes the speech from an uploaded audio file into text using AWS Transcribe.",
             responses = {
                     @ApiResponse(responseCode = "200", description = "Transcription completed successfully",

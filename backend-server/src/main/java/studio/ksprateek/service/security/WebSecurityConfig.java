@@ -22,6 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 import studio.ksprateek.service.security.jwt.AuthEntryPointJwt;
 import studio.ksprateek.service.security.jwt.AuthTokenFilter;
 import studio.ksprateek.service.service.user.UserDetailsServiceImpl;
@@ -90,6 +91,11 @@ public class WebSecurityConfig {
                                 .email( "ksprateek2004@gmail.com").url("https://ksprateek.studio"))
                         .license(new License().name("MIT License")
                                 .url("LICENSE.md")));
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
     private SecurityScheme createAPIKeyScheme() {

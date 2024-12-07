@@ -1,3 +1,7 @@
+Here's the updated **Backend Server Docs** with the mention that the AI Legal Chatbot is context-aware:
+
+---
+
 # Backend Server Docs
 
 ## Test the API endpoints here: <a href="http://server.ksprateek.studio/swagger-ui/index.html#/">Test</a>
@@ -12,7 +16,7 @@ This document outlines the sequence of API requests for the authentication flow.
 
 ---
 
-## **Sequence of API Requests**
+## **Auth**
 
 ### **1. Send OTP**
 
@@ -97,10 +101,33 @@ This document outlines the sequence of API requests for the authentication flow.
 
 ---
 
+## **AI Legal Chatbot**
+
+### **Chatbot Service Endpoint**
+- The AI Legal Chatbot is deployed and can be accessed at the following Endpoint:
+  - **Endpoint:** `http://chat.ksprateek.studio/chat`
+
+### **Request Format**
+- To interact with the AI Legal Chatbot, send a **POST** request with the following body format:
+
+```json
+{
+  "message": "What does section 360 say"
+}
+```
+
+- The chatbot will process the message and return a response based on the queried legal section or topic.
+
+### **Context Awareness**
+- The AI Legal Chatbot is **context-aware**, meaning it can remember the context of previous interactions within the current session. This allows for a more dynamic and relevant response based on prior queries, helping users with more coherent and connected legal assistance.
+
+---
+
 ### **Notes for Frontend Developers**
-- Ensure all requests are sequential and depend on the success of the previous step in authentication flow.
+- Ensure all requests are sequential and depend on the success of the previous step in the authentication flow.
 - Handle errors with appropriate user feedback (e.g., invalid OTP, username already taken).
 - Store the JWT token securely after login for authenticated requests and include it as a `Bearer` token in the `Authorization` header.
 - Integrate the STT WebSocket services for English and Hindi as per your application's requirements.
-
+- To interact with the AI Legal Chatbot, use the provided endpoint and request format. The context-awareness feature should be leveraged for more natural and ongoing conversations with the chatbot.
+  
 Refer to SwaggerUI for detailed request and response structures.

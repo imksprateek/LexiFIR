@@ -26,5 +26,17 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="SIH_finale-prod" uuid="5f67bd68-540c-45cd-bf37-f9517ddedef3">
+      <driver-ref>documentdb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.dbschema.MongoJdbcDriver</jdbc-driver>
+      <jdbc-url>mongodb://docdb-2024-12-06-04-22-49.cluster-ccrz76ldy9gt.us-east-1.docdb.amazonaws.com:27017/SIH_finale?tls=true&amp;tlsCAFile=%2Fhome%2Fksprateek%2FDownloads%2Fglobal-bundle.pem</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="com.intellij.clouds.kubernetes.db.host.port" />
+        <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
+        <property name="com.intellij.clouds.kubernetes.db.container.port" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
