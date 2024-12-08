@@ -67,6 +67,7 @@ public class DTOConverter {
         dto.setCaseTitle(fir.getCaseTitle());
         dto.setIncidentDescription(fir.getIncidentDescription());
         dto.setIncidentDate(fir.getIncidentDate());
+        dto.setTypeOfCase(fir.getTypeOfCase());
         dto.setLocation(toLocationDTO(fir.getLocation()));
         dto.setRelatedSections(fir.getRelatedSections().stream().map(this::toRelatedSectionDTO).collect(Collectors.toList()));
         dto.setLandmarkJudgments(fir.getLandmarkJudgments().stream().map(this::toLandmarkJudgmentDTO).collect(Collectors.toList()));
@@ -88,6 +89,7 @@ public class DTOConverter {
                 .incidentDescription(dto.getIncidentDescription())
                 .incidentDate(dto.getIncidentDate())
                 .location(toLocationEntity(dto.getLocation()))
+                .typeOfCase(dto.getTypeOfCase())
                 .relatedSections(dto.getRelatedSections() != null ? dto.getRelatedSections().stream()
                         .map(this::toRelatedSectionEntity)
                         .collect(Collectors.toList()) : new ArrayList<>())

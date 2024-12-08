@@ -30,6 +30,7 @@ public class FIR {
     private List<RelatedSection> relatedSections;
     private List<LandmarkJudgment> landmarkJudgments;
     private String status;
+    private String typeOfCase;
 
     @CreatedDate
     private LocalDateTime createdAt;
