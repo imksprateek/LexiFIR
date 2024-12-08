@@ -1,4 +1,6 @@
+import 'package:app_client/services/functions/Chatmessage.dart';
 import 'package:app_client/services/functions/SpeechToText.dart';
+import 'package:app_client/services/functions/airequest.dart';
 import 'package:app_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -12,102 +14,102 @@ class FirAiScreen extends StatefulWidget {
 }
 
 class _FirAiScreenState extends State<FirAiScreen> {
+  final List<ChatMessage> _messages = []; // To store chat messages
+
+  void _addUserMessage(String message) {
+    setState(() {
+      _messages.add(ChatMessage(content: message, isUser: true));
+      _ChatMessageController.clear();
+    });
+
+    // Simulate AI response
+    /*Future.delayed(Duration(seconds: 1), () {
+      _addAIMessage("This is a response to: $message");
+    });*/
+  }
+
+  /*void _addAIMessage(String message) {
+    setState(() {
+      _messages.add(ChatMessage(content: message, isUser: false));
+    });
+  }*/
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-      ),
-      drawer: const Drawer(
-        child: Column(
-          children: [Text("Chat History")],
+        title: const Text(
+          'Fir AI Chat',
+          style: TextStyle(color: Colors.black),
         ),
+        elevation: 0,
       ),
-      body: Stack(
+      body: Column(
         children: [
-          // Bottom input field and expanded space for content
-          Column(
-            children: [
-              Expanded(
-                child: Container(
-                  // Placeholder for chat or other content
-                  color: Colors.white,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Container(
-
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    border: Border.all(color: Colors.black),
-                  ),
-                  child: TextFormField(
-                    controller: _ChatMessageController,
-                    decoration: InputDecoration(
-                      hintText: "Describe the crime that has happened",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () async {
-                          // Add functionality for the speaker icon here
-                          print("Speaker icon tapped!");
-
-                          print("speech to text calling..,");
-
-                          String file_path =
-                              'assets/recordings/Voiceover_Proxy.mp3';
-
-                          // await SpeechToText(file_path);
-                        },
-                        icon: Icon(Icons.mic, color: Colors.blue),
-                      ),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(10),
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                final message = _messages[index];
+                return Align(
+                  alignment: message.isUser
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(vertical: 5),
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color:
+                          message.isUser ? Colors.blue[100] : Colors.grey[200],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Text(
+                      message.content,
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
-                ),
-              ),
-            ],
+                );
+              },
+            ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(color: Colors.black),
+              ),
+              child: TextFormField(
+                controller: _ChatMessageController,
+                decoration: InputDecoration(
+                  hintText: "Type your message",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  suffixIcon: SizedBox(
+                    width: 96,
+                    child: Row(
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            airequest(_ChatMessageController.text);
 
-          // Center container
-          Positioned(
-            bottom: 360,
-            left: 80,
-            child: Center(
-              child: Container(
-                height: 200,
-                width: 200,
-
-                decoration: BoxDecoration(
-                  color: Appbluelight2, // Replace with your desired color
-                  borderRadius: BorderRadius.circular(20), // Rounds the edges
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2), // Shadow color
-                      spreadRadius: 2, // How wide the shadow spreads
-                      blurRadius: 10, // The softness of the shadow
-                      offset: Offset(4, 4), // Position of the shadow
+                            if (_ChatMessageController.text.trim().isNotEmpty) {
+                              _addUserMessage(
+                                  _ChatMessageController.text.trim());
+                            }
+                          },
+                          icon: const Icon(Icons.send),
+                        ),
+                        IconButton(onPressed: () {}, icon: Icon(Icons.mic))
+                      ],
                     ),
-                  ],
-                ), // You can replace this with any color
-                child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.attach_file,
-                        size: 100,
-                        color: Colors.white,
-                      )),
-                  Center(child: Text('''      Click here to Attach      
- Documents or Start Typing'''  ,style: TextStyle(color: Colors.white),))
-                ])),
+                  ),
+                ),
               ),
             ),
           ),
@@ -116,3 +118,50 @@ class _FirAiScreenState extends State<FirAiScreen> {
     );
   }
 }
+
+
+          /* Positioned(
+            bottom: 360,
+            left: 80,
+            child: Center(
+              child: Container(
+                height: 200,
+                width: 200,
+                decoration: BoxDecoration(
+                  color: Appbluelight2,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 2,
+                      blurRadius: 10,
+                      offset: const Offset(4, 4),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          print("Attach documents button clicked");
+                        },
+                        icon: const Icon(
+                          Icons.attach_file,
+                          size: 100,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const Text(
+                        '''Click here to Attach      
+Documents or Start Typing''',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),*/
