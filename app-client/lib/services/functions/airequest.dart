@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
+String? Ai_answer;
 final logger = Logger();
 
-Future<void> airequest(String prompt) async {
+Future<dynamic> airequest(String prompt) async {
   const String baseUrl = "http://chat.ksprateek.studio";
   const String endpoint = "/chat";
 
@@ -24,10 +25,13 @@ Future<void> airequest(String prompt) async {
     if (response.statusCode == 200) {
       print("Request succeededdd lets fkn go !");
 
+      Ai_answer = response.body;
       logger.d(response.body);
 
       final decodedResponse = jsonDecode(response.body);
       print("Decoded response: $decodedResponse");
+
+      return response.body;
     } else {
       print("Request failed with status: ${response.statusCode}");
       print("Response body: ${response.body}");

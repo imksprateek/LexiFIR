@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:app_client/services/functions/Chatmessage.dart';
 
 import 'package:app_client/services/functions/airequest.dart';
@@ -22,17 +24,29 @@ class _FirAiScreenState extends State<FirAiScreen> {
       _ChatMessageController.clear();
     });
 
-    // Simulate AI response
-    /*Future.delayed(Duration(seconds: 1), () {
-      _addAIMessage("This is a response to: $message");
-    });*/
+    //Simulate AI response
   }
 
-  /*void _addAIMessage(String message) {
+  Future<void> ai_answer() async {
+    String userMessage = _ChatMessageController.text;
+    if (userMessage.trim().isEmpty) return;
+
+    _addUserMessage(userMessage);
+
+    String? aiResponse = await airequest(userMessage);
+
+    if (aiResponse != null) {
+      _addAIMessage(aiResponse);
+    } else {
+      _addAIMessage("AI could not process the request.");
+    }
+  }
+
+  void _addAIMessage(String message) {
     setState(() {
       _messages.add(ChatMessage(content: message, isUser: false));
     });
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +110,9 @@ class _FirAiScreenState extends State<FirAiScreen> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            airequest(_ChatMessageController.text);
-
+                            //airequest(_ChatMessageController.text);
                             if (_ChatMessageController.text.trim().isNotEmpty) {
-                              _addUserMessage(
-                                  _ChatMessageController.text.trim());
+                              ai_answer();
                             }
                           },
                           icon: const Icon(Icons.send),
