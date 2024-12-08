@@ -11,6 +11,7 @@ import 'package:app_client/utils/colors.dart';
 
 import 'dart:ui' as ui;
 
+import '../services/functions/GlobalStartTranscirptionService.dart';
 import 'fir_screen1.dart';
 
 class Homescreen extends StatefulWidget {
@@ -167,9 +168,13 @@ $username,''',
                       icon: Icons.handshake,
                     ),
                     const SizedBox(width: 16),
-                    CircleContainer(
-                      feature_name: "Learn",
-                      icon: Icons.book,
+                    GestureDetector(
+                      onTap: ()async{
+                      },
+                      child: CircleContainer(
+                        feature_name: "Learn",
+                        icon: Icons.book,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     CircleContainer(

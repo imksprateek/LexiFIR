@@ -1,6 +1,7 @@
 import 'package:app_client/pages/HomeScreen.dart';
 import 'package:app_client/services/functions/SttWebSocket.dart';
-import 'package:app_client/services/functions/speech_to_text.dart';
+import 'package:app_client/services/functions/SttWebSocket.dart';
+
 import 'package:flutter/material.dart';
 import 'SplashScreen.dart';
 
