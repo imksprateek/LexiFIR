@@ -1,3 +1,4 @@
+import 'package:app_client/services/functions/airequest.dart';
 import 'package:flutter/material.dart';
 import 'package:app_client/services/functions/TexttoSpeech.dart';
 import 'package:app_client/utils/constants.dart';
@@ -75,14 +76,15 @@ class _VoiceChatState extends State<VoiceChat> {
       await _transcriptionService.stopRecording();
       print("Recording stopped.");
       print("Final conversation: $_conversation");
-
+      String airesponse = await airequest(_conversation) ;
       // Automatically trigger Text-to-Speech after recording stops
       if (_conversation.isNotEmpty) {
         if (!_isSpeaking) {
           _isSpeaking = true; // Set flag before speaking
-          await textToSpeech(_conversation); // Call the Text-to-Speech function
+          await textToSpeech(airesponse); // Call the Text-to-Speech function
           _isSpeaking = false; // Reset flag after speaking
         }
+
       }
     } catch (e) {
       print("Error stopping voice chat: $e");
