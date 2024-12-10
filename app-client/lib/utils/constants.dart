@@ -10,4 +10,3 @@ String transcription='' ;
 String conversation = '' ;
 String ForBot= '' ;
 final Transcription_service = TranscriptionService1() ;
-final TranscriptionForChat = TranscriptionServiceBot() ;
