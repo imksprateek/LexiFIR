@@ -31,7 +31,7 @@ Future<dynamic> airequest(String prompt) async {
       final decodedResponse = jsonDecode(response.body);
       print("Decoded response: $decodedResponse");
 
-      return response.body;
+      return decodedResponse.toString();
     } else {
       print("Request failed with status: ${response.statusCode}");
       print("Response body: ${response.body}");

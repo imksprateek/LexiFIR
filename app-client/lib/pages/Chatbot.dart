@@ -4,7 +4,7 @@ import 'package:app_client/utils/constants.dart';
 import 'dart:async';
 
 import '../services/functions/Transciption service.dart';
- // Ensure the correct file path and spelling
+
 
 class VoiceChat extends StatefulWidget {
   const VoiceChat({super.key});
@@ -17,6 +17,7 @@ class _VoiceChatState extends State<VoiceChat> {
   final TranscriptionService _transcriptionService = TranscriptionService();
   String _conversation = ""; // Store the final conversation
   StreamSubscription<String>? _transcriptionSubscription;
+  bool _isSpeaking = false; // Track if text-to-speech is in progress
 
   @override
   void initState() {
@@ -57,8 +58,7 @@ class _VoiceChatState extends State<VoiceChat> {
               });
             }
             stopVoiceChat() ;
-          }, onError: (error)
-          {
+          }, onError: (error) {
             print("Error in transcription stream: $error");
           }, onDone: () {
             print("Transcription stream closed.");
@@ -78,7 +78,11 @@ class _VoiceChatState extends State<VoiceChat> {
 
       // Automatically trigger Text-to-Speech after recording stops
       if (_conversation.isNotEmpty) {
-        textToSpeech(_conversation); // Call the Text-to-Speech function
+        if (!_isSpeaking) {
+          _isSpeaking = true; // Set flag before speaking
+          await textToSpeech(_conversation); // Call the Text-to-Speech function
+          _isSpeaking = false; // Reset flag after speaking
+        }
       }
     } catch (e) {
       print("Error stopping voice chat: $e");
