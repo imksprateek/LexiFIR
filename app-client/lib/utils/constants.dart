@@ -8,4 +8,6 @@ String username = "";
 final String serverUrl = "ws://eng.ksprateek.studio/TranscribeStreaming";
 String transcription='' ;
 String conversation = '' ;
-final Transcription_service = TranscriptionService() ;
+String ForBot= '' ;
+final Transcription_service = TranscriptionService1() ;
+final TranscriptionForChat = TranscriptionServiceBot() ;

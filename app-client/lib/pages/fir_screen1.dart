@@ -14,6 +14,7 @@ class FillFir extends StatefulWidget {
 class _FillFirState extends State<FillFir> {
   @override
   final TextEditingController crimeDescriptionController = TextEditingController();
+
   // List of weapons
   final List<String> weapons = [
     'Knife',

@@ -1,3 +1,4 @@
+import 'package:app_client/pages/Chatbot.dart';
 import 'package:app_client/pages/fir_screen1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -170,6 +171,7 @@ $username,''',
                     const SizedBox(width: 16),
                     GestureDetector(
                       onTap: ()async{
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>VoiceChat())) ;
                       },
                       child: CircleContainer(
                         feature_name: "Learn",

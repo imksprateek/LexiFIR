@@ -5,3 +5,4 @@ class ChatMessage {
   ChatMessage({required this.content, required this.isUser});
   
 }
+
