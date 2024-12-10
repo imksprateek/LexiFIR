@@ -9,4 +9,4 @@ final String serverUrl = "ws://eng.ksprateek.studio/TranscribeStreaming";
 String transcription='' ;
 String conversation = '' ;
 String ForBot= '' ;
-final Transcription_service = TranscriptionService1() ;
+final Transcription_service = TranscriptionService() ;

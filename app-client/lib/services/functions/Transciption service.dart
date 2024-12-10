@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:app_client/pages/fir_screen1.dart';
-import 'package:app_client/utils/constants.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-class TranscriptionService1 {
+import '../../utils/constants.dart';
+
+class TranscriptionService {
   final FlutterSoundRecorder _recorder = FlutterSoundRecorder();
   WebSocketChannel? _channel;
   StreamController<Uint8List>? _audioStreamController;
@@ -21,8 +21,9 @@ class TranscriptionService1 {
   Timer? _silenceTimer;
 
   final double _silenceThreshold = 30.0; // Silence threshold in dB
-  final Duration _silenceDuration = Duration(seconds: 1); // Silence duration to trigger stop
+  final Duration _silenceDuration = Duration(seconds: 2); // Silence duration to trigger stop
 
+  // Initialize recorder and request permissions
   Future<void> initialize() async {
     var status = await Permission.microphone.request();
     if (!status.isGranted) {
@@ -33,8 +34,9 @@ class TranscriptionService1 {
     await _recorder.setSubscriptionDuration(const Duration(milliseconds: 500));
   }
 
+  // Initialize WebSocket connection
   Future<void> _initializeWebSocket(String url) async {
-    await _closeWebSocket();
+    await _closeWebSocket(); // Close existing connection before creating a new one
     try {
       _channel = WebSocketChannel.connect(Uri.parse(url));
       _channel!.stream.listen(
@@ -54,6 +56,7 @@ class TranscriptionService1 {
     }
   }
 
+  // Close WebSocket connection
   Future<void> _closeWebSocket() async {
     if (_channel != null) {
       try {
@@ -65,6 +68,7 @@ class TranscriptionService1 {
     }
   }
 
+  // Start recording
   Future<void> startRecording(String webSocketUrl) async {
     if (_isRecording) return;
 
@@ -100,35 +104,34 @@ class TranscriptionService1 {
         },
       );
 
-      // Start monitoring audio levels for pauses
-      _monitorSilence();
+      _monitorSilence(); // Start monitoring silence to stop recording
     } catch (e) {
       print("Error starting recorder: $e");
       _isRecording = false;
     }
   }
 
+  // Stop recording and send final transcription
   Future<void> stopRecording() async {
     if (!_isRecording) return;
 
     _isRecording = false;
 
     try {
-      _silenceTimer?.cancel();
+      _silenceTimer?.cancel(); // Cancel silence timer if any
       await _recorder.stopRecorder();
       if (_channel != null && _channel!.closeCode == null) {
-        _channel!.sink.add("submit_response");
+        _channel!.sink.add("submit_response"); // Send 'submit_response' to signal end of recording
       }
 
       print(_transcriptions.join(' '));
-      conversation = _transcriptions.join(' ') ;
-
-
+      conversation = _transcriptions.join(' '); // Update global conversation variable
     } catch (e) {
       print("Error stopping recorder: $e");
     }
   }
 
+  // Monitor audio levels to detect silence and trigger stop if silence persists
   void _monitorSilence() {
     _recorder.onProgress!.listen((event) {
       final audioLevel = event.decibels ?? -120.0; // Default to low value if null
@@ -139,22 +142,23 @@ class TranscriptionService1 {
       if (audioLevel < _silenceThreshold) {
         // Silence detected, start or reset the timer
         if (_silenceTimer == null || !_silenceTimer!.isActive) {
-          print("Audio level below 20 dB. Starting silence timer...");
+          print("Audio level below 30 dB. Starting silence timer...");
           _silenceTimer = Timer(_silenceDuration, () {
-            print("Prolonged low audio level detected for 3 seconds. Stopping recording...");
-            stopRecording(); // Ensure recording stops
+            print("Prolonged low audio level detected for 1 second. Stopping recording...");
+            stopRecording(); // Stop recording after silence duration
           });
         }
       } else {
         // Audio detected, cancel the silence timer
         if (_silenceTimer != null && _silenceTimer!.isActive) {
-          print("Audio level above 20 dB. Resetting silence timer...");
+          print("Audio level above 30 dB. Resetting silence timer...");
           _silenceTimer?.cancel();
         }
       }
     });
   }
 
+  // Dispose resources when done
   Future<void> dispose() async {
     _silenceTimer?.cancel();
     _audioStreamController?.close();

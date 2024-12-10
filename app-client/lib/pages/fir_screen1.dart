@@ -4,7 +4,8 @@ import 'package:app_client/utils/colors.dart';
 import 'package:app_client/utils/constants.dart';
 import 'package:flutter/material.dart';
 
-final TextEditingController crimeDescriptionController = TextEditingController();
+final TextEditingController crimeDescriptionController =
+    TextEditingController();
 
 class FillFir extends StatefulWidget {
   const FillFir({super.key});
@@ -14,8 +15,22 @@ class FillFir extends StatefulWidget {
 }
 
 class _FillFirState extends State<FillFir> {
-  final List<String> weapons = ['Knife', 'Gun', 'Blunt Object', 'Explosive', 'Poison', 'Other'];
-  final List<String> crimeCategories = ['Theft', 'Assault', 'Fraud', 'Homicide', 'Cybercrime', 'Other'];
+  final List<String> weapons = [
+    'Knife',
+    'Gun',
+    'Blunt Object',
+    'Explosive',
+    'Poison',
+    'Other'
+  ];
+  final List<String> crimeCategories = [
+    'Theft',
+    'Assault',
+    'Fraud',
+    'Homicide',
+    'Cybercrime',
+    'Other'
+  ];
   String? selectedWeapon;
   String? selectedCategory;
   DateTime? selectedDate;
@@ -44,7 +59,8 @@ class _FillFirState extends State<FillFir> {
         .toList();
 
     final List<DropdownMenuItem<String>> categoryItems = crimeCategories
-        .map((category) => DropdownMenuItem(value: category, child: Text(category)))
+        .map((category) =>
+            DropdownMenuItem(value: category, child: Text(category)))
         .toList();
 
     return SafeArea(
@@ -70,7 +86,8 @@ class _FillFirState extends State<FillFir> {
                           },
                           child: Text(
                             "LexiFir",
-                            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 40, fontWeight: FontWeight.bold),
                           ),
                         ),
                         Spacer(),
@@ -120,7 +137,8 @@ class _FillFirState extends State<FillFir> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: Colors.black, width: 2),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 2),
                           ),
                           hintText: '',
                           hintStyle: TextStyle(color: Colors.grey),
@@ -128,7 +146,8 @@ class _FillFirState extends State<FillFir> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Text('Select the weapon used:', style: TextStyle(color: Colors.black)),
+                    Text('Select the weapon used:',
+                        style: TextStyle(color: Colors.black)),
                     Container(
                       height: 40,
                       child: DropdownButtonFormField<String>(
@@ -143,7 +162,8 @@ class _FillFirState extends State<FillFir> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: Colors.black, width: 1),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -153,7 +173,8 @@ class _FillFirState extends State<FillFir> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    Text('Category of crime:', style: TextStyle(color: Colors.black)),
+                    Text('Category of crime:',
+                        style: TextStyle(color: Colors.black)),
                     Container(
                       height: 40,
                       child: DropdownButtonFormField<String>(
@@ -168,7 +189,8 @@ class _FillFirState extends State<FillFir> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: Colors.black, width: 1),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 1),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -178,7 +200,8 @@ class _FillFirState extends State<FillFir> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    Text('Date of occurrence:', style: TextStyle(color: Colors.black)),
+                    Text('Date of occurrence:',
+                        style: TextStyle(color: Colors.black)),
                     GestureDetector(
                       onTap: () => _selectDate(context),
                       child: AbsorbPointer(
@@ -199,7 +222,8 @@ class _FillFirState extends State<FillFir> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8),
-                              borderSide: BorderSide(color: Colors.black, width: 2),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 2),
                             ),
                             hintText: 'Select a date',
                             suffixIcon: Icon(Icons.calendar_today),
@@ -208,7 +232,8 @@ class _FillFirState extends State<FillFir> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    Text('Place of occurrence:', style: TextStyle(color: Colors.black)),
+                    Text('Place of occurrence:',
+                        style: TextStyle(color: Colors.black)),
                     TextField(
                       onChanged: (value) {
                         setState(() {
@@ -277,7 +302,8 @@ class _FillFirState extends State<FillFir> {
                     child: Center(
                       child: IconButton(
                         onPressed: () async {
-                          if (isRecording) return; // Prevent multiple recording instances
+                          if (isRecording)
+                            return; // Prevent multiple recording instances
 
                           setState(() {
                             isRecording = true;
@@ -295,21 +321,48 @@ class _FillFirState extends State<FillFir> {
                                     color: AppBlue,
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  child: Icon(Icons.mic, color: AppBluelight, size: 100),
+                                  child: Column(
+                                    children: [
+                                      Icon(Icons.mic,
+                                          color: AppBluelight, size: 100),
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          // Stop recording and update the conversation in textfield
+                                          await Transcription_service
+                                              .stopRecording();
+                                          setState(() {
+                                            crimeDescriptionController.text =
+                                                conversation;
+                                          });
+
+                                          // Close the dialog
+                                          Navigator.pop(context);
+                                          setState(() {
+                                            isRecording = false;
+                                          });
+                                        },
+                                        child: Text("Stop recording"),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },
                           );
 
+                          // Initialize and start recording
                           await Transcription_service.initialize();
                           await Transcription_service.startRecording(serverUrl);
 
                           // Listen for transcription completion
                           Transcription_service.messages.listen((message) {
                             setState(() {
+                              conversation = message;
                               crimeDescriptionController.text = message;
                             });
-                             // Close the dialog once done
+
+                            // Close the dialog once done
+
                             setState(() {
                               isRecording = false;
                             });
