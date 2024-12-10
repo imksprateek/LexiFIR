@@ -1,3 +1,4 @@
+import 'package:app_client/pages/Chatbot.dart';
 import 'package:app_client/pages/HomeScreen.dart';
 import 'package:app_client/services/functions/SttWebSocket.dart';
 import 'package:app_client/services/functions/SttWebSocket.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: SplashScreen());
+        debugShowCheckedModeBanner: false,
+        home: VoiceChat());
   }
 }

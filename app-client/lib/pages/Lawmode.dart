@@ -1,9 +1,11 @@
-import 'package:app_client/pages/FIRMode.dart';
+// import 'package:app_client/pages/FIRMode.dart';
 import 'package:app_client/pages/fir_screen2.dart';
 import 'package:app_client/services/functions/GlobalStartTranscirptionService.dart';
 import 'package:app_client/utils/colors.dart';
 import 'package:app_client/utils/constants.dart';
 import 'package:flutter/material.dart';
+
+import 'Firmode.dart';
 
 final TextEditingController crimeDescriptionController =
     TextEditingController();
