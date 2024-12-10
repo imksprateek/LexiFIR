@@ -1,5 +1,5 @@
 import 'package:app_client/pages/Chatbot.dart';
-import 'package:app_client/pages/fir_screen1.dart';
+import 'package:app_client/pages/Lawmode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:app_client/services/functions/Logout.dart';
@@ -13,7 +13,7 @@ import 'package:app_client/utils/colors.dart';
 import 'dart:ui' as ui;
 
 import '../services/functions/GlobalStartTranscirptionService.dart';
-import 'fir_screen1.dart';
+import 'Lawmode.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -35,13 +35,14 @@ class _HomescreenState extends State<Homescreen> {
   Future<void> _loadUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      username = prefs.getString('username') ?? 'User'; // Default to 'User' if no username is found
+      username = prefs.getString('username') ??
+          'User'; // Default to 'User' if no username is found
     });
   }
 
   void ontap_fir() {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => const FillFir(),
+      builder: (context) => const FillFirLawMode(),
     ));
   }
 
@@ -58,7 +59,8 @@ class _HomescreenState extends State<Homescreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: screenHeight * 0.5, // Adjusting height relative to screen height
+              height: screenHeight *
+                  0.5, // Adjusting height relative to screen height
               child: Stack(
                 children: [
                   Image.asset('lib/images/rect.png'),
@@ -85,7 +87,8 @@ class _HomescreenState extends State<Homescreen> {
                     ],
                   ),
                   Positioned(
-                    top: screenHeight * 0.08, // Adjusted for dynamic positioning
+                    top:
+                        screenHeight * 0.08, // Adjusted for dynamic positioning
                     right: screenWidth * 0.4,
                     child: Text(
                       '''Welcome Back 
@@ -125,7 +128,8 @@ $username,''',
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10, right: 8),
                       child: Container(
-                        height: screenHeight * 0.15, // Adjust the height as needed
+                        height:
+                            screenHeight * 0.15, // Adjust the height as needed
                         width: screenWidth * 0.9, // Adjust the width as needed
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -141,7 +145,8 @@ $username,''',
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(15),
-                          child: Image.asset('lib/images/stats.png', fit: BoxFit.fitWidth),
+                          child: Image.asset('lib/images/stats.png',
+                              fit: BoxFit.fitWidth),
                         ),
                       ),
                     ),
@@ -170,8 +175,11 @@ $username,''',
                     ),
                     const SizedBox(width: 16),
                     GestureDetector(
-                      onTap: ()async{
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>VoiceChat())) ;
+                      onTap: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VoiceChat()));
                       },
                       child: CircleContainer(
                         feature_name: "Learn",
