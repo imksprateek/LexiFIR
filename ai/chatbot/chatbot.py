@@ -72,3 +72,9 @@ Do not provide additional information or engage with unrelated topics.
             self.conversation_history = self.conversation_history[-10:]
         
         return response.content
+    
+    def clear_conversation_history(self):
+        """
+        Clear the entire conversation history
+        """
+        self.conversation_history = []
