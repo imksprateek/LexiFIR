@@ -26,6 +26,17 @@ def chat():
         return jsonify({"response": response})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/end_session', methods=['DELETE'])
+def end_session():
+    """
+    End the current chat session and clear conversation history
+    """
+    try:
+        chatbot.clear_conversation_history()
+        return jsonify({"status": "Session ended successfully"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
