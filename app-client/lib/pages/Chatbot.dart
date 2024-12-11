@@ -6,7 +6,6 @@ import 'dart:async';
 
 import '../services/functions/Transciption service.dart';
 
-
 class VoiceChat extends StatefulWidget {
   const VoiceChat({super.key});
 
@@ -43,7 +42,8 @@ class _VoiceChatState extends State<VoiceChat> {
         _conversation = ""; // Clear previous conversation
       });
 
-      await _transcriptionService.startRecording(serverUrl); // Replace serverUrl with your WebSocket URL
+      await _transcriptionService.startRecording(
+          serverUrl); // Replace serverUrl with your WebSocket URL
       print("Recording started.");
 
       // Cancel any existing subscription
@@ -52,19 +52,19 @@ class _VoiceChatState extends State<VoiceChat> {
       // Listen to real-time transcriptions
       _transcriptionSubscription =
           _transcriptionService.messages.distinct().listen((transcription) {
-            print("Received transcription: $transcription"); // Debugging
-            if (!transcription.toLowerCase().startsWith("final transcript:")) {
-              setState(() {
-                _conversation += "$transcription "; // Append transcription
-              });
-            }
-            stopVoiceChat() ;
-          }, onError: (error) {
-            print("Error in transcription stream: $error");
-          }, onDone: () {
-            print("Transcription stream closed.");
-             // Automatically stop when the stream closes
+        print("Received transcription: $transcription"); // Debugging
+        if (!transcription.toLowerCase().startsWith("final transcript:")) {
+          setState(() {
+            _conversation += "$transcription "; // Append transcription
           });
+        }
+        stopVoiceChat();
+      }, onError: (error) {
+        print("Error in transcription stream: $error");
+      }, onDone: () {
+        print("Transcription stream closed.");
+        // Automatically stop when the stream closes
+      });
     } catch (e) {
       print("Error starting voice chat: $e");
     }
@@ -76,7 +76,7 @@ class _VoiceChatState extends State<VoiceChat> {
       await _transcriptionService.stopRecording();
       print("Recording stopped.");
       print("Final conversation: $_conversation");
-      String airesponse = await airequest(_conversation) ;
+      String airesponse = await airequest(_conversation);
       // Automatically trigger Text-to-Speech after recording stops
       if (_conversation.isNotEmpty) {
         if (!_isSpeaking) {
@@ -84,7 +84,6 @@ class _VoiceChatState extends State<VoiceChat> {
           await textToSpeech(airesponse); // Call the Text-to-Speech function
           _isSpeaking = false; // Reset flag after speaking
         }
-
       }
     } catch (e) {
       print("Error stopping voice chat: $e");
@@ -129,4 +128,3 @@ class _VoiceChatState extends State<VoiceChat> {
     );
   }
 }
-x

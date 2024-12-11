@@ -8,12 +8,13 @@ import 'package:url_launcher/url_launcher.dart';
 class CustomCarousel extends StatefulWidget {
   final List<String> imageUrls;
   final List<String> linkUrls;
+  final List<String> TitleUrls;
 
-  const CustomCarousel({
-    super.key,
-    required this.imageUrls,
-    required this.linkUrls,
-  });
+  const CustomCarousel(
+      {super.key,
+      required this.imageUrls,
+      required this.linkUrls,
+      required this.TitleUrls});
 
   @override
   _CustomCarouselState createState() => _CustomCarouselState();
@@ -95,12 +96,16 @@ class _CustomCarouselState extends State<CustomCarousel> {
                               right: 0,
                               child: Center(
                                 child: Text(
-                                  "",
+                                  widget.TitleUrls[
+                                      widget.imageUrls.indexOf(imageUrl)],
+                                  textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 24.0,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.bold,
-                                    backgroundColor: AppBlue,
-                                    color: Colors.white,
+                                    backgroundColor:
+                                        const Color.fromARGB(104, 54, 54, 54),
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255),
                                   ),
                                 ),
                               ),

@@ -9,13 +9,23 @@ import 'package:flutter/material.dart';
 final TextEditingController _ChatMessageController = TextEditingController();
 
 class FirAiScreen extends StatefulWidget {
-  const FirAiScreen({super.key});
+  final String Description;
+  FirAiScreen({super.key, required this.Description});
 
   @override
   State<FirAiScreen> createState() => _FirAiScreenState();
 }
 
 class _FirAiScreenState extends State<FirAiScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    initai();
+
+    super.initState();
+  }
+
   final List<ChatMessage> _messages = []; // To store chat messages
 
   void _addUserMessage(String message) {
@@ -31,6 +41,21 @@ class _FirAiScreenState extends State<FirAiScreen> {
     setState(() {
       _messages.add(ChatMessage(content: message, isUser: false));
     });
+  }
+
+  Future<void> initai() async {
+    String userMessage = widget.Description.toString();
+    if (userMessage.trim().isEmpty) return;
+
+    _addUserMessage(userMessage);
+
+    String? aiResponse = await airequest(userMessage);
+
+    if (aiResponse != null) {
+      _addAIMessage(aiResponse);
+    } else {
+      _addAIMessage("AI could not process the request.");
+    }
   }
 
   Future<void> ai_answer() async {
@@ -115,11 +140,18 @@ class _FirAiScreenState extends State<FirAiScreen> {
                             //airequest(_ChatMessageController.text);
                             if (_ChatMessageController.text.trim().isNotEmpty) {
                               ai_answer();
+
+                              
                             }
                           },
                           icon: const Icon(Icons.send),
                         ),
-                        IconButton(onPressed: () {}, icon: Icon(Icons.mic))
+                        IconButton(onPressed: () {
+
+                        
+
+
+                        }, icon: Icon(Icons.mic))
                       ],
                     ),
                   ),

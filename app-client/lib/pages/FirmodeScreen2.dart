@@ -1,3 +1,4 @@
+import 'package:app_client/pages/Lawmode.dart';
 import 'package:app_client/pages/fir_screen2.dart';
 import 'package:app_client/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -218,7 +219,7 @@ class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FirAiScreen(),
+                          builder: (context) => FirAiScreen(Description: crimeDescriptionController.text,),
                         ),
                       );
                     },

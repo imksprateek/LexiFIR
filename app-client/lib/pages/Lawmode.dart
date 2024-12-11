@@ -303,7 +303,14 @@ class _FillFirLawModeState extends State<FillFirLawMode> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => FirAiScreen(
+                              Description: crimeDescriptionController.text),
+                        ));
+
+                        //crimeDescriptionController.clear();
+                      },
                       child: Container(
                         width: double.infinity,
                         padding: EdgeInsets.symmetric(vertical: 15),

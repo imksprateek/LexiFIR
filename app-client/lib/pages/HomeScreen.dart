@@ -209,6 +209,7 @@ $username,''',
             CustomCarousel(
               imageUrls: imageUrls,
               linkUrls: linkURLS,
+              TitleUrls: titleUrls,
             ),
           ],
         ),
