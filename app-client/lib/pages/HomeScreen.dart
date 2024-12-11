@@ -195,9 +195,14 @@ $username,''',
                       ),
                     ),
                     const SizedBox(width: 16),
-                    CircleContainer(
-                      feature_name: "Saved Documents",
-                      icon: Icons.save,
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>VoiceChat()));
+                      },
+                      child: CircleContainer(
+                        feature_name: "Saved Documents",
+                        icon: Icons.save,
+                      ),
                     ),
                   ],
                 ),
