@@ -57,9 +57,6 @@ public class LegalAnalysisDTO {
         @JsonProperty("url")
         private String officialReference;
 
-        // Additional properties map
-        private Map<String, Object> additionalProperties = new HashMap<>();
-
         // No-args constructor
         public LandmarkCase() {}
 
@@ -72,17 +69,6 @@ public class LegalAnalysisDTO {
 
         public String getOfficialReference() { return officialReference; }
         public void setOfficialReference(String officialReference) { this.officialReference = officialReference; }
-
-        // Capture any additional properties
-        @JsonAnySetter
-        public void handleUnknownProperty(String key, Object value) {
-            additionalProperties.put(key, value);
-        }
-
-        // Getter for additional properties if needed
-        public Map<String, Object> getAdditionalProperties() {
-            return additionalProperties;
-        }
     }
 
     // Getters and setters for main class
