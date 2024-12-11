@@ -1,7 +1,9 @@
 import 'package:app_client/services/functions/airequest.dart';
+import 'package:app_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:app_client/services/functions/TexttoSpeech.dart';
 import 'package:app_client/utils/constants.dart';
+import 'package:video_player/video_player.dart';
 import 'dart:async';
 
 import '../services/functions/Transciption service.dart';
@@ -19,11 +21,15 @@ class _VoiceChatState extends State<VoiceChat> {
   String _conversation = ""; // Store the final conversation
   StreamSubscription<String>? _transcriptionSubscription;
   bool _isSpeaking = false; // Track if text-to-speech is in progress
-
+  late VideoPlayerController _controller;
   @override
   void initState() {
     super.initState();
     initializeService();
+    _controller = VideoPlayerController.network('https://www.example.com/video.mp4') // Replace with your MP4 URL
+      ..initialize().then((_) {
+        setState(() {});
+      });
   }
 
   // Initialize the transcription service
@@ -102,11 +108,13 @@ class _VoiceChatState extends State<VoiceChat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Voice Chat")),
+      backgroundColor: AppBlue,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
+
             ElevatedButton(
               onPressed: startVoiceChat,
               child: const Text("Start Recording"),
@@ -118,9 +126,10 @@ class _VoiceChatState extends State<VoiceChat> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                "Conversation: $_conversation",
+                "$_conversation",
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16),
+
+                style: const TextStyle(fontSize: 16 , color: Colors.white),
               ),
             ),
           ],
@@ -129,4 +138,3 @@ class _VoiceChatState extends State<VoiceChat> {
     );
   }
 }
-x

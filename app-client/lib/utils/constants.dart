@@ -10,3 +10,5 @@ String transcription='' ;
 String conversation = '' ;
 String ForBot= '' ;
 final Transcription_service = TranscriptionService() ;
+String filePath = '' ;
+bool showWave = false ;
