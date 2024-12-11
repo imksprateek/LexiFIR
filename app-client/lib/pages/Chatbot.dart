@@ -115,7 +115,7 @@ class _VoiceChatState extends State<VoiceChat> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 150,
             ),
             // Reserve space for the waveform widget
@@ -136,12 +136,12 @@ class _VoiceChatState extends State<VoiceChat> {
                 style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 300,
             ),
             ElevatedButton(
               onPressed: startVoiceChat,
-              child: const Text("Start Recording"),
+              child: const Text("x Recording"),
             ),
           ],
         ),
