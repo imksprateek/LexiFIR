@@ -1,5 +1,6 @@
 import 'package:app_client/pages/Chatbot.dart';
 import 'package:app_client/pages/Lawmode.dart';
+import 'package:app_client/pages/LegalAdvisory.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:app_client/services/functions/Logout.dart';
@@ -169,9 +170,16 @@ $username,''',
                       ontap: ontap_fir,
                     ),
                     const SizedBox(width: 16),
-                    CircleContainer(
-                      feature_name: "Legal Assistance",
-                      icon: Icons.handshake,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => LegalAdvisory(),
+                        ));
+                      },
+                      child: CircleContainer(
+                        feature_name: "Legal Assistance",
+                        icon: Icons.handshake,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     GestureDetector(

@@ -1,30 +1,23 @@
-import 'dart:ffi';
-
 import 'package:app_client/services/functions/Chatmessage.dart';
-
 import 'package:app_client/services/functions/airequest.dart';
-import 'package:app_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-final TextEditingController _ChatMessageController = TextEditingController();
-
-class FirAiScreen extends StatefulWidget {
-  const FirAiScreen({super.key});
+class LegalAdvisory extends StatefulWidget {
+  const LegalAdvisory({super.key});
 
   @override
-  State<FirAiScreen> createState() => _FirAiScreenState();
+  State<LegalAdvisory> createState() => _LegalAdvisoryState();
 }
 
-class _FirAiScreenState extends State<FirAiScreen> {
-  final List<ChatMessage> _messages = []; // To store chat messages
+class _LegalAdvisoryState extends State<LegalAdvisory> {
+  List<ChatMessage> _messages = [];
+  TextEditingController _legaladvisoryController = TextEditingController();
 
   void _addUserMessage(String message) {
     setState(() {
       _messages.add(ChatMessage(content: message, isUser: true));
-      _ChatMessageController.clear();
+      _legaladvisoryController.clear();
     });
-
-    //Simulate AI response
   }
 
   void _addAIMessage(String message) {
@@ -34,7 +27,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
   }
 
   Future<void> ai_answer() async {
-    String userMessage = _ChatMessageController.text;
+    String userMessage = _legaladvisoryController.text;
     if (userMessage.trim().isEmpty) return;
 
     _addUserMessage(userMessage);
@@ -55,7 +48,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: const Text(
-          'Fir AI Chat',
+          'Legal Advisory',
           style: TextStyle(color: Colors.black),
         ),
         elevation: 0,
@@ -82,7 +75,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
                     ),
                     child: //Text(
                         //message.content,
-                        //style: const TextStyle(fontSize: 16),
+                        // style: const TextStyle(fontSize: 16),
                         //),
 
                         RichText(text: parseTextWithBold(message.content)),
@@ -100,8 +93,9 @@ class _FirAiScreenState extends State<FirAiScreen> {
                 border: Border.all(color: Colors.black),
               ),
               child: TextFormField(
-                controller: _ChatMessageController,
+                controller: _legaladvisoryController,
                 decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.attachment),
                   hintText: "Type your message",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -113,7 +107,9 @@ class _FirAiScreenState extends State<FirAiScreen> {
                         IconButton(
                           onPressed: () {
                             //airequest(_ChatMessageController.text);
-                            if (_ChatMessageController.text.trim().isNotEmpty) {
+                            if (_legaladvisoryController.text
+                                .trim()
+                                .isNotEmpty) {
                               ai_answer();
                             }
                           },
@@ -169,50 +165,3 @@ class _FirAiScreenState extends State<FirAiScreen> {
     return TextSpan(children: spans);
   }
 }
-
-
-          /* Positioned(
-            bottom: 360,
-            left: 80,
-            child: Center(
-              child: Container(
-                height: 200,
-                width: 200,
-                decoration: BoxDecoration(
-                  color: Appbluelight2,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 2,
-                      blurRadius: 10,
-                      offset: const Offset(4, 4),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          print("Attach documents button clicked");
-                        },
-                        icon: const Icon(
-                          Icons.attach_file,
-                          size: 100,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const Text(
-                        '''Click here to Attach      
-Documents or Start Typing''',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),*/
