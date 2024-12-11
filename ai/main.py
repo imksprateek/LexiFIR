@@ -81,9 +81,10 @@ llm = LLM(
 import json
 from groq import Groq  # Corrected import for Groq
 
+
 def convert_string_to_json(input_string):
     """
-    Converts a legal analysis string into a structured JSON format using an LLM.
+    Converts a legal analysis string into a structured JSON format with specified fields.
 
     Args:
         input_string (str): The input string to convert into JSON.
@@ -93,15 +94,32 @@ def convert_string_to_json(input_string):
     """
     # Initialize the Groq client
     client = Groq()  # You'll need to set up API key via environment variable or direct initialization
-    
+
     prompt = (
-        "Convert the following text into a well-structured JSON format. Ensure all key sections, "
-        "subsections, and their content are preserved. Return the output as a valid JSON string "
-        "that can be directly parsed:\n\n"
+        "Convert the following text into a well-structured JSON format with the specified structure. "
+        "Ensure all key sections, subsections, and their content are preserved. Use this format strictly: \n\n"
+        "{\n"
+        "  \"relatedSections\": [\n"
+        "    {\n"
+        "      \"sectionCode\": \"string\",\n"
+        "      \"description\": \"string\",\n"
+        "      \"relevanceScore\": 0,\n"
+        "      \"reasoning\": \"string\"\n"
+        "    }\n"
+        "  ],\n"
+        "  \"landmarkJudgments\": [\n"
+        "    {\n"
+        "      \"title\": \"string\",\n"
+        "      \"summary\": \"string\",\n"
+        "      \"url\": \"string\"\n"
+        "    }\n"
+        "  ]\n"
+        "}\n\n"
+        "Convert the text below into the above JSON format:\n\n"
         f"{input_string}\n\n"
         "Return ONLY the JSON string without any additional commentary or formatting."
     )
-    
+
     try:
         # Use the chat.completions.create method 
         response = client.chat.completions.create(
@@ -110,19 +128,21 @@ def convert_string_to_json(input_string):
                 {"role": "user", "content": prompt}
             ]
         )
-        
+
         # Extract the text response from the completion
         json_text = response.choices[0].message.content.strip()
-        
+
         # Validate the JSON string
-        # json.loads(json_text)
-        
-        return json_text
-    
+        import json
+        parsed_json = json.loads(json_text)
+
+        return json.dumps(parsed_json, indent=2)  # Pretty-print JSON
+
     except json.JSONDecodeError:
         raise ValueError("The LLM did not return a valid JSON string.")
     except Exception as e:
         raise ValueError(f"An error occurred: {str(e)}")
+
 
     
 def generate_comprehensive_legal_description(case_details: Dict[str, Any]):
