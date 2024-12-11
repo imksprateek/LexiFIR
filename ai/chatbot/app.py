@@ -23,10 +23,13 @@ def chat():
     
     try:
         response = chatbot.get_response(user_message)
-        return jsonify({"response": response})
+        return jsonify({
+            "response": response["response"],
+            "summary": response["summary"]
+        })
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 @app.route('/end_session', methods=['DELETE'])
 def end_session():
     """
