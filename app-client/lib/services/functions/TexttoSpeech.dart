@@ -43,6 +43,18 @@ Future<void> textToSpeech(String text) async {
 
         // Play the audio using audioplayers
         AudioPlayer audioPlayer = AudioPlayer();
+        audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
+          if (state == PlayerState.playing) {
+            showWave= true ;
+            print("Audio has started playing");
+          } else if (state == PlayerState.completed) {
+            showWave = false ;
+            print("Audio has finished playing");
+          } else if (state == PlayerState.stopped) {
+            showWave = false ;
+            print("Audio has stopped");
+          }
+        });
 
         // Play the file using DeviceFileSource (no need for isLocal)
        await audioPlayer.play(DeviceFileSource(filePath));
