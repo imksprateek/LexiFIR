@@ -4,6 +4,7 @@ import 'package:app_client/services/functions/Chatmessage.dart';
 
 import 'package:app_client/services/functions/airequest.dart';
 import 'package:app_client/utils/colors.dart';
+import 'package:app_client/services/functions/SevenWOneH.dart';
 import 'package:flutter/material.dart';
 
 final TextEditingController _ChatMessageController = TextEditingController();
@@ -64,7 +65,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
 
     _addUserMessage(userMessage);
 
-    String? aiResponse = await airequest(userMessage);
+    String? aiResponse = await SevenWrequest(userMessage, 'Gun', 'accident');
 
     if (aiResponse != null) {
       _addAIMessage(aiResponse);
@@ -140,18 +141,11 @@ class _FirAiScreenState extends State<FirAiScreen> {
                             //airequest(_ChatMessageController.text);
                             if (_ChatMessageController.text.trim().isNotEmpty) {
                               ai_answer();
-
-                              
                             }
                           },
                           icon: const Icon(Icons.send),
                         ),
-                        IconButton(onPressed: () {
-
-                        
-
-
-                        }, icon: Icon(Icons.mic))
+                        IconButton(onPressed: () {}, icon: Icon(Icons.mic))
                       ],
                     ),
                   ),

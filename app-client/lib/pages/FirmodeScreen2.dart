@@ -114,7 +114,7 @@ class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
               }).toList(),
               const SizedBox(height: 24),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTap: deleteLastSuspect,
@@ -132,6 +132,9 @@ class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
                         ),
                       ),
                     ),
+                  ),
+                  const SizedBox(
+                    width: 10,
                   ),
                   GestureDetector(
                     onTap: addSuspect,
@@ -219,11 +222,13 @@ class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => FirAiScreen(Description: crimeDescriptionController.text,),
+                          builder: (context) => FirAiScreen(
+                            Description: crimeDescriptionController.text,
+                          ),
                         ),
                       );
                     },
-                    child: const Text('Proceed'),
+                    child:  Text('Proceed'),
                   ),
                 ],
               ),
