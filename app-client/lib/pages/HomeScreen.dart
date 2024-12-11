@@ -77,9 +77,7 @@ class _HomescreenState extends State<Homescreen> {
                       ),
                       SizedBox(width: screenWidth * 0.55),
                       IconButton(
-                        onPressed: () {
-                          textToSpeech("Venkat pp small lmao , hahahahahaha");
-                        },
+                        onPressed: (){},
                         icon: const Icon(
                           Icons.person_outlined,
                           color: Colors.white,
