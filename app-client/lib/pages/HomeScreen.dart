@@ -1,6 +1,7 @@
 import 'package:app_client/pages/Chatbot.dart';
 import 'package:app_client/pages/Lawmode.dart';
 import 'package:app_client/pages/LegalAdvisory.dart';
+import 'package:app_client/utils/responseContainer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:app_client/services/functions/Logout.dart';
@@ -187,7 +188,10 @@ $username,''',
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => VoiceChat()));
+                                builder: (context) => Responsecontainer(
+                                    IpcSection: '100',
+                                    Description: 'asdas',
+                                    Confidence: '90')));
                       },
                       child: CircleContainer(
                         feature_name: "Learn",
@@ -196,8 +200,11 @@ $username,''',
                     ),
                     const SizedBox(width: 16),
                     GestureDetector(
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>VoiceChat()));
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VoiceChat()));
                       },
                       child: CircleContainer(
                         feature_name: "Saved Documents",
