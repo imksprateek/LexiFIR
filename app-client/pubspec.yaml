@@ -45,6 +45,12 @@ dependencies:
   web_socket_channel: ^3.0.1
   permission_handler: ^11.3.1
   flutter_sound: ^9.17.6
+  logger: ^2.5.0
+  just_waveform: ^0.0.5
+  audio_waveforms: ^1.2.0
+  siri_wave: ^2.2.0
+  video_player: ^2.9.2
+  flutter_ffmpeg: ^0.4.0
 
 dev_dependencies:
   flutter_test:

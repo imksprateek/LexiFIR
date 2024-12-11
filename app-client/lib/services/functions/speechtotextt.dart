@@ -1,4 +1,4 @@
-if (_speechToText.isNotListening && _confidenceLevel > 0)
+/*(if (_speechToText.isNotListening && _confidenceLevel > 0)
               Padding(
                 padding: const EdgeInsets.only(
                   bottom: 100,
@@ -89,4 +89,4 @@ if (_speechToText.isNotListening && _confidenceLevel > 0)
         backgroundColor: Colors.red,
       ),
     );
-  
+  */
