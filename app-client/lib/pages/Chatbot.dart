@@ -86,7 +86,7 @@ class _VoiceChatState extends State<VoiceChat> {
 
       if (_conversation.isNotEmpty && !_isSpeaking) {
         _isSpeaking = true;
-        await textToSpeech(airesponse, (status) {
+        await textToSpeech(summarize!, (status) {
           setState(() {
             showWave = status;
           });

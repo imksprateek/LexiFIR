@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 
 String? Ai_answer;
+String? summarize;
 final logger = Logger();
 
 Future<dynamic> airequest(String prompt) async {
@@ -23,17 +24,35 @@ Future<dynamic> airequest(String prompt) async {
     );
 
     if (response.statusCode == 200) {
-      print("Request succeededdd lets fkn go !");
+      print("Request succeeded!");
 
       Ai_answer = response.body;
       logger.d(response.body);
 
+      // Decode the response
       final decodedResponse = jsonDecode(response.body);
       print("Decoded response: $decodedResponse");
 
-      String decodedAi = decodedResponse['response'];
+      // Ensure the decoded response is a Map
+      if (decodedResponse is Map<String, dynamic>) {
+        String? decodedAi = decodedResponse['response'];
+        summarize = decodedResponse['summary'];
 
-      return decodedAi;
+        // Log and return values
+        if (summarize != null) {
+          // Remove the "Here is a summary:" part if it exists
+          summarize = summarize.replaceFirst(from, to) ;
+
+          print("The summary of the above is: $summarize");
+        } else {
+          print("Summary key not found or null.");
+        }
+
+
+        return decodedAi;
+      } else {
+        print("Decoded response is not a valid JSON object.");
+      }
     } else {
       print("Request failed with status: ${response.statusCode}");
       print("Response body: ${response.body}");
