@@ -34,6 +34,6 @@ class _MyAppState extends State<MyApp> {
         ],
         locale: Locale('en'),
         debugShowCheckedModeBanner: false,
-        home: Homescreen());
+        home: VoiceChat());
   }
 }

@@ -29,7 +29,10 @@ class _VoiceChatState extends State<VoiceChat> {
     frequency: 4,
     speed: 0.15,
   );
-  String language = 'ENG' ;
+
+  String language = 'ENG';
+  String serverUrl = 'ws://eng.ksprateek.studio/TranscribeStreaming'; // Initial value
+
   @override
   void initState() {
     super.initState();
@@ -53,9 +56,8 @@ class _VoiceChatState extends State<VoiceChat> {
         _conversation = ""; // Clear previous conversation
       });
 
-      await _transcriptionService.startRecording(
-          serverUrl); // Replace serverUrl with your WebSocket URL
-      print("Recording started.");
+      await _transcriptionService.startRecording(serverUrl);
+      print("Recording started with serverUrl: $serverUrl");
 
       // Cancel any existing subscription
       _transcriptionSubscription?.cancel();
@@ -63,19 +65,18 @@ class _VoiceChatState extends State<VoiceChat> {
       // Listen to real-time transcriptions
       _transcriptionSubscription =
           _transcriptionService.messages.distinct().listen((transcription) {
-        print("Received transcription: $transcription"); // Debugging
-        if (!transcription.toLowerCase().startsWith("final transcript:")) {
-          setState(() {
-            _conversation += "$transcription "; // Append transcription
+            print("Received transcription: $transcription"); // Debugging
+            if (!transcription.toLowerCase().startsWith("final transcript:")) {
+              setState(() {
+                _conversation += "$transcription "; // Append transcription
+              });
+            }
+            stopVoiceChat();
+          }, onError: (error) {
+            print("Error in transcription stream: $error");
+          }, onDone: () {
+            print("Transcription stream closed.");
           });
-        }
-        stopVoiceChat();
-      }, onError: (error) {
-        print("Error in transcription stream: $error");
-      }, onDone: () {
-        print("Transcription stream closed.");
-        // Automatically stop when the stream closes
-      });
     } catch (e) {
       print("Error starting voice chat: $e");
     }
@@ -114,13 +115,17 @@ class _VoiceChatState extends State<VoiceChat> {
     return Scaffold(
       backgroundColor: AppBlue,
       appBar: AppBar(
-         backgroundColor: AppBlue,
+        backgroundColor: AppBlue,
         leading: Padding(
           padding: const EdgeInsets.all(10),
           child: GestureDetector(
             onTap: () {
               setState(() {
                 language = language == 'ENG' ? 'HIN' : 'ENG'; // Toggle the language
+                serverUrl = language == 'ENG'
+                    ? 'ws://eng.ksprateek.studio/TranscribeStreaming'
+                    : 'ws://hin.ksprateek.studio/TranscribeStreaming';
+                print(serverUrl) ; // Update serverUrl
               });
             },
             child: Text(
@@ -133,7 +138,6 @@ class _VoiceChatState extends State<VoiceChat> {
             ),
           ),
         ),
-
       ),
       body: Center(
         child: Column(
@@ -147,10 +151,10 @@ class _VoiceChatState extends State<VoiceChat> {
               height: 200, // Fixed height for the reserved space
               child: showWave
                   ? SiriWaveform.ios7(
-                      controller: controller,
-                      options: const IOS7SiriWaveformOptions(
-                          height: 200, width: 400),
-                    )
+                controller: controller,
+                options: const IOS7SiriWaveformOptions(
+                    height: 200, width: 400),
+              )
                   : null, // If not showing, leave space empty
             ),
             Padding(
@@ -161,14 +165,9 @@ class _VoiceChatState extends State<VoiceChat> {
                 style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
-            SizedBox(
-              height: 80
-              ,
+            const SizedBox(
+              height: 80,
             ),
-
-            // Image.asset(
-            //   "lib/images/orb.gif",
-            // ),
             const SizedBox(
               height: 30,
             ),
@@ -186,7 +185,7 @@ class _VoiceChatState extends State<VoiceChat> {
                 ),
                 height: 130,
                 width: 130,
-                child: Icon(
+                child: const Icon(
                   Icons.mic,
                   size: 60,
                 ),
