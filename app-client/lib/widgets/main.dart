@@ -2,6 +2,7 @@ import 'package:app_client/pages/Chatbot.dart';
 import 'package:app_client/pages/HomeScreen.dart';
 import 'package:app_client/services/functions/SttWebSocket.dart';
 import 'package:app_client/services/functions/SttWebSocket.dart';
+
 import 'package:app_client/utils/responseContainer.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -9,7 +10,8 @@ import 'package:flutter/material.dart';
 import '../SplashScreen.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -34,6 +36,6 @@ class _MyAppState extends State<MyApp> {
         ],
         locale: Locale('en'),
         debugShowCheckedModeBanner: false,
-        home: VoiceChat());
+        home: Homescreen());
   }
 }
