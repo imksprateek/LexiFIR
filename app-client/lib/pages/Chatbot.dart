@@ -1,5 +1,7 @@
 import 'package:app_client/services/functions/airequest.dart';
+import 'package:app_client/utils/circle_container.dart';
 import 'package:app_client/utils/colors.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:app_client/services/functions/TexttoSpeech.dart';
 import 'package:app_client/utils/constants.dart';
@@ -86,7 +88,7 @@ class _VoiceChatState extends State<VoiceChat> {
 
       if (_conversation.isNotEmpty && !_isSpeaking) {
         _isSpeaking = true;
-        await textToSpeech(summarize!, (status) {
+        await textToSpeech(summarizee!, (status) {
           setState(() {
             showWave = status;
           });
@@ -140,16 +142,32 @@ class _VoiceChatState extends State<VoiceChat> {
               height: 150,
             ),
 
-            Image.asset(
-              "lib/images/orb.gif",
-            ),
+            // Image.asset(
+            //   "lib/images/orb.gif",
+            // ),
             const SizedBox(
               height: 30,
             ),
-            ElevatedButton(
-              onPressed: startVoiceChat,
-              child: const Text("x Recording"),
-            ),
+            GestureDetector(
+              onLongPress: () {
+                audioPlayer.stop();
+              },
+              onTap: () {
+                startVoiceChat();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(70),
+                  color: AppBluelight,
+                ),
+                height: 130,
+                width: 130,
+                child: Icon(
+                  Icons.mic,
+                  size: 60,
+                ),
+              ),
+            )
           ],
         ),
       ),

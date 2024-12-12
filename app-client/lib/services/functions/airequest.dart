@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 
 String? Ai_answer;
 String? summarize;
+String? summarizee;
 final logger = Logger();
 
 Future<dynamic> airequest(String prompt) async {
@@ -40,7 +41,7 @@ Future<dynamic> airequest(String prompt) async {
         summarize = decodedResponse['summary'];
 
         // Log and return values
-        summarize = summarize?.replaceFirst('Here is a summary:', '').trim();
+        summarizee = summarize?.split('Here is a summary:').last;
 
         if (summarize != null) {
           print("The summary of the above is: $summarize");
