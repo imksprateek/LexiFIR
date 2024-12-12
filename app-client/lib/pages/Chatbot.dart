@@ -9,8 +9,11 @@ import 'package:siri_wave/siri_wave.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 
+import '../services/functions/EnglishToHindi.dart';
+import '../services/functions/HindiT0English.dart';
 import '../services/functions/Transciption service.dart';
-
+String serverUrl = 'ws://eng.ksprateek.studio/TranscribeStreaming';
+String language = 'ENG';
 class VoiceChat extends StatefulWidget {
   const VoiceChat({super.key});
 
@@ -30,13 +33,14 @@ class _VoiceChatState extends State<VoiceChat> {
     speed: 0.15,
   );
 
-  String language = 'ENG';
-  String serverUrl = 'ws://eng.ksprateek.studio/TranscribeStreaming'; // Initial value
+
+   // Initial value
 
   @override
   void initState() {
     super.initState();
     initializeService();
+
   }
 
   // Initialize the transcription service
@@ -86,11 +90,27 @@ class _VoiceChatState extends State<VoiceChat> {
   void stopVoiceChat() async {
     try {
       await _transcriptionService.stopRecording();
-      String airesponse = await airequest(_conversation);
+      print(_conversation);
+      String airesponse;
+
+      if (language == 'ENG') {
+        airesponse = await airequest(_conversation);
+      } else {
+        try {
+          String translatedText = await translateText(_conversation, "en");
+          String englishResponse = await airequest(translatedText);
+
+          airesponse =  await translateEnglishToHindi(englishResponse);
+          print("Hindi translated response: $airesponse");
+        } catch (e) {
+          print("Translation error: $e");
+          airesponse = "Translation failed. Unable to process.";
+        }
+      }
 
       if (_conversation.isNotEmpty && !_isSpeaking) {
         _isSpeaking = true;
-        await textToSpeech(summarizee!, (status) {
+        await textToSpeech(airesponse, (status) {
           setState(() {
             showWave = status;
           });
@@ -101,6 +121,8 @@ class _VoiceChatState extends State<VoiceChat> {
       print("Error stopping voice chat: $e");
     }
   }
+
+
 
   // Dispose resources
   @override
@@ -143,6 +165,21 @@ class _VoiceChatState extends State<VoiceChat> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            ElevatedButton(onPressed: ()async{
+
+
+                try {
+                  String textToTranslate = "नमस्ते, आप कैसे हैं?";
+                  String targetLanguage = "en";
+
+                  String translatedText = await translateText(textToTranslate, targetLanguage);
+
+                  print("Translated Text: $translatedText");
+                } catch (e) {
+                  print("Error: $e");
+                }
+
+            }, child: Text('Press') ),
             const SizedBox(
               height: 150,
             ),
@@ -166,7 +203,7 @@ class _VoiceChatState extends State<VoiceChat> {
               ),
             ),
             const SizedBox(
-              height: 80,
+              height: 10,
             ),
             const SizedBox(
               height: 30,

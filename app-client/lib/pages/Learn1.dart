@@ -1,5 +1,11 @@
+import 'package:app_client/services/functions/NewsApi.dart';
+import 'package:app_client/utils/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:app_client/utils/carasouel.dart'; // Ensure this import is correct
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:hyperlink/hyperlink.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../utils/carasouel.dart';
 
 class LearningScreen extends StatefulWidget {
   const LearningScreen({Key? key}) : super(key: key);
@@ -7,23 +13,36 @@ class LearningScreen extends StatefulWidget {
   @override
   State<LearningScreen> createState() => _LearningScreenState();
 }
-
 class _LearningScreenState extends State<LearningScreen> {
-  // List of categories to display in the grid
+  final List<String> iurl = [
+    "https://img.youtube.com/vi/dVPedKxq7Sw/0.jpg",
+    "https://img.youtube.com/vi/OZMnJagCjxk/0.jpg",
+    "https://img.youtube.com/vi/orFEKfz6Lxw/0.jpg"
+
+  ];
+  final List<String> lurl = [
+    "https://www.youtube.com/watch?v=dVPedKxq7Sw",
+    "https://www.youtube.com/watch?v=OZMnJagCjxk",
+    "https://www.youtube.com/watch?v=orFEKfz6Lxw&list=PLCszFOPmwm7R0OU1AxYomJgK_2WkRfoC3"
+  ];
+  final List<String> turl = [
+    "Video Title 1: Understanding Safety",
+    "Video Title 2: Personal Security Tips",
+    "Video Title 2: Brief Introduction of IPC"
+  ];
   final List<String> categories = [
     'Assault',
     'Rape',
     'Harassment',
     'Accident',
-    'Dacoity'
-    // Add more categories as needed
+    'Dacoity',
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Learning Screen'),
+        title: const Text('Learning Screen'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -33,38 +52,21 @@ class _LearningScreenState extends State<LearningScreen> {
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Search',
-                suffixIcon: Icon(Icons.search),
+                suffixIcon: const Icon(Icons.search),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.black),
+                  borderSide: const BorderSide(color: Colors.black),
                   borderRadius: BorderRadius.circular(35),
                 ),
               ),
             ),
           ),
-
-          Container(
-            height: 200,
-            width: 360,
-            color: Colors.grey,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          // Uncomment and configure CustomCarousel as needed
-          // CustomCarousel(
-          //   imageUrls: [],
-          //   linkUrls: [],
-          //   titleUrls: [],
-          // ),
-
-          Text(
-            "Browse By Category",
-            textAlign: TextAlign.left,
-          ),
-
+          // Pass the corrected lists to the carousel
+          CustomCarousel(imageUrls: iurl, linkUrls: lurl, TitleUrls: turl),
+          const SizedBox(height: 20),
+          const Text("Browse By Category", textAlign: TextAlign.left),
           Expanded(
             child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
@@ -75,8 +77,7 @@ class _LearningScreenState extends State<LearningScreen> {
               },
             ),
           ),
-
-          Text("Resume"),
+          const Text("Resume"),
           Container(
             height: 200,
             width: 360,
@@ -98,7 +99,7 @@ class _LearningScreenState extends State<LearningScreen> {
         alignment: Alignment.center,
         child: Text(
           category,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
