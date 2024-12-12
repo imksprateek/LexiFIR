@@ -1,0 +1,9 @@
+flask 
+groq 
+pinecone-client 
+sentence-transformers 
+torch 
+python-docx 
+pandas 
+PyPDF2 
+openpyxl
