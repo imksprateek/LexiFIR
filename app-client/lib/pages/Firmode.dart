@@ -6,6 +6,8 @@ import 'package:app_client/utils/colors.dart';
 import 'package:app_client/utils/constants.dart';
 import 'package:flutter/material.dart';
 
+import 'Chatbot.dart';
+
 final TextEditingController crimeDescriptionController =
     TextEditingController();
 

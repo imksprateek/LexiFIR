@@ -5,7 +5,7 @@ bool SigninSuccessfull  = false;
 bool LoginSuccessfull = false ;
 
 String username = "";
-final String serverUrl = "ws://eng.ksprateek.studio/TranscribeStreaming";
+
 String transcription='' ;
 String conversation = '' ;
 String ForBot= '' ;
