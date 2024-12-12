@@ -1,5 +1,7 @@
 import 'package:app_client/pages/Chatbot.dart';
+//import 'package:app_client/pages/DocumentAnalyze.dart';
 import 'package:app_client/pages/Lawmode.dart';
+import 'package:app_client/pages/Learn1.dart';
 import 'package:app_client/pages/LegalAdvisory.dart';
 import 'package:app_client/utils/responseContainer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -77,7 +79,9 @@ class _HomescreenState extends State<Homescreen> {
                       ),
                       SizedBox(width: screenWidth * 0.55),
                       IconButton(
-                        onPressed: (){},
+                        onPressed: () {
+                          //textToSpeech("Venkat pp small lmao , hahahahahaha");
+                        },
                         icon: const Icon(
                           Icons.person_outlined,
                           color: Colors.white,
@@ -186,10 +190,7 @@ $username,''',
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Responsecontainer(
-                                    IpcSection: '100',
-                                    Description: 'asdas',
-                                    Confidence: '90')));
+                                builder: (context) => LearningScreen()));
                       },
                       child: CircleContainer(
                         feature_name: "Learn",
@@ -206,6 +207,14 @@ $username,''',
                       },
                       child: CircleContainer(
                         feature_name: "Saved Documents",
+                        icon: Icons.save,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {},
+                      child: CircleContainer(
+                        feature_name: "AnalyzeDocuments",
                         icon: Icons.save,
                       ),
                     ),

@@ -279,7 +279,10 @@ class _FillFirLawModeState extends State<FillFirLawMode> {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => FirAiScreen(
-                              Description: crimeDescriptionController.text),
+                            Description: crimeDescriptionController.text,
+                            CategoryCrime: selectedCategory.toString(),
+                            Weapon: selectedWeapon.toString(),
+                          ),
                         ));
 
                         //crimeDescriptionController.clear();

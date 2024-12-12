@@ -1,23 +1,30 @@
 import 'dart:ffi';
 
 import 'package:app_client/services/functions/Chatmessage.dart';
+import 'package:app_client/services/functions/SevenWOneH.dart';
 
 import 'package:app_client/services/functions/airequest.dart';
 import 'package:app_client/utils/colors.dart';
-import 'package:app_client/services/functions/SevenWOneH.dart';
 import 'package:flutter/material.dart';
+
+int flag = 0;
 
 final TextEditingController _ChatMessageController = TextEditingController();
 
 class FirAiScreen extends StatefulWidget {
   final String Description;
-  FirAiScreen({super.key, required this.Description});
+  final String? Weapon;
+  final String? CategoryCrime;
+  FirAiScreen(
+      {super.key, required this.Description, this.Weapon, this.CategoryCrime});
 
   @override
   State<FirAiScreen> createState() => _FirAiScreenState();
 }
 
 class _FirAiScreenState extends State<FirAiScreen> {
+  String? responseSevenWone;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -50,10 +57,15 @@ class _FirAiScreenState extends State<FirAiScreen> {
 
     _addUserMessage(userMessage);
 
-    String? aiResponse = await airequest(userMessage);
+    //String? aiResponse = await airequest(userMessage);
+    String? aiResponse = await SevenWrequest(
+        userMessage, widget.Weapon.toString(), widget.CategoryCrime.toString());
 
     if (aiResponse != null) {
+      flag = 1;
+      responseSevenWone = aiResponse;
       _addAIMessage(aiResponse);
+      airequest(responseSevenWone.toString());
     } else {
       _addAIMessage("AI could not process the request.");
     }
@@ -65,7 +77,9 @@ class _FirAiScreenState extends State<FirAiScreen> {
 
     _addUserMessage(userMessage);
 
-    String? aiResponse = await SevenWrequest(userMessage, 'Gun', 'accident');
+    String? aiResponse = await airequest(userMessage);
+
+    //String? aiResponse = await SevenWrequest(userMessage, '', '');
 
     if (aiResponse != null) {
       _addAIMessage(aiResponse);

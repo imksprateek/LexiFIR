@@ -98,7 +98,6 @@ class _VoiceChatState extends State<VoiceChat> {
     }
   }
 
-
   // Dispose resources
   @override
   void dispose() {
@@ -123,9 +122,10 @@ class _VoiceChatState extends State<VoiceChat> {
               height: 200, // Fixed height for the reserved space
               child: showWave
                   ? SiriWaveform.ios7(
-                controller: controller,
-                options: const IOS7SiriWaveformOptions(height: 200, width: 400),
-              )
+                      controller: controller,
+                      options: const IOS7SiriWaveformOptions(
+                          height: 200, width: 400),
+                    )
                   : null, // If not showing, leave space empty
             ),
             Padding(
@@ -137,7 +137,14 @@ class _VoiceChatState extends State<VoiceChat> {
               ),
             ),
             SizedBox(
-              height: 300,
+              height: 150,
+            ),
+
+            Image.asset(
+              "lib/images/orb.gif",
+            ),
+            const SizedBox(
+              height: 30,
             ),
             ElevatedButton(
               onPressed: startVoiceChat,
@@ -147,4 +154,5 @@ class _VoiceChatState extends State<VoiceChat> {
         ),
       ),
     );
-  }}
+  }
+}

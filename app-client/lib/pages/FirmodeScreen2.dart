@@ -8,8 +8,12 @@ class CaseDetailsScreen extends StatefulWidget {
   _CaseDetailsScreenState createState() => _CaseDetailsScreenState();
 }
 
+
+
 class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
   // List to store the suspect sections
+  
+
   List<Map<String, TextEditingController>> suspects = [];
 
   TextEditingController OfficerName = TextEditingController();
@@ -223,6 +227,8 @@ class _CaseDetailsScreenState extends State<CaseDetailsScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => FirAiScreen(
+
+                            //CategoryCrime: ,
                             Description: crimeDescriptionController.text,
                           ),
                         ),

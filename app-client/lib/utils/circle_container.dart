@@ -31,7 +31,9 @@ class CircleContainer extends StatelessWidget {
             ),
           ),
         ),
-        Text(feature_name)
+        Text(
+          feature_name,
+        )
       ],
     );
   }
