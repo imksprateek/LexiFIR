@@ -29,6 +29,7 @@ class _VoiceChatState extends State<VoiceChat> {
     frequency: 4,
     speed: 0.15,
   );
+  String language = 'ENG' ;
   @override
   void initState() {
     super.initState();
@@ -112,6 +113,28 @@ class _VoiceChatState extends State<VoiceChat> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppBlue,
+      appBar: AppBar(
+         backgroundColor: AppBlue,
+        leading: Padding(
+          padding: const EdgeInsets.all(10),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                language = language == 'ENG' ? 'HIN' : 'ENG'; // Toggle the language
+              });
+            },
+            child: Text(
+              language,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +162,8 @@ class _VoiceChatState extends State<VoiceChat> {
               ),
             ),
             SizedBox(
-              height: 150,
+              height: 80
+              ,
             ),
 
             // Image.asset(
