@@ -268,33 +268,6 @@ class _FillFirLawModeState extends State<FillFirLawMode> {
                     ),
                   ),
                   SizedBox(height: 10),
-                  Text('Place of occurrence:',
-                      style: TextStyle(color: Colors.black)),
-                  TextField(
-                    onChanged: (value) {
-                      setState(() {
-                        placeOfOccurrence = value;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.black),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: Colors.black, width: 2),
-                      ),
-                      hintText: '',
-                      suffixIcon: Icon(Icons.pin_drop),
-                      hintStyle: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
@@ -306,7 +279,10 @@ class _FillFirLawModeState extends State<FillFirLawMode> {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => FirAiScreen(
-                              Description: crimeDescriptionController.text),
+                            Description: crimeDescriptionController.text,
+                            CategoryCrime: selectedCategory.toString(),
+                            Weapon: selectedWeapon.toString(),
+                          ),
                         ));
 
                         //crimeDescriptionController.clear();

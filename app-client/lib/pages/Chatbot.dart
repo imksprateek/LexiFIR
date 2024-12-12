@@ -1,8 +1,11 @@
 import 'package:app_client/services/functions/airequest.dart';
+import 'package:app_client/utils/circle_container.dart';
 import 'package:app_client/utils/colors.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:app_client/services/functions/TexttoSpeech.dart';
 import 'package:app_client/utils/constants.dart';
+import 'package:siri_wave/siri_wave.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:async';
 
@@ -20,15 +23,17 @@ class _VoiceChatState extends State<VoiceChat> {
   String _conversation = ""; // Store the final conversation
   StreamSubscription<String>? _transcriptionSubscription;
   bool _isSpeaking = false; // Track if text-to-speech is in progress
-  late VideoPlayerController _controller;
+  final controller = IOS7SiriWaveformController(
+    amplitude: 0.5,
+    color: AppBluelight,
+    frequency: 4,
+    speed: 0.15,
+  );
+  String language = 'ENG' ;
   @override
   void initState() {
     super.initState();
     initializeService();
-    _controller = VideoPlayerController.network('https://www.example.com/video.mp4') // Replace with your MP4 URL
-      ..initialize().then((_) {
-        setState(() {});
-      });
   }
 
   // Initialize the transcription service
@@ -80,16 +85,16 @@ class _VoiceChatState extends State<VoiceChat> {
   void stopVoiceChat() async {
     try {
       await _transcriptionService.stopRecording();
-      print("Recording stopped.");
-      print("Final conversation: $_conversation");
       String airesponse = await airequest(_conversation);
-      // Automatically trigger Text-to-Speech after recording stops
-      if (_conversation.isNotEmpty) {
-        if (!_isSpeaking) {
-          _isSpeaking = true; // Set flag before speaking
-          await textToSpeech(airesponse); // Call the Text-to-Speech function
-          _isSpeaking = false; // Reset flag after speaking
-        }
+
+      if (_conversation.isNotEmpty && !_isSpeaking) {
+        _isSpeaking = true;
+        await textToSpeech(summarizee!, (status) {
+          setState(() {
+            showWave = status;
+          });
+        });
+        _isSpeaking = false;
       }
     } catch (e) {
       print("Error stopping voice chat: $e");
@@ -108,29 +113,85 @@ class _VoiceChatState extends State<VoiceChat> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppBlue,
+      appBar: AppBar(
+         backgroundColor: AppBlue,
+        leading: Padding(
+          padding: const EdgeInsets.all(10),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                language = language == 'ENG' ? 'HIN' : 'ENG'; // Toggle the language
+              });
+            },
+            child: Text(
+              language,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-
-            ElevatedButton(
-              onPressed: startVoiceChat,
-              child: const Text("Start Recording"),
+            const SizedBox(
+              height: 150,
             ),
-            ElevatedButton(
-              onPressed: stopVoiceChat,
-              child: const Text("Stop Recording"),
+            // Reserve space for the waveform widget
+            SizedBox(
+              height: 200, // Fixed height for the reserved space
+              child: showWave
+                  ? SiriWaveform.ios7(
+                      controller: controller,
+                      options: const IOS7SiriWaveformOptions(
+                          height: 200, width: 400),
+                    )
+                  : null, // If not showing, leave space empty
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                "$_conversation",
+                _conversation,
                 textAlign: TextAlign.center,
-
-                style: const TextStyle(fontSize: 16 , color: Colors.white),
+                style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
             ),
+            SizedBox(
+              height: 80
+              ,
+            ),
+
+            // Image.asset(
+            //   "lib/images/orb.gif",
+            // ),
+            const SizedBox(
+              height: 30,
+            ),
+            GestureDetector(
+              onLongPress: () {
+                audioPlayer.stop();
+              },
+              onTap: () {
+                startVoiceChat();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(70),
+                  color: AppBluelight,
+                ),
+                height: 130,
+                width: 130,
+                child: Icon(
+                  Icons.mic,
+                  size: 60,
+                ),
+              ),
+            )
           ],
         ),
       ),

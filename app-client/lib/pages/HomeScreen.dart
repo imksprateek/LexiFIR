@@ -1,5 +1,7 @@
 import 'package:app_client/pages/Chatbot.dart';
+//import 'package:app_client/pages/DocumentAnalyze.dart';
 import 'package:app_client/pages/Lawmode.dart';
+import 'package:app_client/pages/Learn1.dart';
 import 'package:app_client/pages/LegalAdvisory.dart';
 import 'package:app_client/utils/responseContainer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,7 +80,7 @@ class _HomescreenState extends State<Homescreen> {
                       SizedBox(width: screenWidth * 0.55),
                       IconButton(
                         onPressed: () {
-                          textToSpeech("Venkat pp small lmao , hahahahahaha");
+                          //textToSpeech("Venkat pp small lmao , hahahahahaha");
                         },
                         icon: const Icon(
                           Icons.person_outlined,
@@ -107,8 +109,9 @@ $username,''',
                     left: screenWidth * 0.6, // Adjusted for dynamic positioning
                     top: screenHeight * 0.07,
                     child: Container(
-                      height: screenHeight * 0.2, // Adjust the height as needed
-                      child: Image.asset('lib/images/cartoon.png', scale: 0.5),
+                      height:
+                          screenHeight * 0.16, // Adjust the height as needed
+                      child: Image.asset('lib/images/cartoon.png', scale: 1),
                     ),
                   ),
                   Positioned(
@@ -188,10 +191,7 @@ $username,''',
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Responsecontainer(
-                                    IpcSection: '100',
-                                    Description: 'asdas',
-                                    Confidence: '90')));
+                                builder: (context) => LearningScreen()));
                       },
                       child: CircleContainer(
                         feature_name: "Learn",
@@ -207,7 +207,15 @@ $username,''',
                                 builder: (context) => VoiceChat()));
                       },
                       child: CircleContainer(
-                        feature_name: "Saved Documents",
+                        feature_name: "Voice ChatBot",
+                        icon: Icons.voice_chat,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {},
+                      child: CircleContainer(
+                        feature_name: "AnalyzeDocuments",
                         icon: Icons.save,
                       ),
                     ),

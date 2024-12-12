@@ -12,9 +12,9 @@ class CustomCarousel extends StatefulWidget {
 
   const CustomCarousel(
       {super.key,
-      required this.imageUrls,
-      required this.linkUrls,
-      required this.TitleUrls});
+        required this.imageUrls,
+        required this.linkUrls,
+        required this.TitleUrls});
 
   @override
   _CustomCarouselState createState() => _CustomCarouselState();
@@ -58,64 +58,64 @@ class _CustomCarouselState extends State<CustomCarousel> {
             items: widget.imageUrls
                 .map(
                   (imageUrl) => Padding(
-                    padding: const EdgeInsets.all(0),
-                    child: Card(
-                      margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      elevation: 10.0,
-                      shadowColor: AppBlue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
-                        child: Stack(
-                          children: <Widget>[
-                            // Network image
-                            Image.network(
-                              imageUrl,
-                              width: double.infinity,
-                              height: 200, // Adjust height as needed
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey.shade200,
-                                  child: const Center(
-                                    child: Icon(
-                                      Icons.image_not_supported,
-                                      size: 50,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            // Title overlay
-                            Positioned(
-                              bottom: 20,
-                              left: 0,
-                              right: 0,
-                              child: Center(
-                                child: Text(
-                                  widget.TitleUrls[
-                                      widget.imageUrls.indexOf(imageUrl)],
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    backgroundColor:
-                                        const Color.fromARGB(104, 54, 54, 54),
-                                    color: const Color.fromARGB(
-                                        255, 255, 255, 255),
-                                  ),
+                padding: const EdgeInsets.all(0),
+                child: Card(
+                  margin: const EdgeInsets.symmetric(vertical: 10.0),
+                  elevation: 10.0,
+                  shadowColor: AppBlue,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Stack(
+                      children: <Widget>[
+                        // Network image
+                        Image.network(
+                          imageUrl,
+                          width: double.infinity,
+                          height: 200, // Adjust height as needed
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(
+                              color: Colors.grey.shade200,
+                              child: const Center(
+                                child: Icon(
+                                  Icons.image_not_supported,
+                                  size: 50,
+                                  color: Colors.grey,
                                 ),
                               ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      ),
+                        // Title overlay
+                        Positioned(
+                          bottom: 20,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Text(
+                              widget.TitleUrls[
+                              widget.imageUrls.indexOf(imageUrl)],
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                backgroundColor:
+                                const Color.fromARGB(104, 54, 54, 54),
+                                color: const Color.fromARGB(
+                                    255, 255, 255, 255),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                )
+                ),
+              ),
+            )
                 .toList(),
           ),
         ),
@@ -128,7 +128,7 @@ class _CustomCarouselState extends State<CustomCarousel> {
               width: 10.0,
               height: 10.0,
               margin:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+              const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: _currentIndex == index
