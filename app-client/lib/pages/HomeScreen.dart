@@ -109,8 +109,8 @@ $username,''',
                     left: screenWidth * 0.6, // Adjusted for dynamic positioning
                     top: screenHeight * 0.07,
                     child: Container(
-                      height: screenHeight * 0.2, // Adjust the height as needed
-                      child: Image.asset('lib/images/cartoon.png', scale: 0.5),
+                      height: screenHeight * 0.16, // Adjust the height as needed
+                      child: Image.asset('lib/images/cartoon.png', scale: 1),
                     ),
                   ),
                   Positioned(

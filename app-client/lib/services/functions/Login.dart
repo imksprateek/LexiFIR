@@ -3,14 +3,13 @@ import 'package:app_client/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Map<String, dynamic>> login(String _username, String password) async {
+Future<Map<String, dynamic>> login(String username, String password) async {
   print('Login function called');
-  print('Username: $_username');
+  print('Username: $username');
   print('Password: $password');
 
-  String baseUrl =
-      "http://server.ksprateek.studio"; // Replace with your base URL
-  String endpoint = "/api/auth/login"; // API endpoint for login
+  const String baseUrl = "http://server.ksprateek.studio"; // Replace with your base URL
+  const String endpoint = "/api/auth/login"; // API endpoint for login
 
   // Set the headers and the request body
   Map<String, String> headers = {
@@ -18,7 +17,7 @@ Future<Map<String, dynamic>> login(String _username, String password) async {
   };
 
   Map<String, dynamic> body = {
-    'username': _username,
+    'username': username, // Corrected key
     'password': password,
   };
 
@@ -34,22 +33,19 @@ Future<Map<String, dynamic>> login(String _username, String password) async {
     if (response.statusCode == 200) {
       print('Login successful. Parsing response body...');
 
-      LoginSuccessfull = true;
-
-      username = _username;
-      // Successfully logged in, parse the response body
+      // Parse the response body
       Map<String, dynamic> responseBody = jsonDecode(response.body);
       print('Response body: $responseBody');
 
-      String token = responseBody['token']; // Extract the token
-      String id = responseBody['id']; // Extract user id
-      String email = responseBody['email']; // Extract email
-      List<String> roles =
-          List<String>.from(responseBody['roles']); // Extract roles
+      // Extract necessary fields
+      String token = responseBody['token'];
+      String id = responseBody['id'];
+      String email = responseBody['email'];
+      List<String> roles = List<String>.from(responseBody['roles']);
 
       // Save the token in SharedPreferences
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('jwt_token', token); // Save token
+      await prefs.setString('jwt_token', token);
       print('Token saved in SharedPreferences');
 
       // Return the extracted data
@@ -61,11 +57,11 @@ Future<Map<String, dynamic>> login(String _username, String password) async {
         'roles': roles,
       };
     } else {
-      // If the login fails, return an error message
+      // Handle login failure
       print("Failed to login: ${response.body}");
       return {
         'success': false,
-        'message': 'Invalid credentials or error during login',
+        'message': jsonDecode(response.body)['message'] ?? 'Invalid credentials',
       };
     }
   } catch (e) {

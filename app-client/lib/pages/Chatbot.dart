@@ -86,7 +86,7 @@ class _VoiceChatState extends State<VoiceChat> {
 
       if (_conversation.isNotEmpty && !_isSpeaking) {
         _isSpeaking = true;
-        await textToSpeech(airesponse, (status) {
+        await textToSpeech(summarize!, (status) {
           setState(() {
             showWave = status;
           });
@@ -114,7 +114,7 @@ class _VoiceChatState extends State<VoiceChat> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 150,
             ),
             // Reserve space for the waveform widget
@@ -148,7 +148,7 @@ class _VoiceChatState extends State<VoiceChat> {
             ),
             ElevatedButton(
               onPressed: startVoiceChat,
-              child: const Text("Start Recording"),
+              child: const Text("x Recording"),
             ),
           ],
         ),
