@@ -165,21 +165,7 @@ class _VoiceChatState extends State<VoiceChat> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(onPressed: ()async{
 
-
-                try {
-                  String textToTranslate = "नमस्ते, आप कैसे हैं?";
-                  String targetLanguage = "en";
-
-                  String translatedText = await translateText(textToTranslate, targetLanguage);
-
-                  print("Translated Text: $translatedText");
-                } catch (e) {
-                  print("Error: $e");
-                }
-
-            }, child: Text('Press') ),
             const SizedBox(
               height: 150,
             ),
