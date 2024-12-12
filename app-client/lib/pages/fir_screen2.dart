@@ -4,6 +4,7 @@ import 'package:app_client/services/functions/Chatmessage.dart';
 import 'package:app_client/services/functions/SevenWOneH.dart';
 
 import 'package:app_client/services/functions/airequest.dart';
+import 'package:app_client/services/functions/ownmodel.dart';
 import 'package:app_client/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -46,7 +47,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
   }
 
   void _addAIMessage(String message) {
-     setState(() {
+    setState(() {
       _messages.add(ChatMessage(content: message, isUser: false));
     });
   }
@@ -58,8 +59,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
     _addUserMessage(userMessage);
 
     //String? aiResponse = await airequest(userMessage);
-    String? aiResponse = await SevenWrequest(
-        userMessage, widget.Weapon.toString(), widget.CategoryCrime.toString());
+    String? aiResponse = await ownmodel(userMessage);
 
     if (aiResponse != null) {
       flag = 1;

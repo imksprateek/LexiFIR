@@ -53,6 +53,8 @@ dependencies:
   flutter_ffmpeg: ^0.4.0
   flutter_localization: ^0.2.3
   intl: ^0.19.0
+  translator: ^1.0.3+1
+  
   
   
 
