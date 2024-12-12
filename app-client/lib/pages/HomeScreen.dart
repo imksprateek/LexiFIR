@@ -109,7 +109,8 @@ $username,''',
                     left: screenWidth * 0.6, // Adjusted for dynamic positioning
                     top: screenHeight * 0.07,
                     child: Container(
-                      height: screenHeight * 0.16, // Adjust the height as needed
+                      height:
+                          screenHeight * 0.16, // Adjust the height as needed
                       child: Image.asset('lib/images/cartoon.png', scale: 1),
                     ),
                   ),
@@ -206,8 +207,8 @@ $username,''',
                                 builder: (context) => VoiceChat()));
                       },
                       child: CircleContainer(
-                        feature_name: "Saved Documents",
-                        icon: Icons.save,
+                        feature_name: "Voice ChatBot",
+                        icon: Icons.voice_chat,
                       ),
                     ),
                     const SizedBox(width: 10),

@@ -46,7 +46,7 @@ class _FirAiScreenState extends State<FirAiScreen> {
   }
 
   void _addAIMessage(String message) {
-    setState(() {
+     setState(() {
       _messages.add(ChatMessage(content: message, isUser: false));
     });
   }
