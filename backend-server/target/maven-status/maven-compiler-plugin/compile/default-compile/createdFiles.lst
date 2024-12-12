@@ -1,11 +1,14 @@
 studio/ksprateek/service/payload/responses/OtpResponse$OtpResponseBuilder.class
 studio/ksprateek/service/ServiceApplication.class
 studio/ksprateek/service/entity/FIR$LandmarkJudgment.class
+studio/ksprateek/service/payload/responses/CaseReportResponse$Location.class
 studio/ksprateek/service/repository/TrainingModuleRepository.class
 studio/ksprateek/service/entity/FIR$FIRBuilder.class
 studio/ksprateek/service/payload/requests/MultiplePreSignedUrlRequest.class
+studio/ksprateek/service/dto/LegalAnalysisDTO$LandmarkCase.class
 studio/ksprateek/service/utils/DTOConverter.class
 studio/ksprateek/service/service/user/UserDetailsServiceImpl.class
+studio/ksprateek/service/payload/responses/CaseReportResponse.class
 studio/ksprateek/service/entity/Notification$NotificationBuilder.class
 studio/ksprateek/service/payload/requests/LoginRequest.class
 studio/ksprateek/service/entity/Questionnaire$Question.class
@@ -25,6 +28,7 @@ studio/ksprateek/service/entity/RelatedJudgement.class
 studio/ksprateek/service/payload/responses/AuthResponse$AuthResponseBuilder.class
 studio/ksprateek/service/entity/User.class
 studio/ksprateek/service/payload/requests/OtpValidation.class
+studio/ksprateek/service/security/AppConfig.class
 studio/ksprateek/service/dto/FIRDTO$LocationDTO.class
 studio/ksprateek/service/service/document/S3ObjectInputStreamWrapper.class
 studio/ksprateek/service/repository/ChatLogRepository.class
@@ -56,8 +60,10 @@ studio/ksprateek/service/security/jwt/AuthTokenFilter.class
 studio/ksprateek/service/dto/RelatedJudgementDTO.class
 studio/ksprateek/service/entity/Questionnaire.class
 studio/ksprateek/service/dto/NotificationDTO.class
+studio/ksprateek/service/service/fir/CaseReportService.class
 studio/ksprateek/service/security/CorsConfiguration$1.class
 studio/ksprateek/service/entity/TrainingModule.class
+studio/ksprateek/service/controller/CaseReportController.class
 studio/ksprateek/service/payload/requests/EmailDetails$EmailDetailsBuilder.class
 studio/ksprateek/service/entity/Notification.class
 studio/ksprateek/service/entity/UploadedDocument$UploadedDocumentBuilder.class
@@ -65,6 +71,7 @@ studio/ksprateek/service/payload/responses/MultiplePreSignedUrlResponse.class
 studio/ksprateek/service/entity/ChatLog.class
 studio/ksprateek/service/entity/User$UserBuilder.class
 studio/ksprateek/service/service/auth/OtpService.class
+studio/ksprateek/service/security/DocumentDBConfig.class
 studio/ksprateek/service/dto/LegalReferenceDTO$LandmarkJudgmentDTO.class
 studio/ksprateek/service/service/legalref/LegalReferenceService.class
 studio/ksprateek/service/repository/UserRepository.class
@@ -78,6 +85,8 @@ studio/ksprateek/service/dto/TrainingModuleDTO.class
 studio/ksprateek/service/dto/QuestionnaireDTO$QuestionDTO.class
 studio/ksprateek/service/entity/FIR.class
 studio/ksprateek/service/payload/responses/JwtResponse.class
+studio/ksprateek/service/service/legalref/LegalAnalysisService.class
+studio/ksprateek/service/dto/LegalAnalysisDTO$LegalSection.class
 studio/ksprateek/service/payload/requests/OtpRequest.class
 studio/ksprateek/service/entity/RelatedJudgement$RelatedJudgementBuilder.class
 studio/ksprateek/service/entity/CrimeRecord.class
@@ -90,7 +99,9 @@ studio/ksprateek/service/dto/FIRDTO$RelatedSectionDTO.class
 studio/ksprateek/service/security/jwt/JwtUtils.class
 studio/ksprateek/service/controller/TrainingModuleController.class
 studio/ksprateek/service/payload/responses/MessageResponse.class
+studio/ksprateek/service/dto/LegalAnalysisDTO.class
 studio/ksprateek/service/dto/EmailDetails$EmailDetailsBuilder.class
+studio/ksprateek/service/dto/CaseReportRequest.class
 studio/ksprateek/service/entity/Questionnaire$QuestionnaireBuilder.class
 studio/ksprateek/service/service/fir/FIRService.class
 studio/ksprateek/service/payload/requests/OtpValidation$OtpValidationBuilder.class
@@ -105,6 +116,7 @@ studio/ksprateek/service/controller/TestController.class
 studio/ksprateek/service/service/questionnaire/QuestionnaireService.class
 studio/ksprateek/service/controller/UserController.class
 studio/ksprateek/service/repository/DocumentRepository.class
+studio/ksprateek/service/controller/LegalAnalysisController.class
 studio/ksprateek/service/dto/QuestionnaireDTO.class
 studio/ksprateek/service/dto/FIRDTO$LandmarkJudgmentDTO.class
 studio/ksprateek/service/security/AWSConfig.class
