@@ -37,19 +37,16 @@ Future<dynamic> airequest(String prompt) async {
       if (decodedResponse is Map<String, dynamic>) {
         String? decodedAi = decodedResponse['response'];
 
-      
         summarize = decodedResponse['summary'];
 
         // Log and return values
-        if (summarize != null) {
-          // Remove the "Here is a summary:" part if it exists
-          summarize = summarize.replaceFirst(from, to) ;
+        summarize = summarize?.replaceFirst('Here is a summary:', '').trim();
 
+        if (summarize != null) {
           print("The summary of the above is: $summarize");
         } else {
           print("Summary key not found or null.");
         }
-
 
         return decodedAi;
       } else {
