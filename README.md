@@ -30,8 +30,9 @@
 - **Flutter**: Cross-platform mobile application development.
 
 ### Backend and Microservices
+- **Spring Boot**: Spring Security, Spring Cloud, JWT auth, CRUD operations on DB, Text to Speech with Amazon Polly, Document upload and retrieval with Amazon S3
 - **AI Services**: PyTorch, LangChain, Flask.
-- **Speech-to-Text Microservice**: Flask with WebSockets.
+- **Speech-to-Text Microservice**: Flask with WebSockets using Amazon Transcribe.
 
 ### Database
 - **MongoDB Engine**: Hosted on **AWS DocumentDB** for secure and scalable data storage.
