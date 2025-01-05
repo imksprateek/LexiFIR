@@ -6,5 +6,5 @@
 *.h linguist-detectable=false
 *.cmake linguist-detectable=false
 *.txt linguist-detectable=false
-*.py linguist-detectable=false
-ai/* linguist-vendored=false
+*.py linguist-vendored
+speech-to-text-service/* linguist-vendored=false
