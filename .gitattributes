@@ -1,2 +1,7 @@
 translate-service/myEnv/* linguist-vendored
-
+ai/* linguist-vendored
+*.java linguist-detectable=true
+*.dart linguist-detectable=true
+*.html linguist-detectable=false
+*.cpp linguist-detectable=false
+*.cmake linguist-detectable=false
