@@ -1,2 +1,2 @@
-translate-service/myEnv linguist-vendored
+translate-service/myEnv/* linguist-vendored
 
