@@ -8,3 +8,5 @@
 *.txt linguist-detectable=false
 *.py linguist-vendored
 speech-to-text-service/* linguist-vendored=false
+speech-to-text-service/* linguist-vendored=false
+translate-service/* linguist-vendored=false
