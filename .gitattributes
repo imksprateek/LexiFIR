@@ -4,6 +4,8 @@ ai/* linguist-vendored
 *.dart linguist-detectable=true
 *.html linguist-detectable=false
 *.cpp linguist-detectable=false
+*.cc linguist-detectable=false
+*.h linguist-detectable=false
 *.cmake linguist-detectable=false
 *.txt linguist-detectable=false
 *.py linguist-detectable=false
