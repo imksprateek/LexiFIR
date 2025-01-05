@@ -8,5 +8,6 @@
 *.txt linguist-detectable=false
 *.py linguist-vendored
 speech-to-text-service/* linguist-vendored=false
-speech-to-text-service/* linguist-vendored=false
 translate-service/* linguist-vendored=false
+ai/chatbot/* linguist-vendored=false
+ai/rag/* linguist-vendored=false
